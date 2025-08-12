@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Port of Los Angeles - Digital Twin Command Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+            color: #1e293b;
+            min-height: 100vh;
+            font-size: 14px;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 300px 1fr 360px;
+            grid-template-rows: 80px 1fr 180px;
+            height: 100vh;
+            gap: 1px;
+            background: #e2e8f0;
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            border-bottom: 2px solid #0ea5e9;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+
+        .header-title {
+            color: #1e293b;
+        }
+
+        .header-subtitle {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .header-info {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.8rem;
+            background: white;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .status-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            animation: pulse-ring 2s infinite;
+        }
+
+        .online { background: #10b981; }
+        .online::before { background: #10b981; }
+        .warning { background: #f59e0b; }
+        .warning::before { background: #f59e0b; }
+        .critical { background: #ef4444; }
+        .critical::before { background: #ef4444; }
+
+        @keyframes pulse-ring {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(2.5); }
+        }
+
+        .sidebar {
+            background: white;
+            padding: 1.5rem;
+            overflow-y: auto;
+            border-right: 1px solid #e2e8f0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .main-view {
+            background: #f8fafc;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-panel {
+            background: white;
+            padding: 1.5rem;
+            overflow-y: auto;
+            border-left: 1px solid #e2e8f0;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .footer-panel {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 1rem 2rem;
+            border-top: 1px solid #e2e8f0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            color: #0f172a;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .agent-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .agent-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: #0ea5e9;
+        }
+
+        .agent-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+        }
+
+        .agent-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+
+        .agent-status {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-auto {
+            background: #dbeafe;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+
+        .status-sync {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        .agent-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 3px;
+            background: #f1f5f9;
+            border-radius: 2px;
+            margin-top: 0.8rem;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .port-map-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: 
+                /* Water */
+                radial-gradient(ellipse at 30% 70%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 40%, rgba(96, 165, 250, 0.2) 0%, transparent 50%),
+                linear-gradient(180deg, #dbeafe 0%, #bfdbfe 30%, #93c5fd 70%, #60a5fa 100%);
+            overflow: hidden;
+        }
+
+        /* Port of Los Angeles Background Layout */
+        .port-infrastructure {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Landmass */
+        .landmass {
+            position: absolute;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 50%, #d1d5db 100%);
+            border: 2px solid #9ca3af;
+        }
+
+        .main-land {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 25%;
+            border-radius: 0 0 20px 0;
+        }
+
+        .terminal-island-land {
+            top: 40%;
+            left: 15%;
+            width: 35%;
+            height: 35%;
+            border-radius: 15px;
+        }
+
+        .san-pedro-land {
+            top: 70%;
+            left: 0;
+            width: 50%;
+            height: 30%;
+            border-radius: 0 15px 0 0;
+        }
+
+        /* Water channels and harbors */
+        .inner-harbor {
+            position: absolute;
+            top: 25%;
+            left: 10%;
+            width: 80%;
+            height: 40%;
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 20px;
+            border: 1px dashed #3b82f6;
+        }
+
+        .main-channel {
+            position: absolute;
+            top: 15%;
+            left: 5%;
+            width: 90%;
+            height: 8px;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+        }
+
+        .approach-channel {
+            position: absolute;
+            top: 10%;
+            left: 85%;
+            width: 15%;
+            height: 6px;
+            background: linear-gradient(90deg, #1d4ed8, #1e40af);
+            border-radius: 4px;
+        }
+
+        /* Breakwater */
+        .outer-breakwater {
+            position: absolute;
+            top: 12%;
+            left: 8%;
+            width: 75%;
+            height: 4px;
+            background: #6b7280;
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .middle-breakwater {
+            position: absolute;
+            top: 18%;
+            left: 15%;
+            width: 60%;
+            height: 3px;
+            background: #6b7280;
+            border-radius: 2px;
+        }
+
+        /* Terminals with realistic positioning */
+        .terminal {
+            position: absolute;
+            background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+            border: 2px solid #6b7280;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .terminal:hover {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            border-color: #0ea5e9;
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: 0 8px 16px rgba(14, 165, 233, 0.3);
+        }
+
+        /* Actual Port of LA Terminal Layout */
+        .terminal-island {
+            top: 42%;
+            left: 18%;
+            width: 28%;
+            height: 10%;
+        }
+
+        .pier-a {
+            top: 33%;
+            left: 12%;
+            width: 18%;
+            height: 8%;
+        }
+
+        .pier-b {
+            top: 52%;
+            left: 8%;
+            width: 22%;
+            height: 8%;
+        }
+
+        .pier-c {
+            top: 60%;
+            left: 22%;
+            width: 20%;
+            height: 8%;
+        }
+
+        .pier-s {
+            top: 38%;
+            left: 48%;
+            width: 22%;
+            height: 10%;
+        }
+
+        .pier-t {
+            top: 28%;
+            left: 72%;
+            width: 18%;
+            height: 12%;
+        }
+
+        /* Container yards */
+        .container-yard {
+            position: absolute;
+            background: repeating-linear-gradient(
+                45deg,
+                #f3f4f6,
+                #f3f4f6 3px,
+                #e5e7eb 3px,
+                #e5e7eb 6px
+            );
+            border: 1px solid #d1d5db;
+            border-radius: 3px;
+        }
+
+        .yard-1 {
+            top: 26%;
+            left: 20%;
+            width: 24%;
+            height: 6%;
+        }
+
+        .yard-2 {
+            top: 50%;
+            left: 48%;
+            width: 20%;
+            height: 8%;
+        }
+
+        /* Ship icons using CSS */
+        .vessel-marker {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 15;
+        }
+
+        .vessel-marker:hover {
+            transform: scale(1.3);
+            z-index: 20;
+        }
+
+        .vessel-container {
+            width: 24px;
+            height: 8px;
+            background: linear-gradient(90deg, #0ea5e9 0%, #0284c7 100%);
+            border-radius: 2px 8px 8px 2px;
+            border: 1px solid #0369a1;
+            box-shadow: 0 2px 4px rgba(3, 105, 161, 0.3);
+            position: relative;
+        }
+
+        .vessel-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 2px;
+            width: 4px;
+            height: 3px;
+            background: #0369a1;
+            border-radius: 1px;
+        }
+
+        .vessel-container::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: 2px;
+            width: 6px;
+            height: 3px;
+            background: #0369a1;
+            border-radius: 1px;
+        }
+
+        .vessel-tanker {
+            width: 28px;
+            height: 10px;
+            background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+            border-radius: 3px 10px 10px 3px;
+            border: 1px solid #b45309;
+            box-shadow: 0 2px 4px rgba(180, 83, 9, 0.3);
+            position: relative;
+        }
+
+        .vessel-tanker::before {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 3px;
+            width: 20px;
+            height: 2px;
+            background: #b45309;
+            border-radius: 1px;
+        }
+
+        .vessel-tanker::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 3px;
+            width: 20px;
+            height: 2px;
+            background: #b45309;
+            border-radius: 1px;
+        }
+
+        .vessel-cargo {
+            width: 20px;
+            height: 7px;
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            border-radius: 2px 6px 6px 2px;
+            border: 1px solid #047857;
+            box-shadow: 0 2px 4px rgba(4, 120, 87, 0.3);
+            position: relative;
+        }
+
+        .vessel-cargo::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 2px;
+            width: 3px;
+            height: 2px;
+            background: #047857;
+            border-radius: 1px;
+        }
+
+        .vessel-cargo::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            right: 3px;
+            width: 4px;
+            height: 2px;
+            background: #047857;
+            border-radius: 1px;
+        }
+
+        /* Sonar ping effect for vessels */
+        .vessel-marker::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: sonar-ping 4s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes sonar-ping {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(3); }
+        }
+
+        /* Navigation aids */
+        .navigation-light {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ef4444;
+            border-radius: 50%;
+            animation: nav-blink 2s infinite;
+        }
+
+        .nav-light-1 {
+            top: 15%;
+            left: 20%;
+        }
+
+        .nav-light-2 {
+            top: 15%;
+            right: 25%;
+        }
+
+        @keyframes nav-blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        .data-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+        }
+
+        .data-item {
+            text-align: center;
+            padding: 0.8rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .data-label {
+            color: #0ea5e9;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .data-value {
+            color: #10b981;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .global-ports-panel {
+            position: absolute;
+            top: 120px;
+            right: 20px;
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .port-connection {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .port-connection:last-child {
+            border-bottom: none;
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .latency-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .latency-bar {
+            width: 40px;
+            height: 4px;
+            background: #f1f5f9;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .latency-fill {
+            height: 100%;
+            background: #10b981;
+            border-radius: 2px;
+            animation: latency-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes latency-pulse {
+            0%, 100% { width: 70%; }
+            50% { width: 95%; }
+        }
+
+        .explainable-ai-panel {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 400px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .explanation-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .explanation-item:last-child {
+            border-bottom: none;
+        }
+
+        .explanation-content {
+            flex: 1;
+        }
+
+        .explanation-title {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+
+        .explanation-detail {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.2rem;
+        }
+
+        .confidence-indicator {
+            width: 60px;
+            height: 6px;
+            background: #f1f5f9;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .confidence-level {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0ea5e9;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .uncertainty-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.75rem;
+            color: #f59e0b;
+            margin-top: 0.3rem;
+        }
+
+        .automation-panel {
+            background: white;
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .automation-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .automation-item:last-child {
+            border-bottom: none;
+        }
+
+        .automation-content {
+            flex: 1;
+        }
+
+        .automation-title {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+
+        .automation-time {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.2rem;
+        }
+
+        .auto-generated {
+            font-size: 0.7rem;
+            color: #059669;
+            background: #dcfce7;
+            padding: 0.3rem 0.6rem;
+            border-radius: 12px;
+            border: 1px solid #bbf7d0;
+            font-weight: 500;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .footer-section {
+            text-align: center;
+        }
+
+        .footer-title {
+            color: #0ea5e9;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-value {
+            font-size: 1.2rem;
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .footer-subtitle {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.3rem;
+        }
+
+        .edge-node {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #8b5cf6;
+            border-radius: 50%;
+            border: 1px solid white;
+            animation: edge-compute 3s ease-in-out infinite;
+            box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3);
+        }
+
+        @keyframes edge-compute {
+            0%, 100% { opacity: 0.7; box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3); }
+            50% { opacity: 1; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.6); }
+        }
+
+        .integration-status {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .integration-title {
+            color: #8b5cf6;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .integration-list {
+            font-size: 0.8rem;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .terminal-info {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .terminal:hover .terminal-info {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-section">
+                <div class="logo">⚓</div>
+                <div>
+                    <h1 class="header-title">Port of Los Angeles Digital Twin</h1>
+                    <p class="header-subtitle">AI-Orchestrated Maritime Operations • IEEE 2875 Spatial Web</p>
+                </div>
+            </div>
+            <div class="header-info">
+                <div class="status-indicator">
+                    <div class="status-dot online"></div>
+                    <span style="font-size: 0.85rem; color: #64748b;">8 Global Ports</span>
+                </div>
+                <div class="status-indicator">
+                    <div class="status-dot online"></div>
+                    <span style="font-size: 0.85rem; color: #64748b;">47 Edge Nodes</span>
+                </div>
+                <div class="status-indicator">
+                    <div class="status-dot warning"></div>
+                    <span style="font-size: 0.85rem; color: #64748b;">3 Alerts</span>
+                </div>
+                <div style="font-size: 0.85rem; color: #64748b;">Aug 12, 2025 14:23 PST</div>
+            </div>
+        </div>
+
+        <!-- Sidebar - AI Agents -->
+        <div class="sidebar">
+            <div class="section-title">🧠 Autonomous AI Agents</div>
+            
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-name">Bathymetric Fusion AI</div>
+                    <div class="agent-status status-active">ACTIVE</div>
+                </div>
+                <div class="agent-metrics">
+                    <span>Depth Models: 4</span>
+                    <span>Accuracy: 99.1%</span>
+                    <span>Sedimentation: Live</span>
+                    <span>Tidal Sync: Real-time</span>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 95%;"></div>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-name">Environmental Compliance</div>
+                    <div class="agent-status status-auto">AUTO-GEN</div>
+                </div>
+                <div class="agent-metrics">
+                    <span>Air Quality: 89ppm</span>
+                    <span>Compliance: 100%</span>
+                    <span>Water Temp: 68.3°F</span>
+                    <span>Reports: 3 Auto</span>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 92%;"></div>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-name">Risk Assessment AI</div>
+                    <div class="agent-status status-active">ACTIVE</div>
+                </div>
+                <div class="agent-metrics">
+                    <span>Risk Score: 0.23</span>
+                    <span>Certainty: 94.7%</span>
+                    <span>Alerts: 2 Auto</span>
+                    <span>Mitigation: Active</span>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 88%;"></div>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-name">Cross-Port Orchestrator</div>
+                    <div class="agent-status status-sync">SYNC</div>
+                </div>
+                <div class="agent-metrics">
+                    <span>Global Ports: 8</span>
+                    <span>Data Sync: 99.8%</span>
+                    <span>Latency: 12ms</span>
+                    <span>Predictions: Live</span>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 97%;"></div>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-name">Edge Compute Manager</div>
+                    <div class="agent-status status-active">REAL-TIME</div>
+                </div>
+                <div class="agent-metrics">
+                    <span>Nodes: 47 Active</span>
+                    <span>Efficiency: 96.8%</span>
+                    <span>Inference: <2ms</span>
+                    <span>Load: 34%</span>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 91%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main View - Port of LA Map -->
+        <div class="main-view">
+            <div class="port-map-container" id="mapContainer">
+                <div class="port-infrastructure">
+                    <!-- Landmasses -->
+                    <div class="landmass main-land"></div>
+                    <div class="landmass terminal-island-land"></div>
+                    <div class="landmass san-pedro-land"></div>
+                    
+                    <!-- Water bodies and channels -->
+                    <div class="inner-harbor"></div>
+                    <div class="main-channel"></div>
+                    <div class="approach-channel"></div>
+                    
+                    <!-- Breakwaters -->
+                    <div class="outer-breakwater"></div>
+                    <div class="middle-breakwater"></div>
+                    
+                    <!-- Container yards -->
+                    <div class="container-yard yard-1"></div>
+                    <div class="container-yard yard-2"></div>
+                    
+                    <!-- Navigation lights -->
+                    <div class="navigation-light nav-light-1"></div>
+                    <div class="navigation-light nav-light-2"></div>
+                    
+                    <!-- Terminals based on actual PoLA layout -->
+                    <div class="terminal terminal-island" onclick="showTerminalInfo('Terminal Island', '85%', 'Container')">
+                        Terminal Island
+                        <div class="terminal-info">Capacity: 85% • Type: Container</div>
+                    </div>
+                    
+                    <div class="terminal pier-a" onclick="showTerminalInfo('Pier A', '67%', 'Multi-purpose')">
+                        Pier A
+                        <div class="terminal-info">Capacity: 67% • Type: Multi-purpose</div>
+                    </div>
+                    
+                    <div class="terminal pier-b" onclick="showTerminalInfo('Pier B', '92%', 'Container')">
+                        Pier B
+                        <div class="terminal-info">Capacity: 92% • Type: Container</div>
+                    </div>
+                    
+                    <div class="terminal pier-c" onclick="showTerminalInfo('Pier C', '78%', 'Bulk Cargo')">
+                        Pier C
+                        <div class="terminal-info">Capacity: 78% • Type: Bulk Cargo</div>
+                    </div>
+                    
+                    <div class="terminal pier-s" onclick="showTerminalInfo('Pier S', '55%', 'Automotive')">
+                        Pier S
+                        <div class="terminal-info">Capacity: 55% • Type: Automotive</div>
+                    </div>
+                    
+                    <div class="terminal pier-t" onclick="showTerminalInfo('Pier T', '88%', 'Container')">
+                        Pier T
+                        <div class="terminal-info">Capacity: 88% • Type: Container</div>
+                    </div>
+                </div>
+
+                <!-- Live Data Fusion Overlay -->
+                <div class="data-overlay">
+                    <div style="color: #0ea5e9; font-weight: 600; margin-bottom: 1rem; font-size: 0.95rem;">🔄 Live Multi-Source Data Fusion</div>
+                    <div class="data-grid">
+                        <div class="data-item">
+                            <div class="data-label">Bathymetry</div>
+                            <div class="data-value">4D Model Active</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Sedimentation</div>
+                            <div class="data-value">Real-time Tracking</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Tidal Data</div>
+                            <div class="data-value">+2.3ft Rising</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Environmental</div>
+                            <div class="data-value">157 Sensors</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Vessel AIS</div>
+                            <div class="data-value">1,247 Tracked</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Global Ports Network -->
+                <div class="global-ports-panel">
+                    <div style="color: #8b5cf6; font-weight: 600; margin-bottom: 1rem; font-size: 0.95rem;">🌐 IEEE 2875 Global Network</div>
+                    <div class="port-connection">
+                        <span style="color: #1e293b; font-weight: 500;">🇸🇬 Singapore</span>
+                        <div class="connection-status">
+                            <div class="latency-indicator">
+                                <div class="latency-bar">
+                                    <div class="latency-fill"></div>
+                                </div>
+                                <span style="font-size: 0.75rem; color: #10b981;">8ms</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="port-connection">
+                        <span style="color: #1e293b; font-weight: 500;">🇳🇱 Rotterdam</span>
+                        <div class="connection-status">
+                            <div class="latency-indicator">
+                                <div class="latency-bar">
+                                    <div class="latency-fill"></div>
+                                </div>
+                                <span style="font-size: 0.75rem; color: #10b981;">15ms</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="port-connection">
+                        <span style="color: #1e293b; font-weight: 500;">🇨🇳 Shanghai</span>
+                        <div class="connection-status">
+                            <div class="latency-indicator">
+                                <div class="latency-bar">
+                                    <div class="latency-fill"></div>
+                                </div>
+                                <span style="font-size: 0.75rem; color: #f59e0b;">23ms</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="port-connection">
+                        <span style="color: #1e293b; font-weight: 500;">🇬🇧 Felixstowe</span>
+                        <div class="connection-status">
+                            <div class="latency-indicator">
+                                <div class="latency-bar">
+                                    <div class="latency-fill"></div>
+                                </div>
+                                <span style="font-size: 0.75rem; color: #10b981;">12ms</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem; font-size: 0.75rem; color: #64748b;">
+                        Cross-port impact modeling & resilience planning active
+                    </div>
+                </div>
+
+                <!-- Explainable AI Panel -->
+                <div class="explainable-ai-panel">
+                    <div style="color: #f59e0b; font-weight: 600; margin-bottom: 1rem; font-size: 0.95rem;">🔍 Explainable AI Reasoning</div>
+                    <div class="explanation-item">
+                        <div class="explanation-content">
+                            <div class="explanation-title">Terminal Capacity Alert</div>
+                            <div class="explanation-detail">Pier B: Tidal patterns + Weather forecast + Current load</div>
+                        </div>
+                        <div class="confidence-indicator">
+                            <div class="confidence-level" style="width: 87%; background: #f59e0b;"></div>
+                        </div>
+                    </div>
+                    <div class="explanation-item">
+                        <div class="explanation-content">
+                            <div class="explanation-title">Route Optimization</div>
+                            <div class="explanation-detail">AIS tracking + Bathymetry data + Current conditions</div>
+                        </div>
+                        <div class="confidence-indicator">
+                            <div class="confidence-level" style="width: 94%; background: #10b981;"></div>
+                        </div>
+                    </div>
+                    <div class="explanation-item">
+                        <div class="explanation-content">
+                            <div class="explanation-title">Environmental Compliance</div>
+                            <div class="explanation-detail">Air quality sensors + Water temperature + Noise levels</div>
+                        </div>
+                        <div class="confidence-indicator">
+                            <div class="confidence-level" style="width: 99%; background: #10b981;"></div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem; font-size: 0.75rem; color: #64748b;">
+                        Model uncertainty: ±2.3% variance • Confidence intervals updated real-time
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <div class="section-title">📊 Real-Time Metrics</div>
+            
+            <div class="metric-card">
+                <div class="metric-value">
+                    247
+                    <div class="uncertainty-indicator">
+                        <span>±3</span>
+                        <div style="width: 8px; height: 8px; background: #f59e0b; border-radius: 50%;"></div>
+                    </div>
+                </div>
+                <div class="metric-label">Vessels Tracked (Multi-Source)</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-value">
+                    94.7%
+                    <div class="uncertainty-indicator">
+                        <span>±1.2%</span>
+                        <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%;"></div>
+                    </div>
+                </div>
+                <div class="metric-label">Data Fusion Accuracy</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-value">
+                    <2ms
+                    <div class="uncertainty-indicator">
+                        <span>Edge</span>
+                        <div style="width: 8px; height: 8px; background: #8b5cf6; border-radius: 50%;"></div>
+                    </div>
+                </div>
+                <div class="metric-label">Inference Latency</div>
+            </div>
+
+            <div class="section-title">🤖 Autonomous Operations</div>
+            
+            <div class="automation-panel">
+                <div class="automation-item">
+                    <div class="automation-content">
+                        <div class="automation-title">Environmental Impact Report</div>
+                        <div class="automation-time">Auto-generated at 14:15 PST</div>
+                    </div>
+                    <div class="auto-generated">AUTO</div>
+                </div>
+                <div class="automation-item">
+                    <div class="automation-content">
+                        <div class="automation-title">Risk Assessment Update</div>
+                        <div class="automation-time">Auto-generated at 14:20 PST</div>
+                    </div>
+                    <div class="auto-generated">AUTO</div>
+                </div>
+                <div class="automation-item">
+                    <div class="automation-content">
+                        <div class="automation-title">Cross-Port Resilience Plan</div>
+                        <div class="automation-time">Updated at 14:18 PST</div>
+                    </div>
+                    <div class="auto-generated">AUTO</div>
+                </div>
+            </div>
+
+            <div class="section-title">⚡ Edge Computing Network</div>
+            
+            <div class="integration-status">
+                <div class="integration-title">47 Active Edge Nodes</div>
+                <div class="integration-list">
+                    🚁 Autonomous Buoys: 12 nodes<br>
+                    🏗️ Smart Cranes: 18 nodes<br>
+                    ⛵ Pilot Vessels: 8 nodes<br>
+                    📡 Fixed Sensors: 9 nodes<br><br>
+                    <strong style="color: #10b981;">Sub-2ms inference for critical decisions</strong>
+                </div>
+            </div>
+
+            <div class="section-title">🔗 System Integrations</div>
+            
+            <div class="integration-status">
+                <div class="integration-title">23 Data Sources Connected</div>
+                <div class="integration-list">
+                    ✅ Esri ArcGIS Enterprise<br>
+                    ✅ NOAA Weather & Tide APIs<br>
+                    ✅ US Coast Guard AIS Network<br>
+                    ✅ Port Management Systems<br>
+                    ✅ Environmental Sensor Grid<br>
+                    ✅ Bathymetric Survey Data<br>
+                    ✅ Terminal Operating Systems
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Panel -->
+        <div class="footer-panel">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-title">Multi-Source Data Fusion</div>
+                    <div class="footer-value">23 Systems</div>
+                    <div class="footer-subtitle">Bathymetry • Tidal • Environmental • AIS</div>
+                </div>
+                <div class="footer-section">
+                    <div class="footer-title">AI Model Confidence</div>
+                    <div class="footer-value">94.7% ±1.2%</div>
+                    <div class="footer-subtitle">Uncertainty Quantified</div>
+                </div>
+                <div class="footer-section">
+                    <div class="footer-title">Global Port Latency</div>
+                    <div class="footer-value">12ms avg</div>
+                    <div class="footer-subtitle">IEEE 2875 Optimized</div>
+                </div>
+                <div class="footer-section">
+                    <div class="footer-title">Autonomous Actions</div>
+                    <div class="footer-value">127 Today</div>
+                    <div class="footer-subtitle">Zero Human Intervention</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create vessel markers with detailed ship icons
+        function createVesselMarkers() {
+            const mapContainer = document.getElementById('mapContainer');
+            const vessels = [
+                {id: 1, x: 32, y: 45, name: 'MSC TRUST', type: 'container', confidence: 97.3, ais: true, radar: true},
+                {id: 2, x: 55, y: 65, name: 'EVERGREEN GLORY', type: 'container', confidence: 94.1, ais: true, radar: true},
+                {id: 3, x: 78, y: 35, name: 'MAERSK SEATTLE', type: 'container', confidence: 98.7, ais: true, radar: false},
+                {id: 4, x: 25, y: 75, name: 'CHEVRON VOYAGER', type: 'tanker', confidence: 91.2, ais: false, radar: true},
+                {id: 5, x: 65, y: 50, name: 'COSCO SHIPPING', type: 'container', confidence: 96.8, ais: true, radar: true},
+                {id: 6, x: 15, y: 85, name: 'APL BANGKOK', type: 'cargo', confidence: 89.4, ais: true, radar: true},
+                {id: 7, x: 45, y: 80, name: 'HYUNDAI FAITH', type: 'container', confidence: 93.6, ais: true, radar: false},
+                {id: 8, x: 85, y: 25, name: 'VALERO EXPRESS', type: 'tanker', confidence: 95.2, ais: true, radar: true},
+                {id: 9, x: 70, y: 70, name: 'YANG MING', type: 'container', confidence: 92.8, ais: true, radar: true},
+                {id: 10, x: 40, y: 30, name: 'PACIFIC CARRIER', type: 'cargo', confidence: 88.5, ais: true, radar: false}
+            ];
+
+            vessels.forEach(vessel => {
+                const marker = document.createElement('div');
+                marker.className = 'vessel-marker';
+                marker.style.left = vessel.x + '%';
+                marker.style.top = vessel.y + '%';
+                marker.title = `${vessel.name} - ${vessel.type.toUpperCase()} - Confidence: ${vessel.confidence}%`;
+                marker.onclick = () => showAdvancedVesselInfo(vessel);
+                
+                // Create ship icon based on type
+                const shipIcon = document.createElement('div');
+                shipIcon.className = `vessel-${vessel.type}`;
+                marker.appendChild(shipIcon);
+                
+                mapContainer.appendChild(marker);
+            });
+        }
+
+        // Create edge computing nodes positioned around the port
+        function createEdgeNodes() {
+            const mapContainer = document.getElementById('mapContainer');
+            const edgeNodes = [
+                {x: 15, y: 25, type: 'buoy'},
+                {x: 35, y: 20, type: 'buoy'},
+                {x: 55, y: 30, type: 'crane'},
+                {x: 70, y: 40, type: 'crane'},
+                {x: 85, y: 35, type: 'buoy'},
+                {x: 25, y: 65, type: 'pilot'},
+                {x: 45, y: 75, type: 'crane'},
+                {x: 65, y: 80, type: 'buoy'},
+                {x: 80, y: 75, type: 'pilot'},
+                {x: 90, y: 60, type: 'sensor'}
+            ];
+
+            edgeNodes.forEach(node => {
+                const element = document.createElement('div');
+                element.className = 'edge-node';
+                element.style.left = node.x + '%';
+                element.style.top = node.y + '%';
+                element.title = `Edge Node: ${node.type.toUpperCase()} - Sub-2ms inference`;
+                mapContainer.appendChild(element);
+            });
+        }
+
+        function showTerminalInfo(terminal, capacity, type) {
+            alert(`🏗️ ${terminal}
+
+📊 Current Capacity: ${capacity}
+🚢 Terminal Type: ${type}
+⚡ Edge Nodes: 3 active
+🔄 Data Sources: 8 integrated
+📡 Real-time Monitoring: Active
+
+AI Recommendations:
+• Optimal berthing time: 15:30 PST
+• Expected turnaround: 8.5 hours
+• Environmental impact: GREEN`);
+        }
+
+        function showAdvancedVesselInfo(vessel) {
+            const trackingMethods = [];
+            if (vessel.ais) trackingMethods.push('AIS');
+            if (vessel.radar) trackingMethods.push('Radar');
+            
+            alert(`🚢 ${vessel.name}
+
+🎯 Tracking: ${trackingMethods.join(' + ')}
+📊 AI Confidence: ${vessel.confidence}%
+🚢 Vessel Type: ${vessel.type.toUpperCase()}
+⚡ Edge Processing: Active
+🌊 Bathymetry: Real-time depth mapping
+📍 Position Accuracy: ±2.1m
+🔄 Data Fusion: 6 sources integrated
+
+Status: Approaching berth assignment
+ETA: 15:45 PST (±5 min uncertainty)
+Environmental Compliance: VERIFIED`);
+        }
+
+        // Simulate real-time confidence updates
+        function updateConfidenceLevels() {
+            const confidenceBars = document.querySelectorAll('.confidence-fill');
+            confidenceBars.forEach(bar => {
+                const currentWidth = parseFloat(bar.style.width) || 90;
+                const variation = (Math.random() - 0.5) * 3; // ±1.5% variation
+                const newWidth = Math.max(85, Math.min(99, currentWidth + variation));
+                bar.style.width = newWidth + '%';
+            });
+        }
+
+        // Simulate automated report generation
+        function simulateAutomation() {
+            const automationItems = document.querySelectorAll('.automation-item');
+            const currentTime = new Date();
+            const timeString = currentTime.toLocaleTimeString('en-US', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            const randomItem = automationItems[Math.floor(Math.random() * automationItems.length)];
+            const timeElement = randomItem.querySelector('.automation-time');
+            timeElement.textContent = `Auto-generated at ${timeString} PST`;
+            
+            // Brief highlight effect
+            randomItem.style.background = '#f0fdf4';
+            randomItem.style.borderColor = '#10b981';
+            setTimeout(() => {
+                randomItem.style.background = '';
+                randomItem.style.borderColor = '';
+            }, 3000);
+        }
+
+        // Update vessel positions with realistic maritime movement
+        function updateVesselPositions() {
+            const markers = document.querySelectorAll('.vessel-marker');
+            markers.forEach((marker, index) => {
+                const currentLeft = parseFloat(marker.style.left);
+                const currentTop = parseFloat(marker.style.top);
+                
+                // Simulate realistic movement patterns
+                const timeOffset = Date.now() / 20000;
+                const windEffect = Math.sin(timeOffset + index) * 0.1;
+                const currentEffect = Math.cos(timeOffset + index * 1.5) * 0.08;
+                
+                const newLeft = currentLeft + windEffect;
+                const newTop = currentTop + currentEffect;
+                
+                // Keep vessels within port boundaries
+                marker.style.left = Math.max(10, Math.min(90, newLeft)) + '%';
+                marker.style.top = Math.max(20, Math.min(85, newTop)) + '%';
+            });
+        }
+
+        // Update global port synchronization indicators
+        function updateGlobalPortLatency() {
+            const latencyBars = document.querySelectorAll('.latency-fill');
+            const latencyTexts = document.querySelectorAll('.latency-indicator span');
+            
+            latencyBars.forEach((bar, index) => {
+                const baseLatencies = [70, 80, 55, 75]; // Different base values for each port
+                const baseLatency = baseLatencies[index] || 70;
+                const variation = Math.sin(Date.now() / 4000 + index) * 15;
+                const latency = Math.max(40, Math.min(95, baseLatency + variation));
+                bar.style.width = latency + '%';
+                
+                // Update latency text
+                if (latencyTexts[index]) {
+                    const latencyMs = Math.round(8 + (index * 5) + (Math.random() - 0.5) * 4);
+                    latencyTexts[index].textContent = latencyMs + 'ms';
+                    
+                    // Color based on latency
+                    if (latencyMs < 15) {
+                        latencyTexts[index].style.color = '#10b981';
+                    } else if (latencyMs < 25) {
+                        latencyTexts[index].style.color = '#f59e0b';
+                    } else {
+                        latencyTexts[index].style.color = '#ef4444';
+                    }
+                }
+            });
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            createVesselMarkers();
+            createEdgeNodes();
+            
+            // Start real-time simulation intervals
+            setInterval(updateConfidenceLevels, 8000);
+            setInterval(simulateAutomation, 20000);
+            setInterval(updateVesselPositions, 3000);
+            setInterval(updateGlobalPortLatency, 2000);
+            
+            // Update explainable AI confidence indicators
+            setInterval(() => {
+                const explanationBars = document.querySelectorAll('.explanation-item .confidence-level');
+                explanationBars.forEach(bar => {
+                    const currentWidth = parseFloat(bar.style.width) || 90;
+                    const newWidth = Math.max(75, Math.min(99, currentWidth + (Math.random() - 0.5) * 4));
+                    bar.style.width = newWidth + '%';
+                    
+                    // Update color based on confidence level
+                    if (newWidth > 90) {
+                        bar.style.background = '#10b981';
+                    } else if (newWidth > 80) {
+                        bar.style.background = '#f59e0b';
+                    } else {
+                        bar.style.background = '#ef4444';
+                    }
+                });
+            }, 6000);
+        });
+    </script>
+</body>
+</html>
+                    
