@@ -918,6 +918,208 @@
         .terminal:hover .terminal-info {
             opacity: 1;
         }
+
+        /* Chat Interface Styles */
+        .chat-panel {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 400px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .chat-header {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            border-radius: 12px 12px 0 0;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: 180px;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            max-width: 90%;
+        }
+
+        .chat-message.user {
+            background: #f1f5f9;
+            padding: 0.6rem 1rem;
+            border-radius: 18px 18px 4px 18px;
+            margin-left: auto;
+            color: #1e293b;
+            font-size: 0.85rem;
+        }
+
+        .chat-message.ai {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            padding: 0.6rem 1rem;
+            border-radius: 18px 18px 18px 4px;
+            margin-right: auto;
+            color: #1e293b;
+            font-size: 0.85rem;
+            border: 1px solid #93c5fd;
+        }
+
+        .chat-input-container {
+            padding: 1rem;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            outline: none;
+            font-size: 0.85rem;
+            background: white;
+        }
+
+        .chat-input:focus {
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .chat-send-btn {
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .chat-send-btn:hover {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            transform: translateY(-1px);
+        }
+
+        .chat-send-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 0.3rem;
+            color: #64748b;
+            font-size: 0.8rem;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .typing-dot {
+            width: 4px;
+            height: 4px;
+            background: #64748b;
+            border-radius: 50%;
+            animation: typing-pulse 1.5s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes typing-pulse {
+            0%, 60%, 100% { opacity: 0.3; }
+            30% { opacity: 1; }
+        }
+
+        /* Graph overlay styles */
+        .graph-overlay {
+            position: absolute;
+            top: 150px;
+            left: 20px;
+            width: calc(100% - 40px);
+            height: calc(100% - 200px);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            z-index: 50;
+            display: none;
+            flex-direction: column;
+        }
+
+        .graph-header {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border-radius: 12px 12px 0 0;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .graph-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .graph-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .graph-content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .graph-canvas {
+            width: 100%;
+            height: 100%;
+            max-width: 800px;
+            max-height: 400px;
+        }
     </style>
 </head>
 <body>
@@ -1324,6 +1526,42 @@
                 </div>
             </div>
         </div>
+
+        <!-- Chat Interface -->
+        <div class="chat-panel" id="chatPanel">
+            <div class="chat-header">
+                🤖 Port AI Assistant
+                <span style="font-size: 0.75rem; opacity: 0.9;">Powered by Gemini</span>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message ai">
+                    Hello! I'm your Port AI Assistant. Ask me about vessel tracking, terminal operations, environmental data, or request data visualizations.
+                </div>
+            </div>
+            <div class="typing-indicator" id="typingIndicator">
+                <span>AI is analyzing...</span>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Ask about port operations, data, or request graphs..." maxlength="500">
+                <button class="chat-send-btn" id="chatSendBtn" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+
+        <!-- Graph Overlay -->
+        <div class="graph-overlay" id="graphOverlay">
+            <div class="graph-header">
+                <span id="graphTitle">Data Visualization</span>
+                <button class="graph-close" onclick="closeGraph()">×</button>
+            </div>
+            <div class="graph-content">
+                <canvas class="graph-canvas" id="graphCanvas"></canvas>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1505,6 +1743,446 @@ Environmental Compliance: VERIFIED`);
             });
         }
 
+        // Chat functionality
+        let chatHistory = [];
+        const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY'; // Replace with your actual API key
+        
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message to chat
+            addMessageToChat(message, 'user');
+            input.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Send to Gemini API
+            queryGeminiAPI(message);
+        }
+        
+        function addMessageToChat(message, sender) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+            messageDiv.textContent = message;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'flex';
+            document.getElementById('chatSendBtn').disabled = true;
+        }
+        
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+            document.getElementById('chatSendBtn').disabled = false;
+        }
+        
+        async function queryGeminiAPI(userMessage) {
+            try {
+                const portContext = `
+                You are an AI assistant for the Port of Los Angeles Digital Twin Dashboard. 
+                Current port data:
+                - 247 vessels tracked
+                - 94.7% data fusion accuracy
+                - 6 terminals: Terminal Island (85%), Pier A (67%), Pier B (92%), Pier C (78%), Pier S (55%), Pier T (88%)
+                - 47 edge computing nodes active
+                - 8 global port connections
+                - Environmental sensors: 157 active
+                - Tidal data: +2.3ft rising
+                - 23 data sources integrated
+                
+                When users ask for graphs or visualizations, respond with 'SHOW_GRAPH:' followed by the graph type.
+                Available graph types: vessel_traffic, terminal_capacity, environmental_data, confidence_levels, port_efficiency
+                
+                User question: ${userMessage}
+                `;
+                
+                if (GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY') {
+                    // Fallback response when API key is not configured
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        const response = generateFallbackResponse(userMessage);
+                        addMessageToChat(response, 'ai');
+                        
+                        // Check if response includes graph command
+                        if (response.includes('SHOW_GRAPH:')) {
+                            const graphType = response.split('SHOW_GRAPH:')[1].split(' ')[0];
+                            showGraph(graphType);
+                        }
+                    }, 1500);
+                    return;
+                }
+                
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: portContext
+                            }]
+                        }]
+                    })
+                });
+                
+                const data = await response.json();
+                hideTypingIndicator();
+                
+                if (data.candidates && data.candidates[0]) {
+                    const aiResponse = data.candidates[0].content.parts[0].text;
+                    addMessageToChat(aiResponse, 'ai');
+                    
+                    // Check if response includes graph command
+                    if (aiResponse.includes('SHOW_GRAPH:')) {
+                        const graphType = aiResponse.split('SHOW_GRAPH:')[1].split(' ')[0];
+                        showGraph(graphType);
+                    }
+                } else {
+                    addMessageToChat('Sorry, I encountered an error. Please try again.', 'ai');
+                }
+                
+            } catch (error) {
+                hideTypingIndicator();
+                console.error('Gemini API Error:', error);
+                addMessageToChat('Sorry, I\'m having trouble connecting to the AI service. Please check your API key and try again.', 'ai');
+            }
+        }
+        
+        function generateFallbackResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            
+            if (message.includes('vessel') || message.includes('ship') || message.includes('traffic')) {
+                return 'Currently tracking 247 vessels with 94.7% accuracy using multi-source data fusion (AIS + Radar). SHOW_GRAPH:vessel_traffic';
+            } else if (message.includes('terminal') || message.includes('capacity')) {
+                return 'Terminal status: Pier B at 92% capacity (highest), Pier S at 55% (lowest). All terminals operating within normal parameters. SHOW_GRAPH:terminal_capacity';
+            } else if (message.includes('environment') || message.includes('sensor') || message.includes('air') || message.includes('water')) {
+                return '157 environmental sensors active. Air quality: 89ppm, Water temp: 68.3°F, Compliance: 100%. SHOW_GRAPH:environmental_data';
+            } else if (message.includes('confidence') || message.includes('ai') || message.includes('model')) {
+                return 'AI model confidence: 94.7% ±1.2%. All autonomous agents operating with high confidence levels. SHOW_GRAPH:confidence_levels';
+            } else if (message.includes('efficiency') || message.includes('performance') || message.includes('port')) {
+                return 'Port efficiency: 96.8% with <2ms edge inference latency. 127 autonomous actions completed today. SHOW_GRAPH:port_efficiency';
+            } else if (message.includes('graph') || message.includes('chart') || message.includes('visual')) {
+                return 'I can show you various visualizations: vessel traffic, terminal capacity, environmental data, AI confidence levels, or port efficiency. What would you like to see? SHOW_GRAPH:vessel_traffic';
+            } else {
+                return 'I can help you with vessel tracking, terminal operations, environmental monitoring, AI model performance, and data visualizations. What specific information are you looking for?';
+            }
+        }
+        
+        function showGraph(graphType) {
+            const overlay = document.getElementById('graphOverlay');
+            const title = document.getElementById('graphTitle');
+            const canvas = document.getElementById('graphCanvas');
+            
+            // Set graph title
+            const titles = {
+                vessel_traffic: 'Vessel Traffic Analysis',
+                terminal_capacity: 'Terminal Capacity Utilization',
+                environmental_data: 'Environmental Monitoring',
+                confidence_levels: 'AI Model Confidence Levels',
+                port_efficiency: 'Port Operational Efficiency'
+            };
+            
+            title.textContent = titles[graphType] || 'Data Visualization';
+            overlay.style.display = 'flex';
+            
+            // Generate graph based on type
+            setTimeout(() => {
+                drawGraph(canvas, graphType);
+            }, 100);
+        }
+        
+        function closeGraph() {
+            document.getElementById('graphOverlay').style.display = 'none';
+        }
+        
+        function drawGraph(canvas, graphType) {
+            const ctx = canvas.getContext('2d');
+            const width = canvas.offsetWidth;
+            const height = canvas.offsetHeight;
+            canvas.width = width;
+            canvas.height = height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Set styles
+            ctx.font = '12px Inter, sans-serif';
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 1;
+            
+            const margin = 60;
+            const chartWidth = width - 2 * margin;
+            const chartHeight = height - 2 * margin;
+            
+            if (graphType === 'vessel_traffic') {
+                drawVesselTrafficGraph(ctx, margin, chartWidth, chartHeight);
+            } else if (graphType === 'terminal_capacity') {
+                drawTerminalCapacityGraph(ctx, margin, chartWidth, chartHeight);
+            } else if (graphType === 'environmental_data') {
+                drawEnvironmentalGraph(ctx, margin, chartWidth, chartHeight);
+            } else if (graphType === 'confidence_levels') {
+                drawConfidenceGraph(ctx, margin, chartWidth, chartHeight);
+            } else if (graphType === 'port_efficiency') {
+                drawEfficiencyGraph(ctx, margin, chartWidth, chartHeight);
+            }
+        }
+        
+        function drawVesselTrafficGraph(ctx, margin, width, height) {
+            // Draw axes
+            ctx.beginPath();
+            ctx.moveTo(margin, margin);
+            ctx.lineTo(margin, margin + height);
+            ctx.lineTo(margin + width, margin + height);
+            ctx.stroke();
+            
+            // Sample data for last 24 hours
+            const hours = ['00', '04', '08', '12', '16', '20', '24'];
+            const vessels = [45, 78, 156, 247, 189, 123, 67];
+            
+            // Draw data points and lines
+            ctx.strokeStyle = '#0ea5e9';
+            ctx.fillStyle = '#0ea5e9';
+            ctx.lineWidth = 3;
+            
+            ctx.beginPath();
+            for (let i = 0; i < vessels.length; i++) {
+                const x = margin + (i * width) / (vessels.length - 1);
+                const y = margin + height - (vessels[i] / 300) * height;
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+                
+                // Draw point
+                ctx.fillRect(x - 3, y - 3, 6, 6);
+                
+                // Draw labels
+                ctx.fillStyle = '#64748b';
+                ctx.fillText(hours[i], x - 10, margin + height + 20);
+                ctx.fillText(vessels[i], x - 10, y - 10);
+                ctx.fillStyle = '#0ea5e9';
+            }
+            ctx.stroke();
+            
+            // Labels
+            ctx.fillStyle = '#1e293b';
+            ctx.font = '14px Inter, sans-serif';
+            ctx.fillText('Vessels Tracked Over Time', margin, margin - 20);
+            
+            // Rotate and draw Y-axis label
+            ctx.save();
+            ctx.translate(20, margin + height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Number of Vessels', 0, 0);
+            ctx.restore();
+        }
+        
+        function drawTerminalCapacityGraph(ctx, margin, width, height) {
+            const terminals = ['Terminal Island', 'Pier A', 'Pier B', 'Pier C', 'Pier S', 'Pier T'];
+            const capacities = [85, 67, 92, 78, 55, 88];
+            
+            const barWidth = width / terminals.length - 20;
+            
+            for (let i = 0; i < terminals.length; i++) {
+                const x = margin + i * (width / terminals.length) + 10;
+                const barHeight = (capacities[i] / 100) * height;
+                const y = margin + height - barHeight;
+                
+                // Color based on capacity
+                if (capacities[i] > 85) {
+                    ctx.fillStyle = '#ef4444';
+                } else if (capacities[i] > 70) {
+                    ctx.fillStyle = '#f59e0b';
+                } else {
+                    ctx.fillStyle = '#10b981';
+                }
+                
+                ctx.fillRect(x, y, barWidth, barHeight);
+                
+                // Labels
+                ctx.fillStyle = '#64748b';
+                ctx.save();
+                ctx.translate(x + barWidth / 2, margin + height + 15);
+                ctx.rotate(-Math.PI / 4);
+                ctx.fillText(terminals[i], 0, 0);
+                ctx.restore();
+                
+                // Capacity values
+                ctx.fillStyle = '#1e293b';
+                ctx.fillText(capacities[i] + '%', x + barWidth / 2 - 10, y - 5);
+            }
+            
+            // Title
+            ctx.fillStyle = '#1e293b';
+            ctx.font = '14px Inter, sans-serif';
+            ctx.fillText('Terminal Capacity Utilization', margin, margin - 20);
+        }
+        
+        function drawEnvironmentalGraph(ctx, margin, width, height) {
+            // Multi-line graph for different environmental metrics
+            const timePoints = 12;
+            const airQuality = Array.from({ length: timePoints }, (_, i) => 85 + Math.sin(i * 0.5) * 10);
+            const waterTemp = Array.from({ length: timePoints }, (_, i) => 68 + Math.cos(i * 0.3) * 3);
+            const noiseLevel = Array.from({ length: timePoints }, (_, i) => 45 + Math.sin(i * 0.7) * 8);
+            
+            // Draw grid
+            ctx.strokeStyle = '#f1f5f9';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const y = margin + (i * height) / 10;
+                ctx.beginPath();
+                ctx.moveTo(margin, y);
+                ctx.lineTo(margin + width, y);
+                ctx.stroke();
+            }
+            
+            // Draw air quality line
+            drawLine(ctx, airQuality, margin, width, height, '#ef4444', 'Air Quality (ppm)', 100);
+            
+            // Draw water temperature line
+            drawLine(ctx, waterTemp, margin, width, height, '#0ea5e9', 'Water Temp (°F)', 75);
+            
+            // Draw noise level line
+            drawLine(ctx, noiseLevel, margin, width, height, '#10b981', 'Noise Level (dB)', 60);
+            
+            // Legend
+            ctx.fillStyle = '#ef4444';
+            ctx.fillRect(margin, margin - 40, 15, 10);
+            ctx.fillStyle = '#1e293b';
+            ctx.fillText('Air Quality', margin + 20, margin - 32);
+            
+            ctx.fillStyle = '#0ea5e9';
+            ctx.fillRect(margin + 100, margin - 40, 15, 10);
+            ctx.fillStyle = '#1e293b';
+            ctx.fillText('Water Temp', margin + 120, margin - 32);
+            
+            ctx.fillStyle = '#10b981';
+            ctx.fillRect(margin + 200, margin - 40, 15, 10);
+            ctx.fillStyle = '#1e293b';
+            ctx.fillText('Noise Level', margin + 220, margin - 32);
+        }
+        
+        function drawLine(ctx, data, margin, width, height, color, label, maxValue) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            for (let i = 0; i < data.length; i++) {
+                const x = margin + (i * width) / (data.length - 1);
+                const y = margin + height - (data[i] / maxValue) * height;
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+        }
+        
+        function drawConfidenceGraph(ctx, margin, width, height) {
+            const agents = ['Bathymetric AI', 'Environmental', 'Risk Assessment', 'Cross-Port', 'Edge Manager'];
+            const confidence = [95, 92, 88, 97, 91];
+            
+            const barWidth = width / agents.length - 20;
+            
+            for (let i = 0; i < agents.length; i++) {
+                const x = margin + i * (width / agents.length) + 10;
+                const barHeight = (confidence[i] / 100) * height;
+                const y = margin + height - barHeight;
+                
+                // Gradient based on confidence
+                if (confidence[i] > 90) {
+                    ctx.fillStyle = '#10b981';
+                } else if (confidence[i] > 80) {
+                    ctx.fillStyle = '#f59e0b';
+                } else {
+                    ctx.fillStyle = '#ef4444';
+                }
+                
+                ctx.fillRect(x, y, barWidth, barHeight);
+                
+                // Labels
+                ctx.fillStyle = '#64748b';
+                ctx.save();
+                ctx.translate(x + barWidth / 2, margin + height + 15);
+                ctx.rotate(-Math.PI / 4);
+                ctx.fillText(agents[i], 0, 0);
+                ctx.restore();
+                
+                // Confidence values
+                ctx.fillStyle = '#1e293b';
+                ctx.fillText(confidence[i] + '%', x + barWidth / 2 - 10, y - 5);
+            }
+            
+            // Title
+            ctx.fillStyle = '#1e293b';
+            ctx.font = '14px Inter, sans-serif';
+            ctx.fillText('AI Agent Confidence Levels', margin, margin - 20);
+        }
+        
+        function drawEfficiencyGraph(ctx, margin, width, height) {
+            // Pie chart for different efficiency metrics
+            const centerX = margin + width / 2;
+            const centerY = margin + height / 2;
+            const radius = Math.min(width, height) / 3;
+            
+            const metrics = [
+                { label: 'Vessel Processing', value: 34, color: '#0ea5e9' },
+                { label: 'Terminal Operations', value: 28, color: '#10b981' },
+                { label: 'Data Sync', value: 22, color: '#f59e0b' },
+                { label: 'Edge Computing', value: 16, color: '#8b5cf6' }
+            ];
+            
+            let currentAngle = -Math.PI / 2;
+            
+            metrics.forEach((metric, index) => {
+                const sliceAngle = (metric.value / 100) * 2 * Math.PI;
+                
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
+                ctx.closePath();
+                ctx.fillStyle = metric.color;
+                ctx.fill();
+                
+                // Labels
+                const labelAngle = currentAngle + sliceAngle / 2;
+                const labelX = centerX + Math.cos(labelAngle) * (radius + 30);
+                const labelY = centerY + Math.sin(labelAngle) * (radius + 30);
+                
+                ctx.fillStyle = '#1e293b';
+                ctx.fillText(metric.label, labelX - 30, labelY);
+                ctx.fillText(metric.value + '%', labelX - 10, labelY + 15);
+                
+                currentAngle += sliceAngle;
+            });
+            
+            // Title
+            ctx.fillStyle = '#1e293b';
+            ctx.font = '14px Inter, sans-serif';
+            ctx.fillText('Port Efficiency Distribution', centerX - 80, margin - 20);
+        }
+        
+        // Handle Enter key in chat input
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('chatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+        
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
             createVesselMarkers();
