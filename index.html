@@ -2024,7 +2024,8 @@ Environmental Compliance: VERIFIED`);
                         
                         // Check if response includes graph command
                         if (response.includes('SHOW_GRAPH:')) {
-                            const graphType = response.split('SHOW_GRAPH:')[1].split(' ')[0];
+                            const graphType = response.split('SHOW_GRAPH:')[1].split(' ')[0].trim();
+                            console.log('Extracted graph type from fallback response:', graphType);
                             showGraph(graphType);
                         }
                     }, 2000); // Longer delay to simulate advanced processing
@@ -2076,7 +2077,8 @@ Environmental Compliance: VERIFIED`);
                     
                     // Check if response includes graph command
                     if (aiResponse.includes('SHOW_GRAPH:')) {
-                        const graphType = aiResponse.split('SHOW_GRAPH:')[1].split(' ')[0];
+                        const graphType = aiResponse.split('SHOW_GRAPH:')[1].split(' ')[0].trim();
+                        console.log('Extracted graph type from Gemini response:', graphType);
                         showGraph(graphType);
                     }
                 } else {
@@ -2307,6 +2309,8 @@ SHOW_GRAPH:vessel_traffic`;
         }
         
         function showGraph(graphType) {
+            console.log('showGraph called with type:', graphType);
+            
             const overlay = document.getElementById('graphOverlay');
             const title = document.getElementById('graphTitle');
             const canvas = document.getElementById('graphCanvas');
@@ -2333,15 +2337,34 @@ SHOW_GRAPH:vessel_traffic`;
             document.getElementById('graphOverlay').style.display = 'none';
         }
         
+        // Test function to manually trigger charts
+        function testChart(type) {
+            console.log('Testing chart type:', type);
+            showGraph(type);
+        }
+        
+        // Make test function available globally for debugging
+        window.testChart = testChart;
+        
         function drawGraph(canvas, graphType) {
-            const ctx = canvas.getContext('2d');
-            const width = canvas.offsetWidth;
-            const height = canvas.offsetHeight;
-            canvas.width = width;
-            canvas.height = height;
-            
-            // Clear canvas
-            ctx.clearRect(0, 0, width, height);
+            try {
+                const ctx = canvas.getContext('2d');
+                
+                // Get the parent container dimensions
+                const container = canvas.parentElement;
+                const width = Math.max(Math.min(container.clientWidth - 20, 800), 400);
+                const height = Math.max(Math.min(container.clientHeight - 20, 400), 300);
+                
+                console.log(`Drawing ${graphType} graph with dimensions: ${width}x${height}`);
+                
+                // Set canvas dimensions
+                canvas.width = width;
+                canvas.height = height;
+                canvas.style.width = width + 'px';
+                canvas.style.height = height + 'px';
+                
+                // Clear canvas
+                ctx.clearRect(0, 0, width, height);
             
             // Set styles
             ctx.font = '12px Inter, sans-serif';
@@ -2352,16 +2375,41 @@ SHOW_GRAPH:vessel_traffic`;
             const chartWidth = width - 2 * margin;
             const chartHeight = height - 2 * margin;
             
+            console.log('Drawing graph type:', graphType);
+            console.log('Graph type length:', graphType.length);
+            console.log('Graph type charCodes:', [...graphType].map(c => c.charCodeAt(0)));
+            
             if (graphType === 'vessel_traffic') {
+                console.log('Drawing vessel traffic graph');
                 drawVesselTrafficGraph(ctx, margin, chartWidth, chartHeight);
             } else if (graphType === 'terminal_capacity') {
+                console.log('Drawing terminal capacity graph');
                 drawTerminalCapacityGraph(ctx, margin, chartWidth, chartHeight);
             } else if (graphType === 'environmental_data') {
+                console.log('Drawing environmental data graph');
                 drawEnvironmentalGraph(ctx, margin, chartWidth, chartHeight);
             } else if (graphType === 'confidence_levels') {
+                console.log('Drawing confidence levels graph');
                 drawConfidenceGraph(ctx, margin, chartWidth, chartHeight);
             } else if (graphType === 'port_efficiency') {
+                console.log('Drawing port efficiency graph');
                 drawEfficiencyGraph(ctx, margin, chartWidth, chartHeight);
+            } else {
+                console.log('No matching graph type, using fallback');
+                // Default fallback graph
+                ctx.fillStyle = '#64748b';
+                ctx.font = '16px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Chart visualization ready', width / 2, height / 2);
+            }
+            } catch (error) {
+                console.error('Error drawing graph:', error);
+                // Show error message on canvas
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#ef4444';
+                ctx.font = '14px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Error loading chart', canvas.width / 2, canvas.height / 2);
             }
         }
         
@@ -2866,12 +2914,12 @@ SHOW_GRAPH:vessel_traffic`;
                         </div>
                         <div style="font-size: 13px; line-height: 1.5; color: #475569;">
                             <strong>For Development:</strong><br>
-                            • Set <code>GOOGLE_MAPS_API</code> in ~/.bashrc<br>
+                            • Set <code>GOOGLE_MAPS_API_KEY</code> in ~/.bashrc<br>
                             • Source the file: <code>source ~/.bashrc</code><br>
                             • Serve with Node.js to access env vars<br><br>
                             
                             <strong>For Production:</strong><br>
-                            • Set <code>GOOGLE_MAPS_API</code> in environment<br>
+                            • Set <code>GOOGLE_MAPS_API_KEY</code> in environment<br>
                             • Enable Maps JavaScript API in Google Cloud<br>
                             • Separate from Gemini AI key for better security<br><br>
                             
