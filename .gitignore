@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Environment files with real API keys
+config.local.js
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
