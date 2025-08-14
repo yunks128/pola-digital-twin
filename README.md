@@ -21,6 +21,23 @@ This digital twin dashboard provides a real-time visualization of Port of Los An
 - **Explainable AI**: Real-time reasoning display with confidence intervals
 - **Edge Computing**: 47 distributed nodes with sub-2ms inference latency
 - **Automated Operations**: Zero human intervention for routine tasks
+- **Agentic AI Workflow**: Human-in-the-loop recommendations with approve/reject/defer actions
+
+### 🏗️ 3D Photorealistic Visualization
+- **Google Earth Integration**: Access to Google's photorealistic 3D models and satellite imagery
+- **Advanced 3D Navigation**: Custom controls for tilt, rotation, and zoom with optimal viewing angles
+- **Preset 3D Viewpoints**: Vincent Thomas Bridge, Terminal Island, Pier 400, Main Channel, Breakwater
+- **Interactive 3D Controls**: Rotate left/right, tilt up/down, reset view, port overview, terminal view
+- **2D/3D Toggle**: Switch between traditional 2D map and immersive 3D photorealistic view
+- **Cinematic Fly-To**: Smooth animated transitions between different port areas
+
+### 🚦 Real-Time Traffic & Routing
+- **Google Maps Traffic Layer**: Live traffic conditions with color-coded congestion levels
+- **8 Traffic Monitoring Points**: I-110, SR-47, Vincent Thomas Bridge, Terminal access roads
+- **Smart Truck Routing**: Real-time alternative route suggestions based on traffic conditions
+- **Employee Parking Management**: 5 parking lots with capacity monitoring and overflow management
+- **Intelligent Route Optimization**: Automatic routing recommendations for trucks and employee vehicles
+- **Rush Hour & Shift Change Detection**: Time-based traffic pattern analysis
 
 ### 🌐 Global Connectivity
 - **IEEE 2875 Spatial Web**: Global port network with 8 connected ports

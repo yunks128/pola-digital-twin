@@ -1383,12 +1383,218 @@
             cursor: not-allowed;
         }
 
+        /* AI Recommendations Panel Styles */
+        .ai-recommendations-panel {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .recommendation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .ai-status {
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .timestamp {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-family: monospace;
+        }
+
+        .active-recommendations {
+            min-height: 120px;
+            margin-bottom: 1rem;
+        }
+
+        .recommendation-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .recommendation-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .recommendation-header-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .recommendation-title {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+
+        .recommendation-priority {
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .priority-high {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .priority-medium {
+            background: #fffbeb;
+            color: #d97706;
+            border: 1px solid #fde68a;
+        }
+
+        .priority-low {
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .recommendation-description {
+            font-size: 0.85rem;
+            color: #475569;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .recommendation-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .rec-action-btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .approve-btn {
+            background: #10b981;
+            color: white;
+        }
+
+        .approve-btn:hover {
+            background: #059669;
+        }
+
+        .reject-btn {
+            background: #ef4444;
+            color: white;
+        }
+
+        .reject-btn:hover {
+            background: #dc2626;
+        }
+
+        .defer-btn {
+            background: #6b7280;
+            color: white;
+        }
+
+        .defer-btn:hover {
+            background: #4b5563;
+        }
+
+        .workflow-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .scan-btn {
+            background: #0ea5e9;
+            color: white;
+        }
+
+        .scan-btn:hover {
+            background: #0284c7;
+        }
+
+        .auto-btn {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .auto-btn:hover {
+            background: #7c3aed;
+        }
+
+        .auto-btn.active {
+            background: #10b981;
+        }
+
+        .auto-btn.active:hover {
+            background: #059669;
+        }
+
+        .executing-action {
+            opacity: 0.7;
+            pointer-events: none;
+            position: relative;
+        }
+
+        .executing-action::after {
+            content: "⚡ EXECUTING...";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
         /* Status Dashboard Styles */
         .status-dashboard {
-            background: #1e293b;
-            color: white;
+            background: #ffffff;
+            color: #1e293b;
             padding: 1.5rem;
             margin-top: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
         }
 
         .status-header {
@@ -1423,10 +1629,11 @@
         }
 
         .status-card {
-            background: #334155;
-            border-radius: 8px;
+            background: #f8fafc;
+            border-radius: 12px;
             padding: 1rem;
-            border: 1px solid #475569;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .status-card-header {
@@ -1445,6 +1652,7 @@
             font-weight: 600;
             font-size: 0.9rem;
             flex: 1;
+            color: #1e293b;
         }
 
         .status-indicator {
@@ -1474,8 +1682,9 @@
             width: 100%;
             height: 80px;
             margin-bottom: 0.75rem;
-            background: #1e293b;
-            border-radius: 4px;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
         }
 
         .status-metrics {
@@ -1483,22 +1692,25 @@
             flex-direction: column;
             gap: 0.25rem;
             font-size: 0.8rem;
-            color: #cbd5e1;
+            color: #64748b;
         }
 
         .status-metrics strong {
-            color: #f1f5f9;
+            color: #1e293b;
             font-weight: 600;
         }
 
         /* Critical Alerts Banner */
         .critical-alerts-banner {
-            background: #991b1b;
-            border-radius: 8px;
-            padding: 1rem;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1rem 2rem;
             overflow: hidden;
-            border: 2px solid #dc2626;
-            width: 100%;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            width: calc(100% + 4rem);
+            margin-left: -2rem;
+            margin-right: -2rem;
             margin-top: 1rem;
         }
 
@@ -1506,17 +1718,20 @@
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
-            white-space: nowrap;
+            white-space: normal;
         }
 
         .alert-item {
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1rem;
             border-radius: 6px;
-            font-weight: 700;
-            font-size: 1rem;
-            letter-spacing: 0.5px;
-            min-width: 300px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
             flex: 1;
+            min-width: 200px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
 
         .alert-item.critical {
@@ -1573,7 +1788,7 @@
                     <div class="status-dot warning"></div>
                     <span style="font-size: 0.85rem; color: #64748b;">3 Alerts</span>
                 </div>
-                <div style="font-size: 0.85rem; color: #64748b;">Aug 12, 2025 14:23 PST</div>
+                <div id="currentDateTime" style="font-size: 0.85rem; color: #64748b;">Loading...</div>
             </div>
         </div>
 
@@ -1801,6 +2016,48 @@
 
         <!-- Control Panel -->
         <div class="control-panel">
+            <div class="section-title">🤖 Agentic AI Workflow</div>
+            
+            <!-- AI Recommendations Panel -->
+            <div class="ai-recommendations-panel">
+                <div class="recommendation-header">
+                    <span class="ai-status" id="aiStatus">🟢 ANALYZING</span>
+                    <span class="timestamp" id="lastAnalysis">Last scan: --:--</span>
+                </div>
+                
+                <div class="active-recommendations" id="activeRecommendations">
+                    <!-- Recommendations will be populated here -->
+                </div>
+                
+                <div class="workflow-actions">
+                    <button class="action-btn scan-btn" onclick="triggerAIScan()">🔍 Trigger AI Scan</button>
+                    <button class="action-btn auto-btn" onclick="toggleAutoMode()" id="autoModeBtn">⚡ Enable Auto Mode</button>
+                </div>
+            </div>
+
+            <div class="section-title">💬 AI Assistant Chat</div>
+            
+            <!-- Chat Interface Integrated -->
+            <div class="chat-interface-integrated">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message ai">
+                        Hello! I'm your Port AI Assistant. I continuously monitor operations and can provide recommendations. Enable Auto Mode above for autonomous actions.
+                    </div>
+                </div>
+                <div class="typing-indicator" id="typingIndicator">
+                    <span>AI is analyzing...</span>
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask about port operations, status, or AI recommendations..." maxlength="500">
+                    <button class="chat-send-btn" id="chatSendBtn" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+
             <div class="section-title">📊 Real-Time Metrics</div>
             
             <div class="metric-card">
@@ -1875,6 +2132,36 @@
                 </div>
             </div>
 
+            <div class="section-title">🏗️ 3D Photorealistic Views</div>
+            
+            <div class="integration-status">
+                <div class="integration-title">Google Earth 3D Models</div>
+                <div class="integration-list" style="display: grid; grid-template-columns: 1fr; gap: 4px;">
+                    <button onclick="flyTo3DView('vincent_thomas_bridge')" style="padding: 4px 8px; background: #0ea5e9; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🌉 Vincent Thomas Bridge</button>
+                    <button onclick="flyTo3DView('terminal_island')" style="padding: 4px 8px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🏗️ Terminal Island</button>
+                    <button onclick="flyTo3DView('pier_400')" style="padding: 4px 8px; background: #8b5cf6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🚢 Pier 400</button>
+                    <button onclick="flyTo3DView('main_channel')" style="padding: 4px 8px; background: #f59e0b; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">⚓ Main Channel</button>
+                    <button onclick="flyTo3DView('breakwater')" style="padding: 4px 8px; background: #64748b; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🌊 Breakwater</button>
+                </div>
+            </div>
+
+            <div class="section-title">🚦 Real-Time Traffic & Routing</div>
+            
+            <div class="integration-status">
+                <div class="integration-title">Traffic Monitoring Active</div>
+                <div class="integration-list">
+                    📍 8 Traffic Monitor Points<br>
+                    🚛 Truck Route Optimization<br>
+                    👥 Employee Parking Management<br>
+                    🗺️ Google Maps Traffic Layer<br>
+                    ⏱️ Real-time Delay Estimation<br>
+                    🛣️ Alternative Route Suggestions<br><br>
+                    <div id="currentTrafficStatus" style="color: #10b981; font-weight: 600;">
+                        System Analyzing Traffic...
+                    </div>
+                </div>
+            </div>
+
             <div class="section-title">🔗 System Integrations</div>
             
             <div class="integration-status">
@@ -1887,29 +2174,6 @@
                     ✅ Environmental Sensor Grid<br>
                     ✅ Bathymetric Survey Data<br>
                     ✅ Terminal Operating Systems
-                </div>
-            </div>
-
-            <div class="section-title">🤖 Port AI Assistant</div>
-            
-            <!-- Chat Interface Integrated -->
-            <div class="chat-interface-integrated">
-                <div class="chat-messages" id="chatMessages">
-                    <div class="chat-message ai">
-                        Hello! I'm your advanced Port AI Assistant. I can help with vessel tracking, terminal operations, environmental monitoring, predictive analytics, risk assessment, compliance reporting, and much more. Ask me anything about port operations!
-                    </div>
-                </div>
-                <div class="typing-indicator" id="typingIndicator">
-                    <span>AI is analyzing...</span>
-                    <div class="typing-dots">
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                    </div>
-                </div>
-                <div class="chat-input-container">
-                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask about port operations, data, or request graphs..." maxlength="500">
-                    <button class="chat-send-btn" id="chatSendBtn" onclick="sendMessage()">Send</button>
                 </div>
             </div>
         </div>
@@ -2003,16 +2267,6 @@
                 </div>
             </div>
 
-            <!-- Critical Alerts Banner -->
-            <div class="critical-alerts-banner">
-                <div class="alert-ticker">
-                    <div class="alert-item critical">🚨 CONTAINER FLIP-OVER - Pier B Crane #3 - MAINTENANCE DISPATCHED</div>
-                    <div class="alert-item warning">⚠️ TRAFFIC CONGESTION - Main Channel - 6 VESSELS QUEUED</div>
-                    <div class="alert-item warning">⚠️ HIGH WAIT TIMES - Berth Assignment Delays - AVG 4.2H</div>
-                    <div class="alert-item critical">🚨 EQUIPMENT FAILURE - Pier 400 Crane #7 - OFFLINE</div>
-                    <div class="alert-item info">ℹ️ WEATHER ADVISORY - Wind Gusts 25+ Knots - MONITOR OPERATIONS</div>
-                </div>
-            </div>
         </div>
 
         <!-- Graph Overlay -->
@@ -2332,13 +2586,8 @@ Environmental Compliance: VERIFIED`);
                 - Cross-port coordination
                 - Technology integration
                 
-                VISUALIZATION COMMANDS:
-                When appropriate, you can trigger data visualizations by including these commands in your response:
-                - SHOW_GRAPH:vessel_traffic (vessel tracking over time)
-                - SHOW_GRAPH:terminal_capacity (terminal utilization)
-                - SHOW_GRAPH:environmental_data (environmental metrics)
-                - SHOW_GRAPH:confidence_levels (AI model performance)
-                - SHOW_GRAPH:port_efficiency (operational efficiency breakdown)
+                RESPONSE FOCUS:
+                Focus on providing detailed operational insights and recommendations. The dashboard already displays real-time charts and graphs in the footer status panels, so focus on analysis and actionable advice rather than data visualization.
                 
                 RESPONSE GUIDELINES:
                 - Provide comprehensive, actionable insights
@@ -2346,9 +2595,9 @@ Environmental Compliance: VERIFIED`);
                 - Explain the reasoning behind recommendations
                 - Consider operational, environmental, and economic factors
                 - Be proactive in suggesting optimizations
-                - If visualization would be helpful, include the SHOW_GRAPH command
-                - If no specific graph is available, provide detailed textual analysis with numbers and trends
+                - Provide detailed textual analysis with numbers and trends
                 - Always contextualize responses within broader port operations
+                - Reference the real-time status charts visible in the dashboard footer
                 
                 User question: ${userMessage}
                 `;
@@ -2359,13 +2608,6 @@ Environmental Compliance: VERIFIED`);
                         hideTypingIndicator();
                         const response = generateAdvancedFallbackResponse(userMessage);
                         addMessageToChat(response, 'ai');
-                        
-                        // Check if response includes graph command
-                        if (response.includes('SHOW_GRAPH:')) {
-                            const graphType = response.split('SHOW_GRAPH:')[1].split(' ')[0].trim();
-                            console.log('Extracted graph type from fallback response:', graphType);
-                            showGraph(graphType);
-                        }
                     }, 2000); // Longer delay to simulate advanced processing
                     return;
                 }
@@ -2412,13 +2654,6 @@ Environmental Compliance: VERIFIED`);
                     const aiResponse = data.candidates[0].content.parts[0].text;
                     chatHistory.push({ role: 'assistant', content: aiResponse });
                     addMessageToChat(aiResponse, 'ai');
-                    
-                    // Check if response includes graph command
-                    if (aiResponse.includes('SHOW_GRAPH:')) {
-                        const graphType = aiResponse.split('SHOW_GRAPH:')[1].split(' ')[0].trim();
-                        console.log('Extracted graph type from Gemini response:', graphType);
-                        showGraph(graphType);
-                    }
                 } else {
                     addMessageToChat('I apologize, but I\'m experiencing technical difficulties. Please try rephrasing your question or try again in a moment.', 'ai');
                 }
@@ -2441,17 +2676,17 @@ Environmental Compliance: VERIFIED`);
             
             // Vessel and Traffic Analysis
             if (message.includes('vessel') || message.includes('ship') || message.includes('traffic')) {
-                return `## Vessel Traffic Analysis\n\nCurrently tracking **247 vessels** using advanced multi-source data fusion:\n\n• **AIS tracking:** 94.7% accuracy\n• **Radar correlation:** Real-time positioning\n• **Predictive routing:** 8.5-hour average turnaround\n\n### Traffic Patterns\n• **Peak hours:** 12:00-16:00 PST (156-247 vessels)\n• **Off-peak:** 00:00-08:00 PST (45-78 vessels)\n• **Container vessels:** 68% of traffic\n• **Tankers:** 18% of traffic\n• **Cargo ships:** 14% of traffic\n\n### Recommendations\n• **Optimal arrival window:** 15:30 PST\n• **Expected delays:** <30 minutes for containers\n• **Berth availability:** Terminal Island preferred\n\nSHOW_GRAPH:vessel_traffic`;
+                return `## Vessel Traffic Analysis\n\nCurrently tracking **247 vessels** using advanced multi-source data fusion:\n\n• **AIS tracking:** 94.7% accuracy\n• **Radar correlation:** Real-time positioning\n• **Predictive routing:** 8.5-hour average turnaround\n\n### Traffic Patterns\n• **Peak hours:** 12:00-16:00 PST (156-247 vessels)\n• **Off-peak:** 00:00-08:00 PST (45-78 vessels)\n• **Container vessels:** 68% of traffic\n• **Tankers:** 18% of traffic\n• **Cargo ships:** 14% of traffic\n\n### Recommendations\n• **Optimal arrival window:** 15:30 PST\n• **Expected delays:** <30 minutes for containers\n• **Berth availability:** Terminal Island preferred\n\n*Real-time vessel traffic charts are visible in the dashboard footer status panels.*`;
             }
             
             // Terminal Operations
             else if (message.includes('terminal') || message.includes('capacity') || message.includes('berth')) {
-                return `## Terminal Capacity Analysis\n\n### Current Utilization\n• **Pier B:** 92% (Container) - ⚠️ Near capacity\n• **Pier T:** 88% (Container) - High utilization\n• **Terminal Island:** 85% (Container) - Optimal\n• **Pier C:** 78% (Bulk Cargo) - Good availability\n• **Pier A:** 67% (Multi-purpose) - Available\n• **Pier S:** 55% (Automotive) - Low utilization\n\n### Operational Insights\n• **Average dwell time:** 4.2 days\n• **Crane productivity:** 32.5 moves/hour\n• **Peak efficiency:** Terminal Island & Pier A\n\n### Recommendations\n• Redirect container traffic to Terminal Island\n• Schedule maintenance during low periods\n• Optimize Pier S for overflow container handling\n\nSHOW_GRAPH:terminal_capacity`;
+                return `## Terminal Capacity Analysis\n\n### Current Utilization\n• **Pier B:** 92% (Container) - ⚠️ Near capacity\n• **Pier T:** 88% (Container) - High utilization\n• **Terminal Island:** 85% (Container) - Optimal\n• **Pier C:** 78% (Bulk Cargo) - Good availability\n• **Pier A:** 67% (Multi-purpose) - Available\n• **Pier S:** 55% (Automotive) - Low utilization\n\n### Operational Insights\n• **Average dwell time:** 4.2 days\n• **Crane productivity:** 32.5 moves/hour\n• **Peak efficiency:** Terminal Island & Pier A\n\n### Recommendations\n• Redirect container traffic to Terminal Island\n• Schedule maintenance during low periods\n• Optimize Pier S for overflow container handling\n\n*Live capacity flow charts are displayed in the dashboard footer.*`;
             }
             
             // Environmental Monitoring
             else if (message.includes('environment') || message.includes('sensor') || message.includes('air') || message.includes('water') || message.includes('compliance')) {
-                return `## Environmental Monitoring Status\n\n### Real-time Metrics (157 sensors)\n• **Air Quality:** 89ppm (Excellent - EPA standard <100ppm)\n• **Water Temperature:** 68.3°F (Optimal range)\n• **Noise Levels:** 45dB average (Compliant)\n• **Wind Speed:** 8.2 knots SW\n• **Visibility:** 10+ nautical miles\n\n### Compliance Status\n• **EPA Standards:** 100% compliant\n• **CARB Regulations:** Fully compliant\n• **IMO 2020 Sulfur:** All vessels verified\n• **Ballast Water:** 98% treatment compliance\n\n### Environmental Impact\n• **CO2 reduction:** 15% vs. baseline\n• **Automated emissions reporting:** Active\n• **Shore power utilization:** 78%\n\nSHOW_GRAPH:environmental_data`;
+                return `## Environmental Monitoring Status\n\n### Real-time Metrics (157 sensors)\n• **Air Quality:** 89ppm (Excellent - EPA standard <100ppm)\n• **Water Temperature:** 68.3°F (Optimal range)\n• **Noise Levels:** 45dB average (Compliant)\n• **Wind Speed:** 8.2 knots SW\n• **Visibility:** 10+ nautical miles\n\n### Compliance Status\n• **EPA Standards:** 100% compliant\n• **CARB Regulations:** Fully compliant\n• **IMO 2020 Sulfur:** All vessels verified\n• **Ballast Water:** 98% treatment compliance\n\n### Environmental Impact\n• **CO2 reduction:** 15% vs. baseline\n• **Automated emissions reporting:** Active\n• **Shore power utilization:** 78%\n\n*Environmental monitoring charts are continuously updated in the footer dashboard.*`;
             }
             
             // AI and Technology
@@ -2480,7 +2715,7 @@ Environmental Compliance: VERIFIED`);
 • **5G edge computing:** 96.8% uptime
 • **Digital twin accuracy:** 94.7% ±1.2%
 
-SHOW_GRAPH:confidence_levels`;
+*AI confidence levels and system performance are displayed in the left dashboard panel.*`;
             }
             
             // Port Efficiency and Operations
@@ -2510,7 +2745,7 @@ SHOW_GRAPH:confidence_levels`;
 • **Revenue:** $2.4M daily throughput
 • **Cost savings:** $180K from automation
 
-SHOW_GRAPH:port_efficiency`;
+*Real-time efficiency metrics are tracked in the footer dashboard panels.*`;
             }
             
             // Predictive Analytics
@@ -2637,7 +2872,7 @@ I can generate several types of data visualizations:
 
 Which visualization would you like to see? I'll provide detailed analysis along with the charts.
 
-SHOW_GRAPH:vessel_traffic`;
+*Predictive analytics and trends are reflected in the real-time dashboard charts.*`;
             }
             
             // Default comprehensive response
@@ -3039,20 +3274,28 @@ SHOW_GRAPH:vessel_traffic`;
                 lng: -118.2639
             };
             
-            // Map options with 3D view and default satellite labels enabled
+            // Map options with 3D photorealistic view and Google Earth models
             const mapOptions = {
-                zoom: 16,
+                zoom: 15,
                 center: portOfLA,
                 mapTypeId: 'hybrid',  // Hybrid mode shows satellite imagery with labels
-                tilt: 45,  // Enable 3D tilt view
-                heading: 90,  // Angle the view
+                tilt: 45,  // Reduced tilt for better overall port overview
+                heading: 90,  // Adjusted heading for optimal port perspective
                 disableDefaultUI: false,
                 zoomControl: true,
                 mapTypeControl: true,
                 scaleControl: true,
                 streetViewControl: false,
                 rotateControl: true,  // Enable rotation for 3D
-                fullscreenControl: true
+                fullscreenControl: true,
+                // Enable 3D buildings and photorealistic models
+                styles: [
+                    {
+                        featureType: "poi",
+                        elementType: "labels",
+                        stylers: [{ visibility: "on" }]
+                    }
+                ]
             };
             
             // Create map
@@ -3061,6 +3304,11 @@ SHOW_GRAPH:vessel_traffic`;
                 try {
                     map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
                     console.log('✅ Google Map created successfully');
+                    
+                    // Enable traffic layer for real-time traffic data
+                    const trafficLayer = new google.maps.TrafficLayer();
+                    trafficLayer.setMap(map);
+                    console.log('✅ Real-time traffic layer enabled');
                     
                     // Add terminal markers
                     addTerminalMarkers();
@@ -3074,9 +3322,21 @@ SHOW_GRAPH:vessel_traffic`;
                     addPortBoundaries();
                     console.log('✅ Port boundaries added');
                     
+                    // Initialize traffic monitoring system
+                    initTrafficMonitoring();
+                    console.log('✅ Traffic monitoring system initialized');
+                    
+                    // Enable 3D photorealistic models from Google Earth
+                    enable3DPhotorealisticModels();
+                    console.log('✅ 3D photorealistic models enabled');
+                    
                     // Add structure labels
                     addStructureLabels();
                     console.log('✅ Structure labels added');
+                    
+                    // 3D navigation controls removed per user request
+                    // add3DNavigationControls();
+                    // console.log('✅ 3D navigation controls added');
                     
                     // Add 3D toggle control
                     add3DToggleControl();
@@ -3738,43 +3998,85 @@ SHOW_GRAPH:vessel_traffic`;
         }
 
         function drawMiniChart(ctx, width, height, chartType) {
-            // Generate sample data points
-            const points = 20;
+            // Generate realistic data points based on port operations patterns
+            const points = 24; // 24 hours of data
             const data = [];
+            const currentHour = new Date().getHours();
             
             for (let i = 0; i < points; i++) {
                 let value;
+                const hour = (currentHour - points + i + 24) % 24; // Past 24 hours
+                
                 switch(chartType) {
                     case 'loadingChart':
-                        value = 70 + Math.sin(i * 0.3) * 15 + Math.random() * 10;
+                        // Loading peaks during day shift (6am-6pm), lower at night
+                        const dayShift = hour >= 6 && hour <= 18;
+                        const baseLoad = dayShift ? 75 : 45;
+                        const peakHours = hour >= 10 && hour <= 14; // Peak mid-day
+                        const peak = peakHours ? 15 : 0;
+                        value = baseLoad + peak + (Math.random() - 0.5) * 8;
                         break;
+                        
                     case 'trafficChart':
-                        value = 60 + Math.sin(i * 0.2) * 20 + Math.random() * 15;
+                        // Traffic follows tidal patterns and business hours
+                        const tidalEffect = Math.sin((hour / 24) * 2 * Math.PI) * 10;
+                        const businessHours = hour >= 7 && hour <= 19;
+                        const baseTraffic = businessHours ? 65 : 35;
+                        const rushHours = (hour >= 8 && hour <= 10) || (hour >= 16 && hour <= 18);
+                        const rush = rushHours ? 20 : 0;
+                        value = baseTraffic + tidalEffect + rush + (Math.random() - 0.5) * 12;
                         break;
+                        
                     case 'envChart':
-                        value = 85 + Math.sin(i * 0.1) * 10 + Math.random() * 5;
+                        // Environmental data is stable with gradual changes
+                        const dailyCycle = Math.sin((hour / 24) * 2 * Math.PI) * 5;
+                        const weatherVariation = Math.sin((hour + i) * 0.1) * 3;
+                        value = 87 + dailyCycle + weatherVariation + (Math.random() - 0.5) * 3;
                         break;
+                        
                     case 'capacityChart':
-                        value = 80 + Math.sin(i * 0.4) * 15 + Math.random() * 10;
+                        // Capacity builds up during day, empties evening/night
+                        const dayProgress = hour <= 12 ? hour : (24 - hour);
+                        const capacityBuild = (dayProgress / 12) * 25;
+                        const weekendFactor = new Date().getDay() <= 1 ? 0.7 : 1; // Lower on weekends
+                        value = (60 + capacityBuild) * weekendFactor + (Math.random() - 0.5) * 8;
                         break;
+                        
                     case 'waitChart':
-                        value = 50 + Math.sin(i * 0.25) * 25 + Math.random() * 15;
+                        // Wait times spike during peak hours, low at night
+                        const peakMorning = hour >= 7 && hour <= 11;
+                        const peakAfternoon = hour >= 14 && hour <= 17;
+                        const isPeak = peakMorning || peakAfternoon;
+                        const baseWait = hour >= 22 || hour <= 5 ? 20 : 40;
+                        const peakWait = isPeak ? 30 : 0;
+                        const congestionSpike = Math.random() < 0.1 ? 25 : 0; // Random congestion
+                        value = baseWait + peakWait + congestionSpike + (Math.random() - 0.5) * 10;
                         break;
+                        
                     case 'efficiencyChart':
-                        value = 90 + Math.sin(i * 0.15) * 8 + Math.random() * 5;
+                        // Efficiency highest during optimal hours, lower during shifts/breaks
+                        const optimalHours = (hour >= 9 && hour <= 11) || (hour >= 14 && hour <= 16);
+                        const shiftChange = hour % 8 === 0; // Shift changes every 8 hours
+                        const breakTime = hour % 4 === 0 && hour % 8 !== 0; // Breaks every 4 hours
+                        let baseEff = optimalHours ? 94 : 89;
+                        if (shiftChange) baseEff -= 8;
+                        if (breakTime) baseEff -= 4;
+                        if (hour >= 22 || hour <= 6) baseEff -= 5; // Night shift adjustment
+                        value = baseEff + (Math.random() - 0.5) * 4;
                         break;
+                        
                     default:
                         value = 50 + Math.random() * 40;
                 }
-                data.push(Math.max(0, Math.min(100, value)));
+                data.push(Math.max(15, Math.min(98, value)));
             }
 
             // Draw chart background
-            ctx.fillStyle = '#1e293b';
+            ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, width, height);
 
             // Draw grid lines
-            ctx.strokeStyle = '#475569';
+            ctx.strokeStyle = '#e2e8f0';
             ctx.lineWidth = 1;
             for (let i = 0; i <= 4; i++) {
                 const y = (height / 4) * i;
@@ -3852,24 +4154,1116 @@ SHOW_GRAPH:vessel_traffic`;
         }
 
         function updateStatusMetrics() {
-            // Update various metrics with realistic variations
-            document.getElementById('activeCranes').textContent = `${40 + Math.floor(Math.random() * 7)}/47`;
-            document.getElementById('avgLoadTime').textContent = `${(2.0 + Math.random() * 1.5).toFixed(1)}h`;
-            document.getElementById('vesselsInChannel').textContent = `${15 + Math.floor(Math.random() * 8)}`;
-            document.getElementById('queueLength').textContent = `${Math.floor(Math.random() * 10)} vessels`;
-            document.getElementById('airQuality').textContent = `${85 + Math.floor(Math.random() * 10)} ppm`;
-            document.getElementById('compliance').textContent = `${98 + Math.floor(Math.random() * 3)}%`;
-            document.getElementById('throughput').textContent = `${85 + Math.floor(Math.random() * 10)}%`;
-            document.getElementById('bottlenecks').textContent = `${Math.floor(Math.random() * 4)} active`;
-            document.getElementById('avgWait').textContent = `${(3.5 + Math.random() * 2).toFixed(1)}h`;
-            document.getElementById('maxWait').textContent = `${(7 + Math.random() * 3).toFixed(1)}h`;
-            document.getElementById('overallEff').textContent = `${(92 + Math.random() * 6).toFixed(1)}%`;
+            const currentHour = new Date().getHours();
+            const dayOfWeek = new Date().getDay(); // 0 = Sunday, 6 = Saturday
+            const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+            const isDayShift = currentHour >= 6 && currentHour <= 18;
+            const isPeakHours = (currentHour >= 8 && currentHour <= 10) || (currentHour >= 16 && currentHour <= 18);
+            
+            // Active Cranes - more during day shift, fewer on weekends
+            const baseCranes = isDayShift ? 42 : 28;
+            const weekendReduction = isWeekend ? -8 : 0;
+            const activeCranes = Math.max(20, baseCranes + weekendReduction + Math.floor(Math.random() * 5));
+            document.getElementById('activeCranes').textContent = `${activeCranes}/47`;
+            
+            // Loading Time - faster during optimal hours, slower during peak congestion
+            const baseLoadTime = isPeakHours ? 3.2 : 2.1;
+            const nightPenalty = !isDayShift ? 0.8 : 0;
+            const loadTime = baseLoadTime + nightPenalty + (Math.random() - 0.5) * 0.6;
+            document.getElementById('avgLoadTime').textContent = `${loadTime.toFixed(1)}h`;
+            
+            // Vessels in Channel - follows traffic patterns
+            const baseVessels = isDayShift ? 18 : 12;
+            const peakBonus = isPeakHours ? 6 : 0;
+            const vesselsInChannel = baseVessels + peakBonus + Math.floor(Math.random() * 5);
+            document.getElementById('vesselsInChannel').textContent = `${vesselsInChannel}`;
+            
+            // Queue Length - builds up during peak times
+            const baseQueue = isPeakHours ? 4 : 1;
+            const congestionFactor = Math.random() < 0.15 ? 3 : 0; // 15% chance of congestion
+            const queueLength = baseQueue + congestionFactor + Math.floor(Math.random() * 3);
+            document.getElementById('queueLength').textContent = `${queueLength} vessels`;
+            
+            // Air Quality - varies with traffic and weather
+            const baseAQ = 87;
+            const trafficPenalty = vesselsInChannel > 20 ? -3 : 0;
+            const weatherBonus = Math.random() > 0.7 ? 3 : 0; // 30% chance of good weather
+            const airQuality = baseAQ + trafficPenalty + weatherBonus + Math.floor(Math.random() * 4);
+            document.getElementById('airQuality').textContent = `${Math.max(75, Math.min(95, airQuality))} ppm`;
+            
+            // Compliance - very stable, occasional minor issues
+            const compliance = Math.random() < 0.05 ? 98 : 100; // 5% chance of minor issue
+            document.getElementById('compliance').textContent = `${compliance}%`;
+            
+            // Throughput - correlates with active operations
+            const baseThroughput = (activeCranes / 47) * 100;
+            const efficiencyFactor = isDayShift ? 1.1 : 0.9;
+            const throughput = baseThroughput * efficiencyFactor + (Math.random() - 0.5) * 8;
+            document.getElementById('throughput').textContent = `${Math.max(60, Math.min(95, Math.round(throughput)))}%`;
+            
+            // Bottlenecks - increase during peak times and equipment issues
+            let bottlenecks = isPeakHours ? 2 : 0;
+            bottlenecks += Math.random() < 0.1 ? 1 : 0; // 10% chance of equipment issue
+            bottlenecks += queueLength > 5 ? 1 : 0; // Traffic creates bottlenecks
+            document.getElementById('bottlenecks').textContent = `${bottlenecks} active`;
+            
+            // Wait Times - directly related to queue and bottlenecks
+            const baseWait = queueLength * 0.7 + bottlenecks * 0.5;
+            const avgWait = Math.max(1.5, baseWait + (Math.random() - 0.5) * 1.0);
+            const maxWait = avgWait * (1.8 + Math.random() * 0.4);
+            document.getElementById('avgWait').textContent = `${avgWait.toFixed(1)}h`;
+            document.getElementById('maxWait').textContent = `${maxWait.toFixed(1)}h`;
+            
+            // Overall Efficiency - composite of all factors
+            let baseEfficiency = 94;
+            if (!isDayShift) baseEfficiency -= 4; // Night shift
+            if (isWeekend) baseEfficiency -= 2; // Weekend operations
+            if (bottlenecks > 0) baseEfficiency -= bottlenecks * 3; // Bottleneck penalty
+            if (queueLength > 3) baseEfficiency -= 2; // Queue penalty
+            const efficiency = baseEfficiency + (Math.random() - 0.5) * 3;
+            document.getElementById('overallEff').textContent = `${Math.max(75, Math.min(98, efficiency.toFixed(1)))}%`;
             document.getElementById('targetEff').textContent = '90%';
         }
 
         // Initialize status dashboard when page loads
         document.addEventListener('DOMContentLoaded', function() {
             initStatusDashboard();
+            updateCurrentDateTime();
+            
+            // Update date/time every second
+            setInterval(updateCurrentDateTime, 1000);
+        });
+
+        function updateCurrentDateTime() {
+            const now = new Date();
+            
+            // Format the date and time
+            const options = {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZone: 'America/Los_Angeles',
+                timeZoneName: 'short'
+            };
+            
+            const formattedDateTime = now.toLocaleString('en-US', options);
+            document.getElementById('currentDateTime').textContent = formattedDateTime;
+        }
+
+        // 3D Models and Photorealistic View System
+        let photorealistic3DEnabled = true;
+        let currentView3D = {
+            tilt: 67.5,
+            heading: 135,
+            zoom: 17
+        };
+
+        function enable3DPhotorealisticModels() {
+            if (!map) return;
+            
+            console.log('🏗️ Enabling Google Earth photorealistic 3D models...');
+            
+            try {
+                // Enable 3D buildings layer (built into Google Maps)
+                map.setOptions({
+                    styles: [
+                        {
+                            featureType: "all",
+                            elementType: "geometry",
+                            stylers: [{ visibility: "on" }]
+                        },
+                        {
+                            featureType: "landscape.man_made",
+                            elementType: "geometry.fill",
+                            stylers: [{ visibility: "on" }]
+                        },
+                        {
+                            featureType: "poi.business",
+                            elementType: "labels",
+                            stylers: [{ visibility: "on" }]
+                        }
+                    ]
+                });
+                
+                // Set optimal viewing angle for 3D port infrastructure
+                const portCenter = { lat: 33.7366, lng: -118.2639 };
+                map.setCenter(portCenter);
+                map.setZoom(15);
+                map.setTilt(45);
+                map.setHeading(90);
+                
+                console.log('✅ 3D photorealistic models active');
+                
+            } catch (error) {
+                console.error('❌ Error enabling 3D models:', error);
+            }
+        }
+
+        function add3DNavigationControls() {
+            if (!map) return;
+            
+            // Create custom 3D navigation control panel
+            const controlDiv = document.createElement('div');
+            controlDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+            controlDiv.style.border = '1px solid #ccc';
+            controlDiv.style.borderRadius = '8px';
+            controlDiv.style.boxShadow = '0 2px 8px rgba(0,0,0,0.3)';
+            controlDiv.style.cursor = 'pointer';
+            controlDiv.style.marginBottom = '10px';
+            controlDiv.style.marginRight = '10px';
+            controlDiv.style.textAlign = 'center';
+            controlDiv.style.padding = '8px';
+            controlDiv.style.fontFamily = 'Inter, sans-serif';
+            controlDiv.style.fontSize = '12px';
+            controlDiv.style.minWidth = '120px';
+            controlDiv.title = '3D Navigation Controls';
+            
+            // Create control buttons
+            const controls = [
+                { label: '🔄 Rotate Left', action: () => rotate3DView(-15) },
+                { label: '🔄 Rotate Right', action: () => rotate3DView(15) },
+                { label: '⬆️ Tilt Up', action: () => adjustTilt(-10) },
+                { label: '⬇️ Tilt Down', action: () => adjustTilt(10) },
+                { label: '🎯 Reset View', action: () => reset3DView() },
+                { label: '🏗️ Port Overview', action: () => setPortOverview() },
+                { label: '🚢 Terminal View', action: () => setTerminalView() }
+            ];
+            
+            controls.forEach((control, index) => {
+                const button = document.createElement('div');
+                button.innerHTML = control.label;
+                button.style.padding = '4px 8px';
+                button.style.margin = '2px 0';
+                button.style.backgroundColor = '#f8fafc';
+                button.style.border = '1px solid #e2e8f0';
+                button.style.borderRadius = '4px';
+                button.style.cursor = 'pointer';
+                button.style.fontSize = '11px';
+                button.style.fontWeight = '500';
+                
+                button.addEventListener('mouseover', () => {
+                    button.style.backgroundColor = '#0ea5e9';
+                    button.style.color = 'white';
+                });
+                
+                button.addEventListener('mouseout', () => {
+                    button.style.backgroundColor = '#f8fafc';
+                    button.style.color = 'black';
+                });
+                
+                button.addEventListener('click', control.action);
+                controlDiv.appendChild(button);
+            });
+            
+            // Add to map controls
+            map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
+        }
+
+        function rotate3DView(degrees) {
+            if (!map) return;
+            currentView3D.heading = (currentView3D.heading + degrees) % 360;
+            if (currentView3D.heading < 0) currentView3D.heading += 360;
+            
+            map.setHeading(currentView3D.heading);
+            console.log(`🔄 Rotated to heading: ${currentView3D.heading}°`);
+        }
+
+        function adjustTilt(degrees) {
+            if (!map) return;
+            currentView3D.tilt = Math.max(0, Math.min(67.5, currentView3D.tilt + degrees));
+            
+            map.setTilt(currentView3D.tilt);
+            console.log(`⬆️ Adjusted tilt to: ${currentView3D.tilt}°`);
+        }
+
+        function reset3DView() {
+            if (!map) return;
+            
+            currentView3D = { tilt: 45, heading: 90, zoom: 15 };
+            
+            map.setCenter({ lat: 33.7366, lng: -118.2639 });
+            map.setZoom(currentView3D.zoom);
+            map.setTilt(currentView3D.tilt);
+            map.setHeading(currentView3D.heading);
+            
+            console.log('🎯 Reset to default 3D view');
+        }
+
+        function setPortOverview() {
+            if (!map) return;
+            
+            // Wide overview of entire port complex
+            map.setCenter({ lat: 33.7366, lng: -118.2639 });
+            map.setZoom(15);
+            map.setTilt(45);
+            map.setHeading(90);
+            
+            console.log('🏗️ Set to port overview mode');
+        }
+
+        function setTerminalView() {
+            if (!map) return;
+            
+            // Close-up view of main container terminals
+            map.setCenter({ lat: 33.7445, lng: -118.2534 }); // Terminal Island
+            map.setZoom(18);
+            map.setTilt(67.5);
+            map.setHeading(180);
+            
+            console.log('🚢 Set to terminal view mode');
+        }
+
+        function add3DToggleControl() {
+            if (!map) return;
+            
+            // Create 3D toggle button
+            const toggleDiv = document.createElement('div');
+            toggleDiv.style.backgroundColor = photorealistic3DEnabled ? '#10b981' : '#6b7280';
+            toggleDiv.style.border = '1px solid #ccc';
+            toggleDiv.style.borderRadius = '8px';
+            toggleDiv.style.boxShadow = '0 2px 8px rgba(0,0,0,0.3)';
+            toggleDiv.style.cursor = 'pointer';
+            toggleDiv.style.marginBottom = '10px';
+            toggleDiv.style.marginRight = '10px';
+            toggleDiv.style.textAlign = 'center';
+            toggleDiv.style.padding = '12px';
+            toggleDiv.style.fontFamily = 'Inter, sans-serif';
+            toggleDiv.style.fontSize = '14px';
+            toggleDiv.style.fontWeight = '600';
+            toggleDiv.style.color = 'white';
+            toggleDiv.style.minWidth = '80px';
+            toggleDiv.innerHTML = photorealistic3DEnabled ? '🏗️ 3D ON' : '🗺️ 2D';
+            toggleDiv.title = 'Toggle 3D photorealistic view';
+            
+            toggleDiv.addEventListener('click', () => {
+                photorealistic3DEnabled = !photorealistic3DEnabled;
+                
+                if (photorealistic3DEnabled) {
+                    // Enable 3D view
+                    map.setTilt(67.5);
+                    map.setZoom(Math.max(16, map.getZoom()));
+                    toggleDiv.innerHTML = '🏗️ 3D ON';
+                    toggleDiv.style.backgroundColor = '#10b981';
+                    console.log('✅ 3D mode enabled');
+                } else {
+                    // Switch to 2D view
+                    map.setTilt(0);
+                    toggleDiv.innerHTML = '🗺️ 2D';
+                    toggleDiv.style.backgroundColor = '#6b7280';
+                    console.log('🗺️ 2D mode enabled');
+                }
+            });
+            
+            // Add to map controls
+            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(toggleDiv);
+        }
+
+        // Preset 3D viewpoints for different areas of the port
+        const preset3DViews = {
+            'vincent_thomas_bridge': {
+                center: { lat: 33.7427, lng: -118.2734 },
+                zoom: 16,
+                tilt: 67.5,
+                heading: 270,
+                name: 'Vincent Thomas Bridge'
+            },
+            'terminal_island': {
+                center: { lat: 33.7445, lng: -118.2534 },
+                zoom: 17,
+                tilt: 60,
+                heading: 180,
+                name: 'Terminal Island Container Terminals'
+            },
+            'pier_400': {
+                center: { lat: 33.7298, lng: -118.2456 },
+                zoom: 16,
+                tilt: 67.5,
+                heading: 225,
+                name: 'Pier 400 - World\'s Largest Container Terminal'
+            },
+            'main_channel': {
+                center: { lat: 33.7366, lng: -118.2639 },
+                zoom: 15,
+                tilt: 45,
+                heading: 90,
+                name: 'Main Channel Approach'
+            },
+            'breakwater': {
+                center: { lat: 33.7156, lng: -118.2489 },
+                zoom: 14,
+                tilt: 30,
+                heading: 45,
+                name: 'San Pedro Breakwater'
+            }
+        };
+
+        function flyTo3DView(viewKey) {
+            if (!map || !preset3DViews[viewKey]) return;
+            
+            const view = preset3DViews[viewKey];
+            
+            console.log(`🚁 Flying to 3D view: ${view.name}`);
+            
+            // Animate to the new view
+            map.panTo(view.center);
+            
+            setTimeout(() => {
+                map.setZoom(view.zoom);
+                map.setTilt(view.tilt);
+                map.setHeading(view.heading);
+            }, 500);
+            
+            // Update current view tracking
+            currentView3D = {
+                tilt: view.tilt,
+                heading: view.heading,
+                zoom: view.zoom
+            };
+        }
+
+        // Traffic Monitoring and Routing System
+        let trafficMonitoringActive = false;
+        let currentTrafficConditions = {};
+        let routingRecommendations = [];
+        let directionsService = null;
+        let directionsRenderer = null;
+
+        // Key traffic monitoring points around Port of LA
+        const trafficMonitoringPoints = [
+            { name: 'I-110 Northbound at Harbor Blvd', lat: 33.7556, lng: -118.2598, type: 'highway', direction: 'inbound' },
+            { name: 'I-110 Southbound at Harbor Blvd', lat: 33.7556, lng: -118.2598, type: 'highway', direction: 'outbound' },
+            { name: 'SR-47 Vincent Thomas Bridge', lat: 33.7427, lng: -118.2734, type: 'bridge', direction: 'both' },
+            { name: 'Terminal Island Freeway East', lat: 33.7366, lng: -118.2489, type: 'terminal_access', direction: 'both' },
+            { name: 'Harbor Blvd at PCH', lat: 33.7702, lng: -118.2584, type: 'arterial', direction: 'both' },
+            { name: 'Seaside Ave Terminal Access', lat: 33.7421, lng: -118.2456, type: 'terminal_access', direction: 'both' },
+            { name: 'Navy Way at Terminal Island', lat: 33.7398, lng: -118.2711, type: 'terminal_access', direction: 'both' },
+            { name: 'Wilmington Blvd Connector', lat: 33.7583, lng: -118.2547, type: 'arterial', direction: 'both' }
+        ];
+
+        // Employee parking and entry gates
+        const employeeAccessPoints = [
+            { name: 'Main Gate - Harbor Blvd', lat: 33.7556, lng: -118.2598, capacity: 1200, currentOccupancy: 0 },
+            { name: 'Terminal Island Employee Lot A', lat: 33.7445, lng: -118.2534, capacity: 800, currentOccupancy: 0 },
+            { name: 'Terminal Island Employee Lot B', lat: 33.7423, lng: -118.2667, capacity: 600, currentOccupancy: 0 },
+            { name: 'West Basin Employee Access', lat: 33.7389, lng: -118.2789, capacity: 400, currentOccupancy: 0 },
+            { name: 'Pier 400 Employee Parking', lat: 33.7298, lng: -118.2456, capacity: 1000, currentOccupancy: 0 }
+        ];
+
+        function initTrafficMonitoring() {
+            console.log('🚦 Initializing traffic monitoring system...');
+            
+            // Initialize Google Directions service for routing
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer({
+                suppressMarkers: true,
+                polylineOptions: {
+                    strokeColor: '#0ea5e9',
+                    strokeWeight: 6,
+                    strokeOpacity: 0.8
+                }
+            });
+            
+            // Start traffic monitoring
+            trafficMonitoringActive = true;
+            analyzeTrafficConditions();
+            
+            // Monitor traffic every 2 minutes
+            setInterval(analyzeTrafficConditions, 120000);
+            
+            // Update employee access recommendations every 30 seconds
+            setInterval(updateEmployeeRoutingRecommendations, 30000);
+            
+            console.log('✅ Traffic monitoring active');
+        }
+
+        function analyzeTrafficConditions() {
+            if (!trafficMonitoringActive || !directionsService) return;
+            
+            console.log('🚦 Analyzing real-time traffic conditions...');
+            
+            const currentHour = new Date().getHours();
+            const dayOfWeek = new Date().getDay();
+            const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5;
+            const isRushHour = (currentHour >= 7 && currentHour <= 9) || (currentHour >= 16 && currentHour <= 19);
+            const isShiftChange = (currentHour === 6 || currentHour === 14 || currentHour === 22);
+            
+            // Simulate traffic analysis based on time patterns and Google traffic layer
+            trafficMonitoringPoints.forEach(point => {
+                let congestionLevel = 'light';
+                let estimatedDelay = 0;
+                
+                if (isWeekday && isRushHour) {
+                    congestionLevel = Math.random() > 0.3 ? 'heavy' : 'moderate';
+                    estimatedDelay = Math.random() * 15 + 5; // 5-20 minute delays
+                } else if (isShiftChange) {
+                    congestionLevel = 'moderate';
+                    estimatedDelay = Math.random() * 8 + 2; // 2-10 minute delays
+                } else if (isWeekday) {
+                    congestionLevel = Math.random() > 0.7 ? 'moderate' : 'light';
+                    estimatedDelay = Math.random() * 5; // 0-5 minute delays
+                } else {
+                    congestionLevel = 'light';
+                    estimatedDelay = Math.random() * 2; // 0-2 minute delays
+                }
+                
+                currentTrafficConditions[point.name] = {
+                    ...point,
+                    congestionLevel,
+                    estimatedDelay: Math.round(estimatedDelay),
+                    lastUpdated: new Date(),
+                    alternativeAvailable: congestionLevel === 'heavy'
+                };
+            });
+            
+            // Update employee parking occupancy based on shift patterns
+            updateEmployeeParkingOccupancy(currentHour, isWeekday, isShiftChange);
+            
+            // Generate truck routing recommendations
+            generateTruckRoutingRecommendations();
+            
+            console.log('🚦 Traffic analysis complete:', Object.keys(currentTrafficConditions).length, 'monitoring points updated');
+            
+            // Update traffic status display
+            updateTrafficStatusDisplay();
+        }
+        
+        function updateTrafficStatusDisplay() {
+            const statusElement = document.getElementById('currentTrafficStatus');
+            if (!statusElement) return;
+            
+            const heavyTrafficCount = Object.values(currentTrafficConditions)
+                .filter(point => point.congestionLevel === 'heavy').length;
+            const moderateTrafficCount = Object.values(currentTrafficConditions)
+                .filter(point => point.congestionLevel === 'moderate').length;
+            
+            let statusText = '';
+            let statusColor = '#10b981'; // green
+            
+            if (heavyTrafficCount > 0) {
+                statusText = `⚠️ ${heavyTrafficCount} Heavy Traffic Points`;
+                statusColor = '#ef4444'; // red
+            } else if (moderateTrafficCount > 0) {
+                statusText = `⚡ ${moderateTrafficCount} Moderate Traffic Points`;
+                statusColor = '#f59e0b'; // yellow
+            } else {
+                statusText = '✅ All Routes Clear';
+                statusColor = '#10b981'; // green
+            }
+            
+            statusElement.textContent = statusText;
+            statusElement.style.color = statusColor;
+        }
+
+        function updateEmployeeParkingOccupancy(currentHour, isWeekday, isShiftChange) {
+            employeeAccessPoints.forEach(lot => {
+                let occupancyRate = 0.15; // Weekend/night baseline
+                
+                if (isWeekday) {
+                    if (currentHour >= 6 && currentHour <= 18) {
+                        // Day shift peak occupancy
+                        occupancyRate = 0.75 + (Math.random() * 0.2 - 0.1); // 65-85%
+                    } else if (currentHour >= 19 && currentHour <= 5) {
+                        // Night shift occupancy
+                        occupancyRate = 0.45 + (Math.random() * 0.15 - 0.075); // 37-52%
+                    }
+                    
+                    // Shift change creates temporary high occupancy
+                    if (isShiftChange) {
+                        occupancyRate = Math.min(0.95, occupancyRate + 0.2);
+                    }
+                }
+                
+                lot.currentOccupancy = Math.round(lot.capacity * occupancyRate);
+            });
+        }
+
+        function generateTruckRoutingRecommendations() {
+            routingRecommendations = [];
+            
+            const heavyTrafficPoints = Object.values(currentTrafficConditions)
+                .filter(point => point.congestionLevel === 'heavy')
+                .map(point => point.name);
+            
+            if (heavyTrafficPoints.length > 0) {
+                // Recommend alternative routes for inbound trucks
+                if (currentTrafficConditions['I-110 Northbound at Harbor Blvd']?.congestionLevel === 'heavy') {
+                    routingRecommendations.push({
+                        type: 'truck_routing',
+                        priority: 'high',
+                        title: 'I-110 Alternative Route',
+                        description: `Heavy traffic on I-110 Northbound (${currentTrafficConditions['I-110 Northbound at Harbor Blvd'].estimatedDelay} min delay). Recommend SR-47 via Vincent Thomas Bridge.`,
+                        route: 'Use SR-47 → Vincent Thomas Bridge → Terminal Island',
+                        estimatedTimeSaving: '8-15 minutes',
+                        affectedVehicles: 'Inbound trucks from North/East LA'
+                    });
+                }
+                
+                // Recommend alternative routes for outbound trucks
+                if (currentTrafficConditions['I-110 Southbound at Harbor Blvd']?.congestionLevel === 'heavy') {
+                    routingRecommendations.push({
+                        type: 'truck_routing',
+                        priority: 'high',
+                        title: 'Outbound Route Optimization',
+                        description: `Heavy congestion on I-110 Southbound (${currentTrafficConditions['I-110 Southbound at Harbor Blvd'].estimatedDelay} min delay). Recommend alternative inland routes.`,
+                        route: 'Use Harbor Blvd → I-405 North → I-605 South bypass',
+                        estimatedTimeSaving: '12-20 minutes',
+                        affectedVehicles: 'Outbound trucks to inland destinations'
+                    });
+                }
+                
+                // Bridge congestion recommendations
+                if (currentTrafficConditions['SR-47 Vincent Thomas Bridge']?.congestionLevel === 'heavy') {
+                    routingRecommendations.push({
+                        type: 'truck_routing',
+                        priority: 'medium',
+                        title: 'Vincent Thomas Bridge Congestion',
+                        description: `Bridge experiencing heavy traffic (${currentTrafficConditions['SR-47 Vincent Thomas Bridge'].estimatedDelay} min delay). Recommend scheduling delays or Terminal Island Freeway.`,
+                        route: 'Delay departure 20-30 min or use Terminal Island Freeway East',
+                        estimatedTimeSaving: '5-12 minutes',
+                        affectedVehicles: 'Cross-harbor truck traffic'
+                    });
+                }
+            }
+            
+            // Generate employee routing recommendations
+            generateEmployeeRoutingRecommendations();
+        }
+
+        function generateEmployeeRoutingRecommendations() {
+            const currentHour = new Date().getHours();
+            const isShiftChange = (currentHour === 6 || currentHour === 14 || currentHour === 22);
+            
+            // Find lots approaching capacity
+            const nearCapacityLots = employeeAccessPoints.filter(lot => 
+                (lot.currentOccupancy / lot.capacity) > 0.85
+            );
+            
+            // Find available lots with capacity
+            const availableLots = employeeAccessPoints.filter(lot => 
+                (lot.currentOccupancy / lot.capacity) < 0.7
+            );
+            
+            if (nearCapacityLots.length > 0 && availableLots.length > 0) {
+                routingRecommendations.push({
+                    type: 'employee_routing',
+                    priority: isShiftChange ? 'high' : 'medium',
+                    title: 'Employee Parking Redirection',
+                    description: `${nearCapacityLots.map(lot => lot.name).join(', ')} approaching capacity. Available spaces at ${availableLots.map(lot => lot.name).join(', ')}.`,
+                    route: `Direct employees to: ${availableLots[0].name} (${availableLots[0].capacity - availableLots[0].currentOccupancy} spaces available)`,
+                    estimatedTimeSaving: '5-8 minutes parking time',
+                    affectedVehicles: `${nearCapacityLots.reduce((sum, lot) => sum + (lot.capacity - lot.currentOccupancy), 0)} employee vehicles`
+                });
+            }
+            
+            // Rush hour employee routing
+            if ((currentHour >= 7 && currentHour <= 9) || (currentHour >= 16 && currentHour <= 18)) {
+                const trafficHotspots = Object.values(currentTrafficConditions)
+                    .filter(point => point.congestionLevel === 'heavy' && point.type === 'arterial')
+                    .map(point => point.name);
+                
+                if (trafficHotspots.length > 0) {
+                    routingRecommendations.push({
+                        type: 'employee_routing',
+                        priority: 'medium',
+                        title: 'Employee Rush Hour Routing',
+                        description: `Heavy traffic on ${trafficHotspots.join(', ')}. Recommend alternative employee access routes.`,
+                        route: 'Use back access roads: Navy Way → Terminal Island Freeway → Employee Lot B',
+                        estimatedTimeSaving: '10-15 minutes',
+                        affectedVehicles: 'Day/Evening shift employees'
+                    });
+                }
+            }
+        }
+
+        function updateEmployeeRoutingRecommendations() {
+            if (!trafficMonitoringActive) return;
+            
+            // Update employee lot occupancy in real-time
+            const currentHour = new Date().getHours();
+            const dayOfWeek = new Date().getDay();
+            const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5;
+            const isShiftChange = Math.abs(currentHour - 6) < 0.5 || Math.abs(currentHour - 14) < 0.5 || Math.abs(currentHour - 22) < 0.5;
+            
+            updateEmployeeParkingOccupancy(currentHour, isWeekday, isShiftChange);
+            
+            // Regenerate recommendations if needed
+            const hasEmployeeRecommendations = routingRecommendations.some(rec => rec.type === 'employee_routing');
+            if (!hasEmployeeRecommendations || isShiftChange) {
+                generateEmployeeRoutingRecommendations();
+            }
+        }
+
+        function showTrafficRoute(origin, destination, avoidHighways = false) {
+            if (!directionsService || !directionsRenderer) return;
+            
+            const request = {
+                origin: origin,
+                destination: destination,
+                travelMode: google.maps.TravelMode.DRIVING,
+                avoidHighways: avoidHighways,
+                avoidTolls: false,
+                optimizeWaypoints: true
+            };
+            
+            directionsService.route(request, (result, status) => {
+                if (status === 'OK') {
+                    directionsRenderer.setDirections(result);
+                    directionsRenderer.setMap(map);
+                    
+                    // Show route info
+                    const route = result.routes[0];
+                    const leg = route.legs[0];
+                    console.log(`Route: ${leg.distance.text}, ${leg.duration.text}`);
+                    console.log(`Traffic duration: ${leg.duration_in_traffic ? leg.duration_in_traffic.text : 'N/A'}`);
+                } else {
+                    console.error('Directions request failed:', status);
+                }
+            });
+        }
+
+        // Function to display traffic recommendations in the UI
+        function displayTrafficRecommendations() {
+            if (routingRecommendations.length === 0) return;
+            
+            // Add traffic recommendations to the existing recommendation system
+            routingRecommendations.forEach(rec => {
+                const trafficRecommendation = {
+                    id: `traffic_${Date.now()}_${Math.random()}`,
+                    title: rec.title,
+                    description: `${rec.description}\n\nRecommended Route: ${rec.route}\nTime Savings: ${rec.estimatedTimeSaving}\nAffects: ${rec.affectedVehicles}`,
+                    priority: rec.priority,
+                    action: () => `Traffic routing updated: ${rec.route}. Estimated time savings: ${rec.estimatedTimeSaving}`,
+                    timestamp: new Date(),
+                    status: 'pending',
+                    type: rec.type
+                };
+                
+                // Add to current recommendations if not already present
+                if (!currentRecommendations.some(existing => existing.title === rec.title)) {
+                    currentRecommendations.push(trafficRecommendation);
+                }
+            });
+            
+            // Sort recommendations by priority
+            const priorityOrder = { high: 3, medium: 2, low: 1 };
+            currentRecommendations.sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]);
+            
+            // Update display if recommendations panel exists
+            if (document.getElementById('activeRecommendations')) {
+                displayRecommendations();
+            }
+        }
+
+        // Agentic AI Workflow System
+        let autoMode = false;
+        let currentRecommendations = [];
+        let aiAnalysisTimer = null;
+
+        // AI Recommendation Templates based on real-time status
+        const recommendationTemplates = [
+            {
+                trigger: (metrics) => metrics.bottlenecks > 2,
+                title: "Reduce Terminal Bottlenecks",
+                description: "High bottleneck count detected. Deploy additional cranes to Pier B and optimize container routing.",
+                priority: "high",
+                action: () => "Deploying 3 additional cranes and rerouting 12 containers through Pier A"
+            },
+            {
+                trigger: (metrics) => metrics.queueLength > 5,
+                title: "Manage Vessel Queue",
+                description: "Extended vessel queue detected. Implement priority scheduling for time-sensitive cargo.",
+                priority: "high", 
+                action: () => "Prioritizing 4 vessels with perishable cargo and extending pier operating hours"
+            },
+            {
+                trigger: (metrics) => metrics.avgWait > 6,
+                title: "Optimize Berth Allocation",
+                description: "Average wait times exceeding target. Reallocate vessels to underutilized terminals.",
+                priority: "medium",
+                action: () => "Reallocating 3 vessels to Terminal Island and adjusting schedules"
+            },
+            {
+                trigger: (metrics) => metrics.airQuality < 82,
+                title: "Environmental Compliance Alert",
+                description: "Air quality approaching threshold limits. Recommend emission reduction protocols.",
+                priority: "medium",
+                action: () => "Activating shore power for 6 vessels and reducing diesel crane operations"
+            },
+            {
+                trigger: (metrics) => metrics.efficiency < 85,
+                title: "Improve Port Efficiency",
+                description: "Overall efficiency below optimal range. Optimize workflow automation systems.",
+                priority: "low",
+                action: () => "Updating AI routing algorithms and synchronizing crane operations"
+            },
+            {
+                trigger: (metrics) => metrics.throughput < 75,
+                title: "Increase Cargo Throughput",
+                description: "Throughput below capacity. Scale up terminal operations and extend shift hours.",
+                priority: "medium",
+                action: () => "Activating standby terminals and extending day shift by 2 hours"
+            },
+            {
+                trigger: (metrics) => {
+                    const heavyTrafficCount = Object.values(currentTrafficConditions || {})
+                        .filter(point => point.congestionLevel === 'heavy').length;
+                    return heavyTrafficCount > 2;
+                },
+                title: "Critical Traffic Congestion",
+                description: "Multiple traffic monitoring points showing heavy congestion. Implement traffic management protocols.",
+                priority: "high",
+                action: () => "Activating traffic control measures and deploying alternative route guidance"
+            },
+            {
+                trigger: (metrics) => {
+                    const nearCapacityLots = employeeAccessPoints.filter(lot => 
+                        (lot.currentOccupancy / lot.capacity) > 0.9
+                    ).length;
+                    return nearCapacityLots > 1;
+                },
+                title: "Employee Parking Crisis",
+                description: "Multiple employee parking lots at capacity. Activate overflow parking and shuttle services.",
+                priority: "medium",
+                action: () => "Opening overflow lots and deploying 3 shuttle buses from remote parking"
+            }
+        ];
+
+        function triggerAIScan() {
+            console.log('🤖 Triggering AI scan...');
+            
+            // Update AI status
+            const aiStatus = document.getElementById('aiStatus');
+            const lastAnalysis = document.getElementById('lastAnalysis');
+            
+            aiStatus.textContent = '🔄 SCANNING';
+            aiStatus.style.background = '#f59e0b';
+            
+            // Simulate analysis time
+            setTimeout(() => {
+                performAIAnalysis();
+                
+                aiStatus.textContent = '🟢 COMPLETED';
+                aiStatus.style.background = '#10b981';
+                
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString('en-US', { 
+                    hour12: false, 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                lastAnalysis.textContent = `Last scan: ${timeStr}`;
+            }, 2500);
+        }
+
+        function performAIAnalysis() {
+            console.log('🔍 Performing AI analysis...');
+            
+            // Gather current metrics
+            const metrics = {
+                bottlenecks: parseInt(document.getElementById('bottlenecks').textContent) || 0,
+                queueLength: parseInt(document.getElementById('queueLength').textContent.split(' ')[0]) || 0,
+                avgWait: parseFloat(document.getElementById('avgWait').textContent) || 0,
+                airQuality: parseInt(document.getElementById('airQuality').textContent) || 90,
+                efficiency: parseFloat(document.getElementById('overallEff').textContent) || 94,
+                throughput: parseInt(document.getElementById('throughput').textContent) || 90
+            };
+            
+            console.log('Current metrics:', metrics);
+            
+            // Clear existing recommendations
+            currentRecommendations = [];
+            
+            // Generate recommendations based on current conditions
+            recommendationTemplates.forEach((template, index) => {
+                if (template.trigger(metrics)) {
+                    currentRecommendations.push({
+                        id: `rec_${Date.now()}_${index}`,
+                        ...template,
+                        timestamp: new Date(),
+                        status: 'pending'
+                    });
+                }
+            });
+            
+            // Integrate traffic and routing recommendations
+            if (trafficMonitoringActive) {
+                displayTrafficRecommendations();
+            }
+            
+            // Always have at least one proactive recommendation with varied scenarios
+            if (currentRecommendations.length === 0) {
+                const proactiveRecommendations = [
+                    {
+                        title: "Proactive System Optimization",
+                        description: "All systems operating normally. Running preventive maintenance checks and optimizing resource allocation.",
+                        priority: "low",
+                        action: () => "Performing system health checks and optimizing resource allocation algorithms"
+                    },
+                    {
+                        title: "Predictive Maintenance Alert",
+                        description: "AI detected subtle patterns indicating potential equipment wear. Schedule preventive maintenance for optimal uptime.",
+                        priority: "medium",
+                        action: () => "Scheduling crane #7 and #12 for preventive maintenance during low-traffic window"
+                    },
+                    {
+                        title: "Weather Pattern Analysis",
+                        description: "Incoming weather system in 6 hours may affect operations. Recommend preparation protocols.",
+                        priority: "medium",
+                        action: () => "Pre-positioning weather protection equipment and adjusting shift schedules"
+                    },
+                    {
+                        title: "Critical Security Protocol Update",
+                        description: "New maritime security threat intelligence requires immediate protocol enhancement.",
+                        priority: "high",
+                        action: () => "Implementing enhanced vessel screening and updating security checkpoints"
+                    },
+                    {
+                        title: "Supply Chain Disruption Risk",
+                        description: "AI models predict 23% chance of supply chain delays from upstream ports. Recommend contingency activation.",
+                        priority: "high",
+                        action: () => "Activating alternate supplier protocols and increasing inventory buffers"
+                    },
+                    {
+                        title: "Energy Efficiency Optimization",
+                        description: "Peak energy consumption window approaching. Recommend load balancing to reduce costs.",
+                        priority: "low",
+                        action: () => "Shifting non-critical operations to off-peak hours and optimizing crane power usage"
+                    },
+                    {
+                        title: "Environmental Compliance Check",
+                        description: "Monthly environmental impact assessment shows opportunity for emissions reduction.",
+                        priority: "medium",
+                        action: () => "Implementing shore power for 4 additional berths and optimizing truck routing"
+                    },
+                    {
+                        title: "Workforce Optimization Alert",
+                        description: "Staff scheduling analysis indicates potential understaffing during evening shift peak.",
+                        priority: "medium",
+                        action: () => "Adjusting shift assignments and activating on-call personnel for 6PM-10PM window"
+                    },
+                    {
+                        title: "Cybersecurity Threat Detection",
+                        description: "Unusual network activity patterns detected. Recommend immediate security assessment.",
+                        priority: "high",
+                        action: () => "Isolating affected systems and conducting comprehensive security audit"
+                    }
+                ];
+                
+                // Select a random proactive recommendation
+                const randomRec = proactiveRecommendations[Math.floor(Math.random() * proactiveRecommendations.length)];
+                
+                currentRecommendations.push({
+                    id: `rec_${Date.now()}_proactive`,
+                    ...randomRec,
+                    timestamp: new Date(),
+                    status: 'pending'
+                });
+            }
+            
+            // Sort by priority (high -> medium -> low)
+            const priorityOrder = { high: 3, medium: 2, low: 1 };
+            currentRecommendations.sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]);
+            
+            console.log(`Generated ${currentRecommendations.length} recommendations:`, currentRecommendations);
+            
+            // Update UI
+            displayRecommendations();
+            
+            // Auto-execute if auto mode is enabled
+            if (autoMode) {
+                setTimeout(autoExecuteRecommendations, 1500);
+            }
+        }
+
+        function displayRecommendations() {
+            const container = document.getElementById('activeRecommendations');
+            
+            if (currentRecommendations.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #64748b; padding: 2rem;">No active recommendations. All systems optimal.</div>';
+                return;
+            }
+            
+            container.innerHTML = currentRecommendations.map(rec => `
+                <div class="recommendation-item" id="rec-${rec.id}">
+                    <div class="recommendation-header-item">
+                        <div class="recommendation-title">${rec.title}</div>
+                        <div class="recommendation-priority priority-${rec.priority}">${rec.priority.toUpperCase()}</div>
+                    </div>
+                    <div class="recommendation-description">${rec.description}</div>
+                    <div class="recommendation-actions">
+                        <button class="rec-action-btn approve-btn" onclick="approveRecommendation('${rec.id}')">✓ Approve</button>
+                        <button class="rec-action-btn reject-btn" onclick="rejectRecommendation('${rec.id}')">✗ Reject</button>
+                        <button class="rec-action-btn defer-btn" onclick="deferRecommendation('${rec.id}')">⏸ Defer</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function approveRecommendation(recId) {
+            console.log(`✅ Approving recommendation: ${recId}`);
+            
+            const recommendation = currentRecommendations.find(rec => rec.id === recId);
+            if (!recommendation) return;
+            
+            recommendation.status = 'approved';
+            
+            // Execute the action
+            executeRecommendation(recommendation);
+        }
+
+        function rejectRecommendation(recId) {
+            console.log(`❌ Rejecting recommendation: ${recId}`);
+            
+            const recommendation = currentRecommendations.find(rec => rec.id === recId);
+            if (!recommendation) return;
+            
+            recommendation.status = 'rejected';
+            
+            // Remove from display
+            const element = document.getElementById(`rec-${recId}`);
+            if (element) {
+                element.style.opacity = '0.5';
+                element.innerHTML = `
+                    <div style="text-align: center; color: #64748b; padding: 1rem;">
+                        <strong>❌ REJECTED</strong><br>
+                        ${recommendation.title}
+                    </div>
+                `;
+                
+                setTimeout(() => {
+                    currentRecommendations = currentRecommendations.filter(rec => rec.id !== recId);
+                    displayRecommendations();
+                }, 2000);
+            }
+        }
+
+        function deferRecommendation(recId) {
+            console.log(`⏸ Deferring recommendation: ${recId}`);
+            
+            const recommendation = currentRecommendations.find(rec => rec.id === recId);
+            if (!recommendation) return;
+            
+            recommendation.status = 'deferred';
+            
+            // Mark as deferred in UI
+            const element = document.getElementById(`rec-${recId}`);
+            if (element) {
+                element.style.opacity = '0.7';
+                element.innerHTML = `
+                    <div style="text-align: center; color: #64748b; padding: 1rem;">
+                        <strong>⏸ DEFERRED</strong><br>
+                        ${recommendation.title}<br>
+                        <small>Will re-analyze in next scan</small>
+                    </div>
+                `;
+                
+                setTimeout(() => {
+                    currentRecommendations = currentRecommendations.filter(rec => rec.id !== recId);
+                    displayRecommendations();
+                }, 3000);
+            }
+        }
+
+        function executeRecommendation(recommendation) {
+            console.log(`⚡ Executing recommendation: ${recommendation.title}`);
+            
+            const element = document.getElementById(`rec-${recommendation.id}`);
+            if (element) {
+                element.classList.add('executing-action');
+                
+                // Simulate execution time
+                setTimeout(() => {
+                    const actionResult = recommendation.action();
+                    console.log(`✅ Action completed: ${actionResult}`);
+                    
+                    element.classList.remove('executing-action');
+                    element.innerHTML = `
+                        <div style="text-align: center; color: #10b981; padding: 1rem;">
+                            <strong>✅ EXECUTED</strong><br>
+                            ${recommendation.title}<br>
+                            <small>${actionResult}</small>
+                        </div>
+                    `;
+                    
+                    // Remove after showing result
+                    setTimeout(() => {
+                        currentRecommendations = currentRecommendations.filter(rec => rec.id !== recommendation.id);
+                        displayRecommendations();
+                    }, 4000);
+                    
+                }, Math.random() * 3000 + 2000); // 2-5 seconds execution time
+            }
+        }
+
+        function toggleAutoMode() {
+            autoMode = !autoMode;
+            const btn = document.getElementById('autoModeBtn');
+            
+            if (autoMode) {
+                btn.textContent = '🤖 Auto Mode ON';
+                btn.classList.add('active');
+                console.log('🤖 Auto mode ENABLED - AI will execute approved actions automatically');
+                
+                // Start periodic scans in auto mode
+                if (aiAnalysisTimer) clearInterval(aiAnalysisTimer);
+                aiAnalysisTimer = setInterval(() => {
+                    if (currentRecommendations.length === 0) {
+                        triggerAIScan();
+                    }
+                }, 30000); // Scan every 30 seconds when no active recommendations
+                
+            } else {
+                btn.textContent = '⚡ Enable Auto Mode';
+                btn.classList.remove('active');
+                console.log('👤 Auto mode DISABLED - Human approval required');
+                
+                // Stop periodic scans
+                if (aiAnalysisTimer) {
+                    clearInterval(aiAnalysisTimer);
+                    aiAnalysisTimer = null;
+                }
+            }
+        }
+
+        function autoExecuteRecommendations() {
+            if (!autoMode) return;
+            
+            console.log('🤖 Auto mode: Executing high priority recommendations...');
+            
+            // Auto-approve high priority recommendations
+            const highPriorityRecs = currentRecommendations.filter(rec => 
+                rec.priority === 'high' && rec.status === 'pending'
+            );
+            
+            highPriorityRecs.forEach(rec => {
+                console.log(`🤖 Auto-approving: ${rec.title}`);
+                approveRecommendation(rec.id);
+            });
+            
+            // For medium priority, randomly approve some (simulate AI confidence)
+            const mediumPriorityRecs = currentRecommendations.filter(rec => 
+                rec.priority === 'medium' && rec.status === 'pending'
+            );
+            
+            mediumPriorityRecs.forEach(rec => {
+                if (Math.random() > 0.6) { // 40% auto-approval rate for medium priority
+                    console.log(`🤖 Auto-approving medium priority: ${rec.title}`);
+                    setTimeout(() => approveRecommendation(rec.id), Math.random() * 2000);
+                }
+            });
+        }
+
+        // Initialize agentic AI system
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🤖 Initializing Agentic AI Workflow System...');
+            
+            // Perform initial scan after a short delay
+            setTimeout(() => {
+                triggerAIScan();
+            }, 3000);
         });
     </script>
 </body>
