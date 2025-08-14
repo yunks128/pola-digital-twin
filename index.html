@@ -1283,6 +1283,270 @@
             max-width: 800px;
             max-height: 400px;
         }
+
+        /* Alert Animation Styles */
+        @keyframes pulse-critical {
+            0% {
+                box-shadow: 0 4px 8px rgba(0,0,0,0.4), 0 0 0 0 rgba(239, 68, 68, 0.7);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 6px 12px rgba(0,0,0,0.5), 0 0 0 8px rgba(239, 68, 68, 0.3);
+                transform: scale(1.05);
+            }
+            100% {
+                box-shadow: 0 4px 8px rgba(0,0,0,0.4), 0 0 0 0 rgba(239, 68, 68, 0);
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse-warning {
+            0% {
+                box-shadow: 0 4px 8px rgba(0,0,0,0.4), 0 0 0 0 rgba(251, 191, 36, 0.7);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 6px 12px rgba(0,0,0,0.5), 0 0 0 6px rgba(251, 191, 36, 0.3);
+                transform: scale(1.03);
+            }
+            100% {
+                box-shadow: 0 4px 8px rgba(0,0,0,0.4), 0 0 0 0 rgba(251, 191, 36, 0);
+                transform: scale(1);
+            }
+        }
+
+        .alert-blink-red {
+            animation: pulse-critical 1.5s infinite;
+        }
+
+        .alert-blink-yellow {
+            animation: pulse-warning 2s infinite;
+        }
+
+        /* Integrated Chat Interface Styles */
+        .chat-interface-integrated {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .chat-interface-integrated .chat-messages {
+            height: 200px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .chat-interface-integrated .chat-input-container {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-interface-integrated .chat-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: #ffffff;
+        }
+
+        .chat-interface-integrated .chat-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .chat-interface-integrated .chat-send-btn {
+            padding: 0.75rem 1rem;
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .chat-interface-integrated .chat-send-btn:hover {
+            background: #0284c7;
+        }
+
+        .chat-interface-integrated .chat-send-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        /* Status Dashboard Styles */
+        .status-dashboard {
+            background: #1e293b;
+            color: white;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 0.5rem;
+            height: 40px;
+        }
+
+        .status-header h2 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #ef4444;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .status-timestamp {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-family: monospace;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-card {
+            background: #334155;
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid #475569;
+        }
+
+        .status-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .status-icon {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        .status-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            flex: 1;
+        }
+
+        .status-indicator {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .status-indicator:contains("NORMAL"), .status-indicator:contains("GOOD"), .status-indicator:contains("OPTIMAL") {
+            background: #10b981;
+            color: white;
+        }
+
+        .status-indicator:contains("HEAVY"), .status-indicator:contains("HIGH"), .status-indicator:contains("ELEVATED") {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .status-indicator:contains("CRITICAL"), .status-indicator:contains("ALERT") {
+            background: #ef4444;
+            color: white;
+        }
+
+        .mini-chart {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 0.75rem;
+            background: #1e293b;
+            border-radius: 4px;
+        }
+
+        .status-metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            font-size: 0.8rem;
+            color: #cbd5e1;
+        }
+
+        .status-metrics strong {
+            color: #f1f5f9;
+            font-weight: 600;
+        }
+
+        /* Critical Alerts Banner */
+        .critical-alerts-banner {
+            background: #991b1b;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow: hidden;
+            border: 2px solid #dc2626;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .alert-ticker {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            white-space: nowrap;
+        }
+
+        .alert-item {
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            min-width: 300px;
+            flex: 1;
+        }
+
+        .alert-item.critical {
+            background: #ef4444;
+            color: white;
+        }
+
+        .alert-item.warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .alert-item.info {
+            background: #0ea5e9;
+            color: white;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .status-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .status-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
 </head>
 <body>
@@ -1625,55 +1889,129 @@
                     ✅ Terminal Operating Systems
                 </div>
             </div>
-        </div>
 
-        <!-- Footer Panel -->
-        <div class="footer-panel">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-title">Multi-Source Data Fusion</div>
-                    <div class="footer-value">23 Systems</div>
-                    <div class="footer-subtitle">Bathymetry • Tidal • Environmental • AIS</div>
+            <div class="section-title">🤖 Port AI Assistant</div>
+            
+            <!-- Chat Interface Integrated -->
+            <div class="chat-interface-integrated">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message ai">
+                        Hello! I'm your advanced Port AI Assistant. I can help with vessel tracking, terminal operations, environmental monitoring, predictive analytics, risk assessment, compliance reporting, and much more. Ask me anything about port operations!
+                    </div>
                 </div>
-                <div class="footer-section">
-                    <div class="footer-title">AI Model Confidence</div>
-                    <div class="footer-value">94.7% ±1.2%</div>
-                    <div class="footer-subtitle">Uncertainty Quantified</div>
+                <div class="typing-indicator" id="typingIndicator">
+                    <span>AI is analyzing...</span>
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
                 </div>
-                <div class="footer-section">
-                    <div class="footer-title">Global Port Latency</div>
-                    <div class="footer-value">12ms avg</div>
-                    <div class="footer-subtitle">IEEE 2875 Optimized</div>
-                </div>
-                <div class="footer-section">
-                    <div class="footer-title">Autonomous Actions</div>
-                    <div class="footer-value">127 Today</div>
-                    <div class="footer-subtitle">Zero Human Intervention</div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask about port operations, data, or request graphs..." maxlength="500">
+                    <button class="chat-send-btn" id="chatSendBtn" onclick="sendMessage()">Send</button>
                 </div>
             </div>
         </div>
 
-        <!-- Chat Interface -->
-        <div class="chat-panel" id="chatPanel">
-            <div class="chat-header">
-                🤖 Port AI Assistant
-            </div>
-            <div class="chat-messages" id="chatMessages">
-                <div class="chat-message ai">
-                    Hello! I'm your advanced Port AI Assistant. I can help with vessel tracking, terminal operations, environmental monitoring, predictive analytics, risk assessment, compliance reporting, and much more. Ask me anything about port operations!
+
+        <!-- Real-Time Status Dashboard -->
+        <div class="status-dashboard">
+            <div class="status-grid">
+                <!-- Loading Conditions -->
+                <div class="status-card">
+                    <div class="status-card-header">
+                        <span class="status-icon">🏗️</span>
+                        <span class="status-title">Loading Conditions</span>
+                        <div class="status-indicator" id="loadingStatus">NORMAL</div>
+                    </div>
+                    <canvas class="mini-chart" id="loadingChart" width="200" height="80"></canvas>
+                    <div class="status-metrics">
+                        <span>Active Cranes: <strong id="activeCranes">42/47</strong></span>
+                        <span>Avg Load Time: <strong id="avgLoadTime">2.3h</strong></span>
+                    </div>
+                </div>
+
+                <!-- Vessel Traffic -->
+                <div class="status-card">
+                    <div class="status-card-header">
+                        <span class="status-icon">🚢</span>
+                        <span class="status-title">Vessel Traffic</span>
+                        <div class="status-indicator" id="trafficStatus">HEAVY</div>
+                    </div>
+                    <canvas class="mini-chart" id="trafficChart" width="200" height="80"></canvas>
+                    <div class="status-metrics">
+                        <span>In Channel: <strong id="vesselsInChannel">18</strong></span>
+                        <span>Queue Length: <strong id="queueLength">6 vessels</strong></span>
+                    </div>
+                </div>
+
+                <!-- Environmental -->
+                <div class="status-card">
+                    <div class="status-card-header">
+                        <span class="status-icon">🌿</span>
+                        <span class="status-title">Environmental</span>
+                        <div class="status-indicator" id="envStatus">GOOD</div>
+                    </div>
+                    <canvas class="mini-chart" id="envChart" width="200" height="80"></canvas>
+                    <div class="status-metrics">
+                        <span>Air Quality: <strong id="airQuality">89 ppm</strong></span>
+                        <span>Compliance: <strong id="compliance">100%</strong></span>
+                    </div>
+                </div>
+
+                <!-- Capacity Flow -->
+                <div class="status-card">
+                    <div class="status-card-header">
+                        <span class="status-icon">📦</span>
+                        <span class="status-title">Capacity Flow</span>
+                        <div class="status-indicator" id="capacityStatus">HIGH</div>
+                    </div>
+                    <canvas class="mini-chart" id="capacityChart" width="200" height="80"></canvas>
+                    <div class="status-metrics">
+                        <span>Throughput: <strong id="throughput">89%</strong></span>
+                        <span>Bottlenecks: <strong id="bottlenecks">2 active</strong></span>
+                    </div>
+                </div>
+
+                <!-- Ship Wait Time -->
+                <div class="status-card">
+                    <div class="status-card-header">
+                        <span class="status-icon">⏱️</span>
+                        <span class="status-title">Ship Wait Time</span>
+                        <div class="status-indicator" id="waitStatus">ELEVATED</div>
+                    </div>
+                    <canvas class="mini-chart" id="waitChart" width="200" height="80"></canvas>
+                    <div class="status-metrics">
+                        <span>Avg Wait: <strong id="avgWait">4.2h</strong></span>
+                        <span>Max Wait: <strong id="maxWait">8.7h</strong></span>
+                    </div>
+                </div>
+
+                <!-- Efficiency -->
+                <div class="status-card">
+                    <div class="status-card-header">
+                        <span class="status-icon">⚡</span>
+                        <span class="status-title">Efficiency</span>
+                        <div class="status-indicator" id="efficiencyStatus">OPTIMAL</div>
+                    </div>
+                    <canvas class="mini-chart" id="efficiencyChart" width="200" height="80"></canvas>
+                    <div class="status-metrics">
+                        <span>Overall: <strong id="overallEff">94.2%</strong></span>
+                        <span>Target: <strong id="targetEff">90%</strong></span>
+                    </div>
                 </div>
             </div>
-            <div class="typing-indicator" id="typingIndicator">
-                <span>AI is analyzing...</span>
-                <div class="typing-dots">
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
+
+            <!-- Critical Alerts Banner -->
+            <div class="critical-alerts-banner">
+                <div class="alert-ticker">
+                    <div class="alert-item critical">🚨 CONTAINER FLIP-OVER - Pier B Crane #3 - MAINTENANCE DISPATCHED</div>
+                    <div class="alert-item warning">⚠️ TRAFFIC CONGESTION - Main Channel - 6 VESSELS QUEUED</div>
+                    <div class="alert-item warning">⚠️ HIGH WAIT TIMES - Berth Assignment Delays - AVG 4.2H</div>
+                    <div class="alert-item critical">🚨 EQUIPMENT FAILURE - Pier 400 Crane #7 - OFFLINE</div>
+                    <div class="alert-item info">ℹ️ WEATHER ADVISORY - Wind Gusts 25+ Knots - MONITOR OPERATIONS</div>
                 </div>
-            </div>
-            <div class="chat-input-container">
-                <input type="text" class="chat-input" id="chatInput" placeholder="Ask about port operations, data, or request graphs..." maxlength="500">
-                <button class="chat-send-btn" id="chatSendBtn" onclick="sendMessage()">Send</button>
             </div>
         </div>
 
@@ -2688,6 +3026,7 @@ SHOW_GRAPH:vessel_traffic`;
         // Google Maps Integration
         let map;
         let vesselMarkers = [];
+        let structureLabels = [];
         // Use the same API key as Gemini since Google Cloud provides unified access
         
         // Make initGoogleMap globally accessible for the callback
@@ -2700,34 +3039,19 @@ SHOW_GRAPH:vessel_traffic`;
                 lng: -118.2639
             };
             
-            // Map options
+            // Map options with 3D view and default satellite labels enabled
             const mapOptions = {
-                zoom: 14,
+                zoom: 16,
                 center: portOfLA,
-                mapTypeId: 'satellite',
-                styles: [
-                    {
-                        featureType: 'water',
-                        elementType: 'geometry',
-                        stylers: [{ color: '#004981' }]
-                    },
-                    {
-                        featureType: 'landscape',
-                        elementType: 'geometry.fill',
-                        stylers: [{ color: '#f5f5f2' }]
-                    },
-                    {
-                        featureType: 'poi',
-                        elementType: 'geometry.fill',
-                        stylers: [{ color: '#d6d6d4' }]
-                    }
-                ],
+                mapTypeId: 'hybrid',  // Hybrid mode shows satellite imagery with labels
+                tilt: 45,  // Enable 3D tilt view
+                heading: 90,  // Angle the view
                 disableDefaultUI: false,
                 zoomControl: true,
                 mapTypeControl: true,
                 scaleControl: true,
                 streetViewControl: false,
-                rotateControl: false,
+                rotateControl: true,  // Enable rotation for 3D
                 fullscreenControl: true
             };
             
@@ -2749,6 +3073,18 @@ SHOW_GRAPH:vessel_traffic`;
                     // Add port boundaries
                     addPortBoundaries();
                     console.log('✅ Port boundaries added');
+                    
+                    // Add structure labels
+                    addStructureLabels();
+                    console.log('✅ Structure labels added');
+                    
+                    // Add 3D toggle control
+                    add3DToggleControl();
+                    console.log('✅ 3D toggle control added');
+                    
+                    // Add alert labels
+                    addAlertLabels();
+                    console.log('✅ Alert labels added');
                 } catch (error) {
                     console.error('❌ Error creating Google Map:', error);
                     createFallbackMap();
@@ -2762,18 +3098,18 @@ SHOW_GRAPH:vessel_traffic`;
         function addTerminalMarkers() {
             const terminals = [
                 // Main Container Terminals - more accurate locations
-                { name: 'APM Terminals Pier 400', lat: 33.7156, lng: -118.2394, capacity: '67%', type: 'Container' },
+                { name: 'APM Terminals Pier 400', lat: 33.7156, lng: -118.2720, capacity: '67%', type: 'Container' },
                 { name: 'TraPac Terminal', lat: 33.7391, lng: -118.2638, capacity: '92%', type: 'Container' },
                 { name: 'Everport Terminal', lat: 33.7348, lng: -118.2708, capacity: '78%', type: 'Container' },
-                { name: 'West Basin Container Terminal', lat: 33.7425, lng: -118.2515, capacity: '85%', type: 'Container' },
+                { name: 'West Basin Container Terminal', lat: 33.7425, lng: -118.2580, capacity: '85%', type: 'Container' },
                 { name: 'Yang Ming Terminal', lat: 33.7382, lng: -118.2595, capacity: '73%', type: 'Container' },
                 { name: 'Yusen Terminals (YTI)', lat: 33.7405, lng: -118.2565, capacity: '81%', type: 'Container' },
                 
                 // Specialized Terminals
                 { name: 'Toyota Logistics Services', lat: 33.7401, lng: -118.2542, capacity: '55%', type: 'Automotive' },
-                { name: 'World Cruise Center', lat: 33.7445, lng: -118.2489, capacity: '88%', type: 'Passenger' },
-                { name: 'Exxon Mobil Marine Terminal', lat: 33.7295, lng: -118.2745, capacity: '62%', type: 'Liquid Bulk' },
-                { name: 'Wilmington Marine Terminal', lat: 33.7225, lng: -118.2825, capacity: '45%', type: 'Dry Bulk' },
+                { name: 'World Cruise Center', lat: 33.7445, lng: -118.2650, capacity: '88%', type: 'Passenger' },
+                { name: 'Exxon Mobil Marine Terminal', lat: 33.7265, lng: -118.2580, capacity: '62%', type: 'Liquid Bulk' },
+                { name: 'Wilmington Marine Terminal', lat: 33.7845, lng: -118.2695, capacity: '45%', type: 'Dry Bulk' },
                 
                 // Additional Facilities
                 { name: 'Fenix Marine Services', lat: 33.7365, lng: -118.2655, capacity: '89%', type: 'Container' },
@@ -2844,25 +3180,25 @@ SHOW_GRAPH:vessel_traffic`;
             vesselMarkers = [];
             
             const vessels = [
-                // Container Ships - represented as rectangles
-                { name: 'MSC TRUST', lat: 33.7380, lng: -118.2720, type: 'container', length: 400, beam: 59 },
-                { name: 'EVERGREEN GLORY', lat: 33.7250, lng: -118.2650, type: 'container', length: 366, beam: 51 },
-                { name: 'MAERSK SEATTLE', lat: 33.7420, lng: -118.2600, type: 'container', length: 347, beam: 45 },
-                { name: 'COSCO SHIPPING', lat: 33.7290, lng: -118.2580, type: 'container', length: 380, beam: 54 },
-                { name: 'HYUNDAI FAITH', lat: 33.7360, lng: -118.2640, type: 'container', length: 335, beam: 43 },
-                { name: 'YANG MING', lat: 33.7330, lng: -118.2680, type: 'container', length: 321, beam: 42 },
-                { name: 'HAPAG LLOYD', lat: 33.7410, lng: -118.2560, type: 'container', length: 390, beam: 56 },
-                { name: 'ONE OLYMPUS', lat: 33.7320, lng: -118.2620, type: 'container', length: 400, beam: 58 },
+                // Container Ships - positioned at berths and anchorage areas
+                { name: 'MSC TRUST', lat: 33.7390, lng: -118.2480, type: 'container', length: 400, beam: 59 },
+                { name: 'EVERGREEN GLORY', lat: 33.7355, lng: -118.2515, type: 'container', length: 366, beam: 51 },
+                { name: 'MAERSK SEATTLE', lat: 33.7345, lng: -118.2490, type: 'container', length: 347, beam: 45 },
+                { name: 'COSCO SHIPPING', lat: 33.7375, lng: -118.2520, type: 'container', length: 380, beam: 54 },
+                { name: 'HYUNDAI FAITH', lat: 33.7365, lng: -118.2505, type: 'container', length: 335, beam: 43 },
+                { name: 'YANG MING', lat: 33.7330, lng: -118.2485, type: 'container', length: 321, beam: 42 },
+                { name: 'HAPAG LLOYD', lat: 33.7320, lng: -118.2475, type: 'container', length: 390, beam: 56 },
+                { name: 'ONE OLYMPUS', lat: 33.7310, lng: -118.2495, type: 'container', length: 400, beam: 58 },
                 
-                // Actual Ships - represented as ship shapes
-                { name: 'CHEVRON VOYAGER', lat: 33.7200, lng: -118.2750, type: 'tanker', length: 274, beam: 48 },
-                { name: 'VALERO EXPRESS', lat: 33.7150, lng: -118.2900, type: 'tanker', length: 228, beam: 32 },
-                { name: 'SHELL NAVIGATOR', lat: 33.7180, lng: -118.2820, type: 'tanker', length: 250, beam: 44 },
-                { name: 'APL BANGKOK', lat: 33.7220, lng: -118.2880, type: 'cargo', length: 210, beam: 30 },
-                { name: 'PACIFIC CARRIER', lat: 33.7170, lng: -118.2790, type: 'cargo', length: 185, beam: 28 },
-                { name: 'PACIFIC UNITY', lat: 33.7240, lng: -118.2760, type: 'cargo', length: 195, beam: 32 },
-                { name: 'LIBERTY STAR', lat: 33.7190, lng: -118.2740, type: 'bulk', length: 225, beam: 38 },
-                { name: 'OCEAN SPIRIT', lat: 33.7160, lng: -118.2830, type: 'bulk', length: 200, beam: 35 }
+                // Ships - positioned in channels and anchorage areas (in water)
+                { name: 'CHEVRON VOYAGER', lat: 33.7280, lng: -118.2420, type: 'tanker', length: 274, beam: 48 },
+                { name: 'VALERO EXPRESS', lat: 33.7260, lng: -118.2450, type: 'tanker', length: 228, beam: 32 },
+                { name: 'SHELL NAVIGATOR', lat: 33.7300, lng: -118.2440, type: 'tanker', length: 250, beam: 44 },
+                { name: 'APL BANGKOK', lat: 33.7220, lng: -118.2460, type: 'cargo', length: 210, beam: 30 },
+                { name: 'PACIFIC CARRIER', lat: 33.7240, lng: -118.2435, type: 'cargo', length: 185, beam: 28 },
+                { name: 'PACIFIC UNITY', lat: 33.7200, lng: -118.2445, type: 'cargo', length: 195, beam: 32 },
+                { name: 'LIBERTY STAR', lat: 33.7180, lng: -118.2425, type: 'bulk', length: 225, beam: 38 },
+                { name: 'OCEAN SPIRIT', lat: 33.7160, lng: -118.2415, type: 'bulk', length: 200, beam: 35 }
             ];
             
             vessels.forEach(vessel => {
@@ -2943,6 +3279,292 @@ SHOW_GRAPH:vessel_traffic`;
             });
             
             portPolygon.setMap(map);
+        }
+        
+        function addStructureLabels() {
+            const structures = [
+                // Major Infrastructure (no pier labels - using satellite map defaults)
+                { name: '🌉 Vincent Thomas Bridge', lat: 33.7474, lng: -118.2736, type: 'bridge' },
+                { name: '🚢 Main Channel', lat: 33.7250, lng: -118.2400, type: 'channel' },
+                { name: '⚓ Anchorage Area', lat: 33.7100, lng: -118.2300, type: 'anchorage' },
+                
+                // Breakwaters & Navigation
+                { name: '🌊 San Pedro Breakwater', lat: 33.7050, lng: -118.2250, type: 'breakwater' },
+                { name: '🌊 Long Beach Breakwater', lat: 33.7200, lng: -118.2100, type: 'breakwater' },
+                { name: '🗼 Angels Gate Lighthouse', lat: 33.7075, lng: -118.2487, type: 'lighthouse' },
+                
+                // Transportation
+                { name: '🚂 Rail Yard', lat: 33.7500, lng: -118.2750, type: 'rail' },
+                { name: '🛣️ Harbor Freeway', lat: 33.7550, lng: -118.2800, type: 'highway' }
+            ];
+            
+            structures.forEach(structure => {
+                // Create custom label marker
+                const labelIcon = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 0,
+                    fillOpacity: 0,
+                    strokeOpacity: 0
+                };
+                
+                const marker = new google.maps.Marker({
+                    position: { lat: structure.lat, lng: structure.lng },
+                    map: map,
+                    icon: labelIcon,
+                    title: structure.name
+                });
+                
+                // Create custom label overlay
+                const labelDiv = document.createElement('div');
+                labelDiv.style.cssText = `
+                    background: rgba(0, 0, 0, 0.8);
+                    color: white;
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    font-size: 11px;
+                    font-weight: 600;
+                    white-space: nowrap;
+                    pointer-events: none;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                    border: 1px solid rgba(255,255,255,0.2);
+                `;
+                labelDiv.textContent = structure.name;
+                
+                // Create info window with custom content
+                const infoWindow = new google.maps.InfoWindow({
+                    content: labelDiv,
+                    disableAutoPan: true,
+                    pixelOffset: new google.maps.Size(0, -10)
+                });
+                
+                // Show label always (persistent)
+                infoWindow.open(map, marker);
+                
+                structureLabels.push({ marker, infoWindow });
+            });
+        }
+        
+        function add3DToggleControl() {
+            // Create custom control for 3D toggle
+            const toggle3DControlDiv = document.createElement('div');
+            
+            // Set CSS for the control border
+            const toggle3DControl = document.createElement('div');
+            toggle3DControl.style.backgroundColor = '#fff';
+            toggle3DControl.style.border = '2px solid #fff';
+            toggle3DControl.style.borderRadius = '3px';
+            toggle3DControl.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+            toggle3DControl.style.cursor = 'pointer';
+            toggle3DControl.style.marginTop = '8px';
+            toggle3DControl.style.marginRight = '10px';
+            toggle3DControl.style.textAlign = 'center';
+            toggle3DControl.title = 'Toggle 3D View';
+            toggle3DControlDiv.appendChild(toggle3DControl);
+            
+            // Set CSS for the control interior
+            const toggle3DText = document.createElement('div');
+            toggle3DText.style.color = 'rgb(25,25,25)';
+            toggle3DText.style.fontFamily = 'Roboto,Arial,sans-serif';
+            toggle3DText.style.fontSize = '16px';
+            toggle3DText.style.lineHeight = '38px';
+            toggle3DText.style.paddingLeft = '5px';
+            toggle3DText.style.paddingRight = '5px';
+            toggle3DText.innerHTML = '🌐 3D';
+            toggle3DControl.appendChild(toggle3DText);
+            
+            let is3D = true;
+            
+            // Setup the click event listener
+            toggle3DControl.addEventListener('click', () => {
+                if (is3D) {
+                    // Switch to 2D view
+                    map.setTilt(0);
+                    map.setHeading(0);
+                    toggle3DText.innerHTML = '🗺️ 2D';
+                    is3D = false;
+                } else {
+                    // Switch to 3D view
+                    map.setTilt(45);
+                    map.setHeading(90);
+                    toggle3DText.innerHTML = '🌐 3D';
+                    is3D = true;
+                }
+            });
+            
+            // Add the control to the map
+            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(toggle3DControlDiv);
+        }
+        
+        function addAlertLabels() {
+            const alerts = [
+                // Critical Red Alerts
+                {
+                    name: '🚨 PIER B - 97% CAPACITY',
+                    lat: 33.7420, lng: -118.2620,
+                    level: 'critical',
+                    description: 'Container terminal at maximum capacity. Immediate attention required.',
+                    action: 'Redirect incoming vessels to Pier A or C'
+                },
+                {
+                    name: '⚠️ TRAFFIC CONGESTION',
+                    lat: 33.7280, lng: -118.2450,
+                    level: 'critical',
+                    description: 'Heavy vessel traffic in main channel. Delays expected.',
+                    action: 'Implement traffic control measures'
+                },
+                {
+                    name: '🔥 CRANE MALFUNCTION',
+                    lat: 33.7156, lng: -118.2720,
+                    level: 'critical',
+                    description: 'Pier 400 Crane #3 offline. Reduced loading capacity.',
+                    action: 'Maintenance crew dispatched. ETA: 2 hours'
+                },
+                
+                // Warning Yellow Alerts
+                {
+                    name: '⚡ HIGH TIDE WARNING',
+                    lat: 33.7200, lng: -118.2350,
+                    level: 'warning',
+                    description: 'Tide level: +3.2ft. Monitor smaller vessels.',
+                    action: 'Increase dock line monitoring'
+                },
+                {
+                    name: '🌊 WEATHER ADVISORY',
+                    lat: 33.7100, lng: -118.2300,
+                    level: 'warning',
+                    description: 'Wind gusts 25+ knots. Anchorage area affected.',
+                    action: 'Suspend small craft operations'
+                },
+                {
+                    name: '📦 CONTAINER BACKUP',
+                    lat: 33.7380, lng: -118.2570,
+                    level: 'warning',
+                    description: 'Pier C yard utilization at 89%. Approaching limit.',
+                    action: 'Accelerate outbound rail operations'
+                },
+                {
+                    name: '🚛 TRUCK QUEUE DELAY',
+                    lat: 33.7450, lng: -118.2700,
+                    level: 'warning',
+                    description: 'Gate processing time: 45+ minutes. Queue building.',
+                    action: 'Open additional inspection lanes'
+                },
+                {
+                    name: '⚓ VESSEL DELAY',
+                    lat: 33.7320, lng: -118.2400,
+                    level: 'warning',
+                    description: 'MSC TRUST delayed 3 hours. Schedule adjustment needed.',
+                    action: 'Notify cargo owners and adjust berth allocation'
+                },
+                {
+                    name: '🛢️ FUEL SPILL RISK',
+                    lat: 33.7265, lng: -118.2580,
+                    level: 'warning',
+                    description: 'Minor leak detected at liquid bulk terminal.',
+                    action: 'Environmental team monitoring'
+                }
+            ];
+            
+            alerts.forEach(alert => {
+                // Determine colors and styling based on alert level
+                let backgroundColor, borderColor, textColor, blinkClass;
+                
+                if (alert.level === 'critical') {
+                    backgroundColor = 'rgba(239, 68, 68, 0.95)'; // Red
+                    borderColor = '#dc2626';
+                    textColor = 'white';
+                    blinkClass = 'alert-blink-red';
+                } else {
+                    backgroundColor = 'rgba(251, 191, 36, 0.95)'; // Yellow
+                    borderColor = '#f59e0b';
+                    textColor = '#92400e';
+                    blinkClass = 'alert-blink-yellow';
+                }
+                
+                // Create alert marker
+                const alertIcon = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 0,
+                    fillOpacity: 0,
+                    strokeOpacity: 0
+                };
+                
+                const marker = new google.maps.Marker({
+                    position: { lat: alert.lat, lng: alert.lng },
+                    map: map,
+                    icon: alertIcon,
+                    title: alert.name,
+                    zIndex: 1000 // Ensure alerts appear above other markers
+                });
+                
+                // Create animated alert label
+                const alertDiv = document.createElement('div');
+                alertDiv.className = blinkClass;
+                alertDiv.style.cssText = `
+                    background: ${backgroundColor};
+                    color: ${textColor};
+                    padding: 6px 10px;
+                    border-radius: 6px;
+                    font-size: 10px;
+                    font-weight: 700;
+                    white-space: nowrap;
+                    pointer-events: auto;
+                    cursor: pointer;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+                    border: 2px solid ${borderColor};
+                    animation: pulse-${alert.level} 1.5s infinite;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                `;
+                alertDiv.textContent = alert.name;
+                
+                // Create detailed info window
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
+                        <div style="font-family: Inter, sans-serif; padding: 12px; max-width: 300px;">
+                            <h3 style="margin: 0 0 8px 0; color: ${alert.level === 'critical' ? '#dc2626' : '#f59e0b'}; font-size: 14px; font-weight: 700;">
+                                ${alert.name}
+                            </h3>
+                            <div style="margin-bottom: 8px;">
+                                <strong>Status:</strong> ${alert.description}
+                            </div>
+                            <div style="margin-bottom: 8px; padding: 8px; background: #f3f4f6; border-radius: 4px;">
+                                <strong>Action Required:</strong> ${alert.action}
+                            </div>
+                            <div style="font-size: 11px; color: #6b7280;">
+                                Alert Level: <span style="color: ${alert.level === 'critical' ? '#dc2626' : '#f59e0b'}; font-weight: 600; text-transform: uppercase;">${alert.level}</span>
+                            </div>
+                        </div>
+                    `,
+                    disableAutoPan: false,
+                    pixelOffset: new google.maps.Size(0, -15)
+                });
+                
+                // Show alert label immediately (persistent)
+                const alertInfoWindow = new google.maps.InfoWindow({
+                    content: alertDiv,
+                    disableAutoPan: true,
+                    pixelOffset: new google.maps.Size(0, -10)
+                });
+                
+                alertInfoWindow.open(map, marker);
+                
+                // Click handler for detailed info
+                alertDiv.addEventListener('click', () => {
+                    // Close the persistent alert label temporarily
+                    alertInfoWindow.close();
+                    // Show detailed info
+                    infoWindow.open(map, marker);
+                    
+                    // Reopen alert label after 5 seconds
+                    setTimeout(() => {
+                        infoWindow.close();
+                        alertInfoWindow.open(map, marker);
+                    }, 5000);
+                });
+                
+                structureLabels.push({ marker, infoWindow: alertInfoWindow, detailWindow: infoWindow });
+            });
         }
         
         function createFallbackMap() {
@@ -3085,6 +3707,169 @@ SHOW_GRAPH:vessel_traffic`;
                     }
                 });
             }, 6000);
+        });
+
+        // Real-Time Status Dashboard Functions
+        function initStatusDashboard() {
+            initMiniCharts();
+            updateStatusIndicators();
+            
+            // Update every 5 seconds
+            setInterval(() => {
+                updateMiniCharts();
+                updateStatusIndicators();
+                updateStatusMetrics();
+            }, 5000);
+        }
+
+        function initMiniCharts() {
+            const chartIds = ['loadingChart', 'trafficChart', 'envChart', 'capacityChart', 'waitChart', 'efficiencyChart'];
+            
+            chartIds.forEach(id => {
+                const canvas = document.getElementById(id);
+                const ctx = canvas.getContext('2d');
+                
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw initial chart
+                drawMiniChart(ctx, canvas.width, canvas.height, id);
+            });
+        }
+
+        function drawMiniChart(ctx, width, height, chartType) {
+            // Generate sample data points
+            const points = 20;
+            const data = [];
+            
+            for (let i = 0; i < points; i++) {
+                let value;
+                switch(chartType) {
+                    case 'loadingChart':
+                        value = 70 + Math.sin(i * 0.3) * 15 + Math.random() * 10;
+                        break;
+                    case 'trafficChart':
+                        value = 60 + Math.sin(i * 0.2) * 20 + Math.random() * 15;
+                        break;
+                    case 'envChart':
+                        value = 85 + Math.sin(i * 0.1) * 10 + Math.random() * 5;
+                        break;
+                    case 'capacityChart':
+                        value = 80 + Math.sin(i * 0.4) * 15 + Math.random() * 10;
+                        break;
+                    case 'waitChart':
+                        value = 50 + Math.sin(i * 0.25) * 25 + Math.random() * 15;
+                        break;
+                    case 'efficiencyChart':
+                        value = 90 + Math.sin(i * 0.15) * 8 + Math.random() * 5;
+                        break;
+                    default:
+                        value = 50 + Math.random() * 40;
+                }
+                data.push(Math.max(0, Math.min(100, value)));
+            }
+
+            // Draw chart background
+            ctx.fillStyle = '#1e293b';
+            ctx.fillRect(0, 0, width, height);
+
+            // Draw grid lines
+            ctx.strokeStyle = '#475569';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 4; i++) {
+                const y = (height / 4) * i;
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+
+            // Draw chart line
+            ctx.strokeStyle = chartType.includes('wait') || chartType.includes('traffic') ? '#f59e0b' : '#10b981';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+
+            data.forEach((value, index) => {
+                const x = (width / (points - 1)) * index;
+                const y = height - (value / 100) * height;
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            ctx.stroke();
+
+            // Fill area under curve
+            ctx.globalAlpha = 0.3;
+            ctx.fillStyle = chartType.includes('wait') || chartType.includes('traffic') ? '#f59e0b' : '#10b981';
+            ctx.lineTo(width, height);
+            ctx.lineTo(0, height);
+            ctx.closePath();
+            ctx.fill();
+            ctx.globalAlpha = 1;
+        }
+
+        function updateMiniCharts() {
+            const chartIds = ['loadingChart', 'trafficChart', 'envChart', 'capacityChart', 'waitChart', 'efficiencyChart'];
+            
+            chartIds.forEach(id => {
+                const canvas = document.getElementById(id);
+                const ctx = canvas.getContext('2d');
+                drawMiniChart(ctx, canvas.width, canvas.height, id);
+            });
+        }
+
+        function updateStatusIndicators() {
+            const indicators = [
+                { id: 'loadingStatus', statuses: ['NORMAL', 'BUSY', 'OVERLOAD'] },
+                { id: 'trafficStatus', statuses: ['LIGHT', 'MODERATE', 'HEAVY', 'CONGESTED'] },
+                { id: 'envStatus', statuses: ['EXCELLENT', 'GOOD', 'FAIR'] },
+                { id: 'capacityStatus', statuses: ['LOW', 'MODERATE', 'HIGH', 'CRITICAL'] },
+                { id: 'waitStatus', statuses: ['NORMAL', 'ELEVATED', 'HIGH', 'CRITICAL'] },
+                { id: 'efficiencyStatus', statuses: ['OPTIMAL', 'GOOD', 'FAIR', 'POOR'] }
+            ];
+
+            indicators.forEach(indicator => {
+                const element = document.getElementById(indicator.id);
+                const randomStatus = indicator.statuses[Math.floor(Math.random() * indicator.statuses.length)];
+                element.textContent = randomStatus;
+                
+                // Update colors
+                element.className = 'status-indicator';
+                if (['NORMAL', 'GOOD', 'EXCELLENT', 'OPTIMAL', 'LIGHT'].includes(randomStatus)) {
+                    element.style.background = '#10b981';
+                    element.style.color = 'white';
+                } else if (['ELEVATED', 'HIGH', 'BUSY', 'MODERATE', 'HEAVY', 'FAIR'].includes(randomStatus)) {
+                    element.style.background = '#f59e0b';
+                    element.style.color = 'white';
+                } else {
+                    element.style.background = '#ef4444';
+                    element.style.color = 'white';
+                }
+            });
+        }
+
+        function updateStatusMetrics() {
+            // Update various metrics with realistic variations
+            document.getElementById('activeCranes').textContent = `${40 + Math.floor(Math.random() * 7)}/47`;
+            document.getElementById('avgLoadTime').textContent = `${(2.0 + Math.random() * 1.5).toFixed(1)}h`;
+            document.getElementById('vesselsInChannel').textContent = `${15 + Math.floor(Math.random() * 8)}`;
+            document.getElementById('queueLength').textContent = `${Math.floor(Math.random() * 10)} vessels`;
+            document.getElementById('airQuality').textContent = `${85 + Math.floor(Math.random() * 10)} ppm`;
+            document.getElementById('compliance').textContent = `${98 + Math.floor(Math.random() * 3)}%`;
+            document.getElementById('throughput').textContent = `${85 + Math.floor(Math.random() * 10)}%`;
+            document.getElementById('bottlenecks').textContent = `${Math.floor(Math.random() * 4)} active`;
+            document.getElementById('avgWait').textContent = `${(3.5 + Math.random() * 2).toFixed(1)}h`;
+            document.getElementById('maxWait').textContent = `${(7 + Math.random() * 3).toFixed(1)}h`;
+            document.getElementById('overallEff').textContent = `${(92 + Math.random() * 6).toFixed(1)}%`;
+            document.getElementById('targetEff').textContent = '90%';
+        }
+
+        // Initialize status dashboard when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initStatusDashboard();
         });
     </script>
 </body>

@@ -52,51 +52,41 @@ This digital twin dashboard provides a real-time visualization of Port of Los An
    cd pola-digital-twin
    ```
 
-2. **Configure API Key**
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure API Keys**
    
-   **Option A: Environment Variable (Recommended)**
+   **Environment Variables (Recommended for Local Development)**
    ```bash
    # Add to ~/.bashrc or ~/.zshrc
-   export GEMINI_API_KEY="your_actual_api_key_here"
+   export GEMINI_API_KEY="your_gemini_api_key_here"
+   export GOOGLE_MAPS_API_KEY="your_google_maps_api_key_here"
    
    # Reload your shell configuration
    source ~/.bashrc
    ```
    
-   **Option B: Direct Code Modification**
-   - Open `index.html` in a text editor
-   - Find: `const GEMINI_API_KEY = process?.env?.GEMINI_API_KEY || window?.GEMINI_API_KEY || 'YOUR_GEMINI_API_KEY';`
-   - Replace the fallback `'YOUR_GEMINI_API_KEY'` with your actual key
-   
-   **Get your API key at:** https://aistudio.google.com/app/apikey
+   **Get your API keys:**
+   - **Gemini API**: https://aistudio.google.com/app/apikey
+   - **Google Maps API**: https://console.cloud.google.com/
    
    **Enable Required APIs:**
    - Generative AI API (for Gemini chat)
    - Maps JavaScript API (for satellite view)
 
-3. **Run the Application**
+4. **Run the Application**
    
-   **Option A: Direct Browser Open**
+   **Local Development (Recommended)**
    ```bash
-   open index.html
+   npm start
    ```
    
-   **Option B: Local Server (Recommended)**
-   ```bash
-   # Python 3
-   python -m http.server 8000
+   Then visit: `http://localhost:3000`
    
-   # Python 2
-   python -m SimpleHTTPServer 8000
-   
-   # Node.js
-   npx serve .
-   
-   # PHP
-   php -S localhost:8000
-   ```
-   
-   Then visit: `http://localhost:8000`
+   The Node.js server will automatically load API keys from your environment variables and serve the dynamic configuration.
 
 ## 🎯 Usage Guide
 
@@ -240,9 +230,10 @@ This project is provided as-is for demonstration purposes. Please ensure complia
 
 For technical issues or questions:
 1. Check the browser console for error messages
-2. Verify your Gemini API key is correctly configured
+2. Verify your API keys are correctly configured in environment variables
 3. Ensure you're using a modern web browser
-4. Test with a local HTTP server rather than file:// protocol
+4. Use `npm start` for local development (do not open index.html directly)
+5. Verify both Gemini API and Google Maps API are enabled in Google Cloud Console
 
 ---
 
