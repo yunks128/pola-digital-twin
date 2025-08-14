@@ -8,6 +8,8 @@ A comprehensive digital twin visualization system for the Port of Los Angeles, f
 
 This digital twin dashboard provides a real-time visualization of Port of Los Angeles operations, combining multiple data sources to create a comprehensive maritime operations center. The system features autonomous AI agents, environmental monitoring, vessel tracking, and intelligent chat assistance powered by Google's Gemini AI.
 
+**📱 Fully Mobile Compatible**: Responsive design optimized for smartphones, tablets, and desktop computers with touch-friendly controls and adaptive layouts.
+
 ## ✨ Features
 
 ### 🚢 Maritime Operations

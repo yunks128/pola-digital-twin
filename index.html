@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Port of Los Angeles - Digital Twin Command Center</title>
     <style>
         * {
@@ -26,6 +26,33 @@
             height: 100vh;
             gap: 1px;
             background: #e2e8f0;
+        }
+
+        /* Mobile Layout - Stack vertically on small screens */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: 60px auto auto auto auto;
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .sidebar {
+                order: 2;
+            }
+            
+            .main-view {
+                order: 1;
+                min-height: 300px;
+            }
+            
+            .control-panel {
+                order: 3;
+            }
+            
+            .status-dashboard {
+                order: 4;
+            }
         }
 
         .header {
@@ -73,6 +100,37 @@
             display: flex;
             align-items: center;
             gap: 2rem;
+        }
+
+        /* Mobile Header Styles */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 1rem;
+                height: 60px;
+            }
+            
+            .logo {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            
+            .header-title {
+                font-size: 1rem;
+            }
+            
+            .header-subtitle {
+                font-size: 0.75rem;
+            }
+            
+            .header-info {
+                gap: 1rem;
+            }
+            
+            .status-indicator {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
+            }
         }
 
         .status-indicator {
@@ -131,6 +189,35 @@
             overflow: hidden;
         }
 
+        /* Mobile Main View */
+        @media (max-width: 768px) {
+            .main-view {
+                min-height: 50vh;
+                overflow: visible;
+            }
+            
+            #googleMap {
+                width: 100%;
+                height: 50vh;
+                border-radius: 0;
+            }
+            
+            .vessel-marker {
+                transform: scale(0.8);
+            }
+            
+            .alert-label {
+                padding: 0.3rem 0.5rem;
+                font-size: 0.7rem;
+                max-width: 120px;
+            }
+            
+            .structure-label {
+                padding: 0.2rem 0.4rem;
+                font-size: 0.65rem;
+            }
+        }
+
         .control-panel {
             background: white;
             padding: 1.5rem;
@@ -157,6 +244,33 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        /* Mobile Sidebar Styles */
+        @media (max-width: 768px) {
+            .sidebar, .control-panel {
+                padding: 1rem;
+                max-height: none;
+                overflow: visible;
+            }
+            
+            .section-title {
+                font-size: 1.1rem;
+                margin-bottom: 0.75rem;
+            }
+            
+            .agent-card, .metric-card {
+                margin-bottom: 0.75rem;
+                padding: 0.75rem;
+            }
+            
+            .agent-name, .metric-label {
+                font-size: 0.85rem;
+            }
+            
+            .confidence-level, .metric-value {
+                font-size: 0.8rem;
+            }
         }
 
         .agent-card {
@@ -1343,6 +1457,94 @@
             border: 1px solid #e2e8f0;
         }
 
+        /* Mobile Chat and AI Recommendations */
+        @media (max-width: 768px) {
+            .chat-interface-integrated {
+                padding: 0.75rem;
+            }
+            
+            .chat-interface-integrated .chat-messages {
+                height: 150px;
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            
+            .chat-interface-integrated .chat-input {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            
+            .chat-interface-integrated .chat-send-btn {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .ai-recommendations-panel {
+                padding: 0.75rem;
+            }
+            
+            .recommendation-item {
+                padding: 0.75rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .recommendation-title {
+                font-size: 0.85rem;
+            }
+            
+            .recommendation-description {
+                font-size: 0.8rem;
+            }
+            
+            .rec-action-btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
+            }
+            
+            .workflow-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            /* Mobile 3D viewpoints buttons */
+            .integration-list button {
+                padding: 6px 10px;
+                font-size: 0.75rem;
+                margin: 2px 0;
+                width: 100%;
+                text-align: left;
+            }
+        }
+
+        /* Tablet Layout - Intermediate screen sizes */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .dashboard-container {
+                grid-template-columns: 250px 1fr 300px;
+                grid-template-rows: 70px 1fr 160px;
+            }
+            
+            .header {
+                padding: 0 1.5rem;
+            }
+            
+            .sidebar, .control-panel {
+                padding: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 0.95rem;
+            }
+            
+            .status-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.8rem;
+            }
+            
+            .status-dashboard {
+                padding: 1.2rem;
+            }
+        }
+
         .chat-interface-integrated .chat-input-container {
             display: flex;
             gap: 0.5rem;
@@ -1626,6 +1828,39 @@
             grid-template-columns: repeat(6, 1fr);
             gap: 1rem;
             margin-bottom: 1.5rem;
+        }
+
+        /* Mobile Status Dashboard */
+        @media (max-width: 768px) {
+            .status-dashboard {
+                padding: 1rem;
+            }
+            
+            .status-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+            
+            .status-card {
+                padding: 0.75rem;
+            }
+            
+            .status-title {
+                font-size: 0.8rem;
+            }
+            
+            .status-indicator {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.4rem;
+            }
+            
+            .mini-chart {
+                height: 60px;
+            }
+            
+            .status-metrics {
+                font-size: 0.75rem;
+            }
         }
 
         .status-card {
@@ -4418,7 +4653,7 @@ Which visualization would you like to see? I'll provide detailed analysis along 
         function add3DToggleControl() {
             if (!map) return;
             
-            // Create 3D toggle button
+            // Create 3D toggle button with mobile-friendly styling
             const toggleDiv = document.createElement('div');
             toggleDiv.style.backgroundColor = photorealistic3DEnabled ? '#10b981' : '#6b7280';
             toggleDiv.style.border = '1px solid #ccc';
@@ -4436,6 +4671,10 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             toggleDiv.style.minWidth = '80px';
             toggleDiv.innerHTML = photorealistic3DEnabled ? '🏗️ 3D ON' : '🗺️ 2D';
             toggleDiv.title = 'Toggle 3D photorealistic view';
+            
+            // Add mobile-friendly touch events
+            toggleDiv.style.touchAction = 'manipulation';
+            toggleDiv.style.userSelect = 'none';
             
             toggleDiv.addEventListener('click', () => {
                 photorealistic3DEnabled = !photorealistic3DEnabled;
