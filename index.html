@@ -2761,27 +2761,64 @@ SHOW_GRAPH:vessel_traffic`;
         
         function addTerminalMarkers() {
             const terminals = [
-                { name: 'Terminal Island Container Terminal', lat: 33.7397, lng: -118.2580, capacity: '85%', type: 'Container' },
+                // Main Container Terminals - more accurate locations
                 { name: 'APM Terminals Pier 400', lat: 33.7156, lng: -118.2394, capacity: '67%', type: 'Container' },
-                { name: 'TraPac Terminal', lat: 33.7389, lng: -118.2620, capacity: '92%', type: 'Container' },
-                { name: 'Everport Terminal', lat: 33.7345, lng: -118.2689, capacity: '78%', type: 'Container' },
+                { name: 'TraPac Terminal', lat: 33.7391, lng: -118.2638, capacity: '92%', type: 'Container' },
+                { name: 'Everport Terminal', lat: 33.7348, lng: -118.2708, capacity: '78%', type: 'Container' },
+                { name: 'West Basin Container Terminal', lat: 33.7425, lng: -118.2515, capacity: '85%', type: 'Container' },
+                { name: 'Yang Ming Terminal', lat: 33.7382, lng: -118.2595, capacity: '73%', type: 'Container' },
+                { name: 'Yusen Terminals (YTI)', lat: 33.7405, lng: -118.2565, capacity: '81%', type: 'Container' },
+                
+                // Specialized Terminals
                 { name: 'Toyota Logistics Services', lat: 33.7401, lng: -118.2542, capacity: '55%', type: 'Automotive' },
-                { name: 'World Cruise Center', lat: 33.7445, lng: -118.2489, capacity: '88%', type: 'Passenger' }
+                { name: 'World Cruise Center', lat: 33.7445, lng: -118.2489, capacity: '88%', type: 'Passenger' },
+                { name: 'Exxon Mobil Marine Terminal', lat: 33.7295, lng: -118.2745, capacity: '62%', type: 'Liquid Bulk' },
+                { name: 'Wilmington Marine Terminal', lat: 33.7225, lng: -118.2825, capacity: '45%', type: 'Dry Bulk' },
+                
+                // Additional Facilities
+                { name: 'Fenix Marine Services', lat: 33.7365, lng: -118.2655, capacity: '89%', type: 'Container' },
+                { name: 'Pacific Container Terminal', lat: 33.7415, lng: -118.2535, capacity: '76%', type: 'Container' }
             ];
             
             terminals.forEach(terminal => {
+                // Different icons for different terminal types
+                let terminalIcon;
+                const capacityNum = parseInt(terminal.capacity.replace('%', ''));
+                
+                if (terminal.type === 'Container') {
+                    terminalIcon = {
+                        path: 'M 0,0 L 12,0 L 12,8 L 0,8 Z',
+                        scale: 1.2,
+                        fillColor: capacityNum > 85 ? '#ef4444' : capacityNum > 75 ? '#f59e0b' : '#10b981',
+                        fillOpacity: 0.9,
+                        strokeColor: '#ffffff',
+                        strokeWeight: 2
+                    };
+                } else if (terminal.type === 'Automotive') {
+                    terminalIcon = {
+                        path: 'M 0,4 L 2,0 L 10,0 L 12,4 L 10,8 L 2,8 Z',
+                        scale: 1.0,
+                        fillColor: '#8b5cf6',
+                        fillOpacity: 0.9,
+                        strokeColor: '#ffffff',
+                        strokeWeight: 2
+                    };
+                } else {
+                    terminalIcon = {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 8,
+                        fillColor: capacityNum > 85 ? '#ef4444' : '#0ea5e9',
+                        fillOpacity: 0.8,
+                        strokeColor: '#ffffff',
+                        strokeWeight: 2
+                    };
+                }
+                
                 const marker = new google.maps.Marker({
                     position: { lat: terminal.lat, lng: terminal.lng },
                     map: map,
                     title: `${terminal.name} - ${terminal.capacity} - ${terminal.type}`,
-                    icon: {
-                        path: google.maps.SymbolPath.CIRCLE,
-                        scale: 8,
-                        fillColor: terminal.capacity.replace('%', '') > 85 ? '#ef4444' : '#0ea5e9',
-                        fillOpacity: 0.8,
-                        strokeColor: '#ffffff',
-                        strokeWeight: 2
-                    }
+                    icon: terminalIcon
                 });
                 
                 const infoWindow = new google.maps.InfoWindow({
@@ -2807,28 +2844,57 @@ SHOW_GRAPH:vessel_traffic`;
             vesselMarkers = [];
             
             const vessels = [
-                { name: 'MSC TRUST', lat: 33.7280, lng: -118.2720, type: 'container' },
-                { name: 'EVERGREEN GLORY', lat: 33.7250, lng: -118.2650, type: 'container' },
-                { name: 'MAERSK SEATTLE', lat: 33.7320, lng: -118.2800, type: 'container' },
-                { name: 'CHEVRON VOYAGER', lat: 33.7200, lng: -118.2750, type: 'tanker' },
-                { name: 'COSCO SHIPPING', lat: 33.7290, lng: -118.2680, type: 'container' },
-                { name: 'APL BANGKOK', lat: 33.7180, lng: -118.2820, type: 'cargo' },
-                { name: 'HYUNDAI FAITH', lat: 33.7260, lng: -118.2760, type: 'container' },
-                { name: 'VALERO EXPRESS', lat: 33.7150, lng: -118.2900, type: 'tanker' },
-                { name: 'YANG MING', lat: 33.7230, lng: -118.2880, type: 'container' },
-                { name: 'PACIFIC CARRIER', lat: 33.7170, lng: -118.2600, type: 'cargo' }
+                // Container Ships - represented as rectangles
+                { name: 'MSC TRUST', lat: 33.7380, lng: -118.2720, type: 'container', length: 400, beam: 59 },
+                { name: 'EVERGREEN GLORY', lat: 33.7250, lng: -118.2650, type: 'container', length: 366, beam: 51 },
+                { name: 'MAERSK SEATTLE', lat: 33.7420, lng: -118.2600, type: 'container', length: 347, beam: 45 },
+                { name: 'COSCO SHIPPING', lat: 33.7290, lng: -118.2580, type: 'container', length: 380, beam: 54 },
+                { name: 'HYUNDAI FAITH', lat: 33.7360, lng: -118.2640, type: 'container', length: 335, beam: 43 },
+                { name: 'YANG MING', lat: 33.7330, lng: -118.2680, type: 'container', length: 321, beam: 42 },
+                { name: 'HAPAG LLOYD', lat: 33.7410, lng: -118.2560, type: 'container', length: 390, beam: 56 },
+                { name: 'ONE OLYMPUS', lat: 33.7320, lng: -118.2620, type: 'container', length: 400, beam: 58 },
+                
+                // Actual Ships - represented as ship shapes
+                { name: 'CHEVRON VOYAGER', lat: 33.7200, lng: -118.2750, type: 'tanker', length: 274, beam: 48 },
+                { name: 'VALERO EXPRESS', lat: 33.7150, lng: -118.2900, type: 'tanker', length: 228, beam: 32 },
+                { name: 'SHELL NAVIGATOR', lat: 33.7180, lng: -118.2820, type: 'tanker', length: 250, beam: 44 },
+                { name: 'APL BANGKOK', lat: 33.7220, lng: -118.2880, type: 'cargo', length: 210, beam: 30 },
+                { name: 'PACIFIC CARRIER', lat: 33.7170, lng: -118.2790, type: 'cargo', length: 185, beam: 28 },
+                { name: 'PACIFIC UNITY', lat: 33.7240, lng: -118.2760, type: 'cargo', length: 195, beam: 32 },
+                { name: 'LIBERTY STAR', lat: 33.7190, lng: -118.2740, type: 'bulk', length: 225, beam: 38 },
+                { name: 'OCEAN SPIRIT', lat: 33.7160, lng: -118.2830, type: 'bulk', length: 200, beam: 35 }
             ];
             
             vessels.forEach(vessel => {
-                const vesselIcon = {
-                    path: 'M 0,0 L 20,0 L 25,5 L 20,10 L 0,10 L 0,0 Z',
-                    scale: 0.8,
-                    fillColor: vessel.type === 'container' ? '#0ea5e9' : vessel.type === 'tanker' ? '#f59e0b' : '#10b981',
-                    fillOpacity: 0.8,
-                    strokeColor: '#ffffff',
-                    strokeWeight: 1,
-                    rotation: Math.random() * 360
-                };
+                let vesselIcon;
+                
+                if (vessel.type === 'container') {
+                    // Container ships represented as rectangles (containers on deck)
+                    vesselIcon = {
+                        path: 'M 0,0 L 30,0 L 30,12 L 0,12 Z',
+                        scale: 0.6,
+                        fillColor: '#0ea5e9',
+                        fillOpacity: 0.9,
+                        strokeColor: '#1e40af',
+                        strokeWeight: 2,
+                        rotation: Math.random() * 360
+                    };
+                } else {
+                    // Actual ships represented with ship-like shapes
+                    let color = '#10b981'; // default cargo
+                    if (vessel.type === 'tanker') color = '#f59e0b';
+                    else if (vessel.type === 'bulk') color = '#8b5cf6';
+                    
+                    vesselIcon = {
+                        path: 'M 0,6 L 4,0 L 28,0 L 32,6 L 28,12 L 4,12 Z',
+                        scale: 0.5,
+                        fillColor: color,
+                        fillOpacity: 0.8,
+                        strokeColor: '#ffffff',
+                        strokeWeight: 1,
+                        rotation: Math.random() * 360
+                    };
+                }
                 
                 const marker = new google.maps.Marker({
                     position: { lat: vessel.lat, lng: vessel.lng },
@@ -2842,6 +2908,8 @@ SHOW_GRAPH:vessel_traffic`;
                         <div style="font-family: Inter, sans-serif; padding: 8px;">
                             <h3 style="margin: 0 0 8px 0; color: #1e293b; font-size: 14px;">${vessel.name}</h3>
                             <p style="margin: 4px 0; font-size: 12px;"><strong>Type:</strong> ${vessel.type.toUpperCase()}</p>
+                            <p style="margin: 4px 0; font-size: 12px;"><strong>Length:</strong> ${vessel.length}m</p>
+                            <p style="margin: 4px 0; font-size: 12px;"><strong>Beam:</strong> ${vessel.beam}m</p>
                             <p style="margin: 4px 0; font-size: 12px;"><strong>Tracking:</strong> AIS + Radar</p>
                             <p style="margin: 4px 0; font-size: 12px;"><strong>Confidence:</strong> ${Math.floor(88 + Math.random() * 10)}%</p>
                         </div>
