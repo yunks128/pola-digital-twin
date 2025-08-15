@@ -5119,75 +5119,78 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                 displayTrafficRecommendations();
             }
             
-            // Always have at least one proactive recommendation with varied scenarios
-            if (currentRecommendations.length === 0) {
-                const proactiveRecommendations = [
-                    {
-                        title: "Proactive System Optimization",
-                        description: "All systems operating normally. Running preventive maintenance checks and optimizing resource allocation.",
-                        priority: "low",
-                        action: () => "Performing system health checks and optimizing resource allocation algorithms"
-                    },
-                    {
-                        title: "Predictive Maintenance Alert",
-                        description: "AI detected subtle patterns indicating potential equipment wear. Schedule preventive maintenance for optimal uptime.",
-                        priority: "medium",
-                        action: () => "Scheduling crane #7 and #12 for preventive maintenance during low-traffic window"
-                    },
-                    {
-                        title: "Weather Pattern Analysis",
-                        description: "Incoming weather system in 6 hours may affect operations. Recommend preparation protocols.",
-                        priority: "medium",
-                        action: () => "Pre-positioning weather protection equipment and adjusting shift schedules"
-                    },
-                    {
-                        title: "Critical Security Protocol Update",
-                        description: "New maritime security threat intelligence requires immediate protocol enhancement.",
-                        priority: "high",
-                        action: () => "Implementing enhanced vessel screening and updating security checkpoints"
-                    },
-                    {
-                        title: "Supply Chain Disruption Risk",
-                        description: "AI models predict 23% chance of supply chain delays from upstream ports. Recommend contingency activation.",
-                        priority: "high",
-                        action: () => "Activating alternate supplier protocols and increasing inventory buffers"
-                    },
-                    {
-                        title: "Energy Efficiency Optimization",
-                        description: "Peak energy consumption window approaching. Recommend load balancing to reduce costs.",
-                        priority: "low",
-                        action: () => "Shifting non-critical operations to off-peak hours and optimizing crane power usage"
-                    },
-                    {
-                        title: "Environmental Compliance Check",
-                        description: "Monthly environmental impact assessment shows opportunity for emissions reduction.",
-                        priority: "medium",
-                        action: () => "Implementing shore power for 4 additional berths and optimizing truck routing"
-                    },
-                    {
-                        title: "Workforce Optimization Alert",
-                        description: "Staff scheduling analysis indicates potential understaffing during evening shift peak.",
-                        priority: "medium",
-                        action: () => "Adjusting shift assignments and activating on-call personnel for 6PM-10PM window"
-                    },
-                    {
-                        title: "Cybersecurity Threat Detection",
-                        description: "Unusual network activity patterns detected. Recommend immediate security assessment.",
-                        priority: "high",
-                        action: () => "Isolating affected systems and conducting comprehensive security audit"
-                    }
-                ];
+            // Always show multiple recommendations based on current map alerts
+            const alertBasedRecommendations = [
+                // Critical Priority - Red Alerts from Map
+                {
+                    title: "URGENT: Pier B Capacity Crisis",
+                    description: "Terminal at 97% capacity. Immediate vessel redirection needed to prevent gridlock.",
+                    priority: "high",
+                    action: () => "Redirecting MSC TRUST and EVERGREEN GLORY to Pier A. Activating overflow protocols."
+                },
+                {
+                    title: "CRITICAL: Traffic Channel Congestion", 
+                    description: "Main shipping channel blocked. Deploy tugboats and implement traffic control measures.",
+                    priority: "high",
+                    action: () => "Dispatching 3 tugboats to clear channel. Rerouting incoming vessels to alternate approaches."
+                },
+                {
+                    title: "URGENT: Pier 400 Crane Failure",
+                    description: "Crane #3 offline reducing loading capacity by 30%. Maintenance crew deployed.",
+                    priority: "high", 
+                    action: () => "Emergency repair initiated. Redistributing container operations to Cranes #1 and #4."
+                },
                 
-                // Select a random proactive recommendation
-                const randomRec = proactiveRecommendations[Math.floor(Math.random() * proactiveRecommendations.length)];
+                // Medium Priority - Yellow Alerts from Map
+                {
+                    title: "High Tide Advisory Response",
+                    description: "Tide level +3.2ft affecting small craft operations. Enhanced monitoring required.",
+                    priority: "medium",
+                    action: () => "Increasing dock line inspections. Restricting small vessel movements until tide recedes."
+                },
+                {
+                    title: "Weather Impact Mitigation",
+                    description: "25+ knot winds affecting anchorage. Suspend non-essential operations.",
+                    priority: "medium", 
+                    action: () => "Implementing weather protocols. Moving vulnerable vessels to protected berths."
+                },
+                {
+                    title: "Container Yard Optimization",
+                    description: "Pier C at 89% capacity. Accelerate rail operations to prevent backup.",
+                    priority: "medium",
+                    action: () => "Prioritizing outbound rail movements. Opening additional yard sections."
+                },
+                {
+                    title: "Gate Processing Delays",
+                    description: "Truck queue time exceeding 45 minutes. Open additional inspection lanes.",
+                    priority: "medium",
+                    action: () => "Activating Lanes 7-9. Deploying additional inspection personnel."
+                },
                 
+                // Low Priority - Proactive Measures  
+                {
+                    title: "Vessel Schedule Optimization",
+                    description: "MSC TRUST 3-hour delay creating schedule cascade. Adjust berth allocations.",
+                    priority: "low",
+                    action: () => "Rescheduling dependent operations. Notifying cargo stakeholders of delays."
+                },
+                {
+                    title: "Environmental Monitoring",
+                    description: "Minor leak detected at bulk terminal. Environmental team monitoring situation.",
+                    priority: "low", 
+                    action: () => "Containment protocols active. Monitoring for any expansion of affected area."
+                }
+            ];
+            
+            // Add multiple recommendations to show comprehensive alert coverage
+            alertBasedRecommendations.forEach((rec, index) => {
                 currentRecommendations.push({
-                    id: `rec_${Date.now()}_proactive`,
-                    ...randomRec,
+                    id: `rec_${Date.now()}_${index}`,
+                    ...rec,
                     timestamp: new Date(),
                     status: 'pending'
                 });
-            }
+            });
             
             // Sort by priority (high -> medium -> low)
             const priorityOrder = { high: 3, medium: 2, low: 1 };
