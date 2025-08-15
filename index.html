@@ -5099,7 +5099,17 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                 title: "Manage Vessel Queue",
                 description: "Extended vessel queue detected. Implement priority scheduling for time-sensitive cargo.",
                 priority: "high", 
-                action: () => "Prioritizing 4 vessels with perishable cargo and extending pier operating hours"
+                action: () => "Prioritizing 4 vessels with perishable cargo and extending pier operating hours",
+                steps: [
+                    "1. Review vessel queue and identify time-sensitive cargo (perishables, medical supplies, auto parts)",
+                    "2. Priority vessels: MSC TRUST (refrigerated containers), EVERGREEN GLORY (automotive parts)",
+                    "3. Contact vessel agents to confirm cargo urgency and berth preferences", 
+                    "4. Reassign MSC TRUST from standard Queue Position 6 to Priority Position 2",
+                    "5. Extend Pier B operating hours by 4 hours to accommodate priority vessels",
+                    "6. Notify affected vessels of revised berthing schedule and estimated delays"
+                ],
+                impact: "Reduces cargo spoilage, meets critical delivery deadlines, improves customer satisfaction",
+                risk: "Medium - Extended operations increase labor costs and fatigue"
             },
             {
                 trigger: (metrics) => metrics.avgWait > 6,
