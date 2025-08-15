@@ -5131,17 +5131,6 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             },
             {
                 trigger: (metrics) => {
-                    const heavyTrafficCount = Object.values(currentTrafficConditions || {})
-                        .filter(point => point.congestionLevel === 'heavy').length;
-                    return heavyTrafficCount > 2;
-                },
-                title: "Critical Traffic Congestion",
-                description: "Multiple traffic monitoring points showing heavy congestion. Implement traffic management protocols.",
-                priority: "high",
-                action: () => "Activating traffic control measures and deploying alternative route guidance"
-            },
-            {
-                trigger: (metrics) => {
                     const nearCapacityLots = employeeAccessPoints.filter(lot => 
                         (lot.currentOccupancy / lot.capacity) > 0.9
                     ).length;
