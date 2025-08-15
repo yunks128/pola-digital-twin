@@ -2527,11 +2527,11 @@
                 {id: 1, x: 32, y: 45, name: 'MSC TRUST', type: 'container', confidence: 97.3, ais: true, radar: true},
                 {id: 2, x: 55, y: 65, name: 'EVERGREEN GLORY', type: 'container', confidence: 94.1, ais: true, radar: true},
                 {id: 3, x: 78, y: 35, name: 'MAERSK SEATTLE', type: 'container', confidence: 98.7, ais: true, radar: false},
-                {id: 4, x: 25, y: 75, name: 'CHEVRON VOYAGER', type: 'tanker', confidence: 91.2, ais: false, radar: true},
+                {id: 4, x: 35, y: 50, name: 'CHEVRON VOYAGER', type: 'tanker', confidence: 91.2, ais: false, radar: true},
                 {id: 5, x: 65, y: 50, name: 'COSCO SHIPPING', type: 'container', confidence: 96.8, ais: true, radar: true},
                 {id: 6, x: 15, y: 85, name: 'APL BANGKOK', type: 'cargo', confidence: 89.4, ais: true, radar: true},
                 {id: 7, x: 45, y: 80, name: 'HYUNDAI FAITH', type: 'container', confidence: 93.6, ais: true, radar: false},
-                {id: 8, x: 85, y: 25, name: 'VALERO EXPRESS', type: 'tanker', confidence: 95.2, ais: true, radar: true},
+                {id: 8, x: 55, y: 40, name: 'VALERO EXPRESS', type: 'tanker', confidence: 95.2, ais: true, radar: true},
                 {id: 9, x: 70, y: 70, name: 'YANG MING', type: 'container', confidence: 92.8, ais: true, radar: true},
                 {id: 10, x: 40, y: 30, name: 'PACIFIC CARRIER', type: 'cargo', confidence: 88.5, ais: true, radar: false}
             ];
@@ -3566,8 +3566,8 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                     console.log('✅ 3D photorealistic models enabled');
                     
                     // Add structure labels
-                    addStructureLabels();
-                    console.log('✅ Structure labels added');
+                    // addStructureLabels();
+                    // console.log('✅ Structure labels added');
                     
                     // 3D navigation controls removed per user request
                     // add3DNavigationControls();
@@ -3686,9 +3686,9 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                 { name: 'ONE OLYMPUS', lat: 33.7310, lng: -118.2495, type: 'container', length: 400, beam: 58 },
                 
                 // Ships - positioned in channels and anchorage areas (in water)
-                { name: 'CHEVRON VOYAGER', lat: 33.7280, lng: -118.2420, type: 'tanker', length: 274, beam: 48 },
-                { name: 'VALERO EXPRESS', lat: 33.7260, lng: -118.2450, type: 'tanker', length: 228, beam: 32 },
-                { name: 'SHELL NAVIGATOR', lat: 33.7300, lng: -118.2440, type: 'tanker', length: 250, beam: 44 },
+                { name: 'CHEVRON VOYAGER', lat: 33.7250, lng: -118.2380, type: 'tanker', length: 274, beam: 48 },
+                { name: 'VALERO EXPRESS', lat: 33.7200, lng: -118.2360, type: 'tanker', length: 228, beam: 32 },
+                { name: 'SHELL NAVIGATOR', lat: 33.7180, lng: -118.2350, type: 'tanker', length: 250, beam: 44 },
                 { name: 'APL BANGKOK', lat: 33.7220, lng: -118.2460, type: 'cargo', length: 210, beam: 30 },
                 { name: 'PACIFIC CARRIER', lat: 33.7240, lng: -118.2435, type: 'cargo', length: 185, beam: 28 },
                 { name: 'PACIFIC UNITY', lat: 33.7200, lng: -118.2445, type: 'cargo', length: 195, beam: 32 },
@@ -3789,8 +3789,7 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                 { name: '🗼 Angels Gate Lighthouse', lat: 33.7075, lng: -118.2487, type: 'lighthouse' },
                 
                 // Transportation
-                { name: '🚂 Rail Yard', lat: 33.7500, lng: -118.2750, type: 'rail' },
-                { name: '🛣️ Harbor Freeway', lat: 33.7550, lng: -118.2800, type: 'highway' }
+                { name: '🚂 Rail Yard', lat: 33.7500, lng: -118.2750, type: 'rail' }
             ];
             
             structures.forEach(structure => {
@@ -3894,21 +3893,21 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             const alerts = [
                 // Critical Red Alerts
                 {
-                    name: '🚨 PIER B - 97% CAPACITY',
+                    name: 'PIER B - 97% CAPACITY',
                     lat: 33.7420, lng: -118.2620,
                     level: 'critical',
                     description: 'Container terminal at maximum capacity. Immediate attention required.',
                     action: 'Redirect incoming vessels to Pier A or C'
                 },
                 {
-                    name: '⚠️ TRAFFIC CONGESTION',
+                    name: 'TRAFFIC CONGESTION',
                     lat: 33.7280, lng: -118.2450,
                     level: 'critical',
                     description: 'Heavy vessel traffic in main channel. Delays expected.',
                     action: 'Implement traffic control measures'
                 },
                 {
-                    name: '🔥 CRANE MALFUNCTION',
+                    name: 'CRANE MALFUNCTION',
                     lat: 33.7156, lng: -118.2720,
                     level: 'critical',
                     description: 'Pier 400 Crane #3 offline. Reduced loading capacity.',
@@ -3917,42 +3916,42 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                 
                 // Warning Yellow Alerts
                 {
-                    name: '⚡ HIGH TIDE WARNING',
+                    name: 'HIGH TIDE WARNING',
                     lat: 33.7200, lng: -118.2350,
                     level: 'warning',
                     description: 'Tide level: +3.2ft. Monitor smaller vessels.',
                     action: 'Increase dock line monitoring'
                 },
                 {
-                    name: '🌊 WEATHER ADVISORY',
+                    name: 'WEATHER ADVISORY',
                     lat: 33.7100, lng: -118.2300,
                     level: 'warning',
                     description: 'Wind gusts 25+ knots. Anchorage area affected.',
                     action: 'Suspend small craft operations'
                 },
                 {
-                    name: '📦 CONTAINER BACKUP',
+                    name: 'CONTAINER BACKUP',
                     lat: 33.7380, lng: -118.2570,
                     level: 'warning',
                     description: 'Pier C yard utilization at 89%. Approaching limit.',
                     action: 'Accelerate outbound rail operations'
                 },
                 {
-                    name: '🚛 TRUCK QUEUE DELAY',
+                    name: 'TRUCK QUEUE DELAY',
                     lat: 33.7450, lng: -118.2700,
                     level: 'warning',
                     description: 'Gate processing time: 45+ minutes. Queue building.',
                     action: 'Open additional inspection lanes'
                 },
                 {
-                    name: '⚓ VESSEL DELAY',
+                    name: 'VESSEL DELAY',
                     lat: 33.7320, lng: -118.2400,
                     level: 'warning',
                     description: 'MSC TRUST delayed 3 hours. Schedule adjustment needed.',
                     action: 'Notify cargo owners and adjust berth allocation'
                 },
                 {
-                    name: '🛢️ FUEL SPILL RISK',
+                    name: 'FUEL SPILL RISK',
                     lat: 33.7265, lng: -118.2580,
                     level: 'warning',
                     description: 'Minor leak detected at liquid bulk terminal.',
@@ -3961,27 +3960,26 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             ];
             
             alerts.forEach(alert => {
-                // Determine colors and styling based on alert level
-                let backgroundColor, borderColor, textColor, blinkClass;
+                // Determine colors based on alert level
+                let fillColor, strokeColor;
                 
                 if (alert.level === 'critical') {
-                    backgroundColor = 'rgba(239, 68, 68, 0.95)'; // Red
-                    borderColor = '#dc2626';
-                    textColor = 'white';
-                    blinkClass = 'alert-blink-red';
+                    fillColor = '#dc2626'; // Red
+                    strokeColor = '#991b1b'; // Dark red
                 } else {
-                    backgroundColor = 'rgba(251, 191, 36, 0.95)'; // Yellow
-                    borderColor = '#f59e0b';
-                    textColor = '#92400e';
-                    blinkClass = 'alert-blink-yellow';
+                    fillColor = '#f59e0b'; // Yellow
+                    strokeColor = '#d97706'; // Dark yellow
                 }
                 
-                // Create alert marker
+                // Create flashing circle alert marker
                 const alertIcon = {
                     path: google.maps.SymbolPath.CIRCLE,
-                    scale: 0,
-                    fillOpacity: 0,
-                    strokeOpacity: 0
+                    scale: 8,
+                    fillColor: fillColor,
+                    fillOpacity: 0.8,
+                    strokeColor: strokeColor,
+                    strokeWeight: 2,
+                    strokeOpacity: 1
                 };
                 
                 const marker = new google.maps.Marker({
@@ -3992,28 +3990,16 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                     zIndex: 1000 // Ensure alerts appear above other markers
                 });
                 
-                // Create animated alert label
-                const alertDiv = document.createElement('div');
-                alertDiv.className = blinkClass;
-                alertDiv.style.cssText = `
-                    background: ${backgroundColor};
-                    color: ${textColor};
-                    padding: 6px 10px;
-                    border-radius: 6px;
-                    font-size: 10px;
-                    font-weight: 700;
-                    white-space: nowrap;
-                    pointer-events: auto;
-                    cursor: pointer;
-                    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-                    border: 2px solid ${borderColor};
-                    animation: pulse-${alert.level} 1.5s infinite;
-                    text-transform: uppercase;
-                    letter-spacing: 0.5px;
-                `;
-                alertDiv.textContent = alert.name;
+                // Add blinking animation
+                let isVisible = true;
+                setInterval(() => {
+                    const icon = marker.getIcon();
+                    icon.fillOpacity = isVisible ? 0.1 : 0.8;
+                    marker.setIcon(icon);
+                    isVisible = !isVisible;
+                }, 750); // Blink every 750ms
                 
-                // Create detailed info window
+                // Create detailed info window for click
                 const infoWindow = new google.maps.InfoWindow({
                     content: `
                         <div style="font-family: Inter, sans-serif; padding: 12px; max-width: 300px;">
@@ -4035,30 +4021,12 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                     pixelOffset: new google.maps.Size(0, -15)
                 });
                 
-                // Show alert label immediately (persistent)
-                const alertInfoWindow = new google.maps.InfoWindow({
-                    content: alertDiv,
-                    disableAutoPan: true,
-                    pixelOffset: new google.maps.Size(0, -10)
-                });
-                
-                alertInfoWindow.open(map, marker);
-                
                 // Click handler for detailed info
-                alertDiv.addEventListener('click', () => {
-                    // Close the persistent alert label temporarily
-                    alertInfoWindow.close();
-                    // Show detailed info
+                marker.addListener('click', () => {
                     infoWindow.open(map, marker);
-                    
-                    // Reopen alert label after 5 seconds
-                    setTimeout(() => {
-                        infoWindow.close();
-                        alertInfoWindow.open(map, marker);
-                    }, 5000);
                 });
                 
-                structureLabels.push({ marker, infoWindow: alertInfoWindow, detailWindow: infoWindow });
+                structureLabels.push({ marker, infoWindow: infoWindow });
             });
         }
         
