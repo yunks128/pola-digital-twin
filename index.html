@@ -1448,7 +1448,7 @@
         }
 
         .chat-interface-integrated .chat-messages {
-            height: 200px;
+            height: 300px;
             overflow-y: auto;
             margin-bottom: 1rem;
             padding: 0.5rem;
@@ -1464,7 +1464,7 @@
             }
             
             .chat-interface-integrated .chat-messages {
-                height: 150px;
+                height: 200px;
                 padding: 0.5rem;
                 font-size: 0.85rem;
             }
@@ -2029,87 +2029,25 @@
 
         <!-- Sidebar - AI Agents -->
         <div class="sidebar">
-            <div class="section-title">🧠 Autonomous AI Agents</div>
+            <div class="section-title">🤖 Agentic AI Workflow</div>
             
-            <div class="agent-card">
-                <div class="agent-header">
-                    <div class="agent-name">Bathymetric Fusion AI</div>
-                    <div class="agent-status status-active">ACTIVE</div>
+            <!-- AI Recommendations Panel -->
+            <div class="ai-recommendations-panel">
+                <div class="recommendation-header">
+                    <span class="ai-status" id="aiStatus">🟢 ANALYZING</span>
+                    <span class="timestamp" id="lastAnalysis">Last scan: --:--</span>
                 </div>
-                <div class="agent-metrics">
-                    <span>Depth Models: 4</span>
-                    <span>Accuracy: 99.1%</span>
-                    <span>Sedimentation: Live</span>
-                    <span>Tidal Sync: Real-time</span>
+                
+                <div class="active-recommendations" id="activeRecommendations">
+                    <!-- Recommendations will be populated here -->
                 </div>
-                <div class="confidence-bar">
-                    <div class="confidence-fill" style="width: 95%;"></div>
-                </div>
-            </div>
-
-            <div class="agent-card">
-                <div class="agent-header">
-                    <div class="agent-name">Environmental Compliance</div>
-                    <div class="agent-status status-auto">AUTO-GEN</div>
-                </div>
-                <div class="agent-metrics">
-                    <span>Air Quality: 89ppm</span>
-                    <span>Compliance: 100%</span>
-                    <span>Water Temp: 68.3°F</span>
-                    <span>Reports: 3 Auto</span>
-                </div>
-                <div class="confidence-bar">
-                    <div class="confidence-fill" style="width: 92%;"></div>
+                
+                <div class="workflow-actions">
+                    <button class="action-btn scan-btn" onclick="triggerAIScan()">🔍 Trigger AI Scan</button>
+                    <button class="action-btn auto-btn" onclick="toggleAutoMode()" id="autoModeBtn">⚡ Enable Auto Mode</button>
                 </div>
             </div>
 
-            <div class="agent-card">
-                <div class="agent-header">
-                    <div class="agent-name">Risk Assessment AI</div>
-                    <div class="agent-status status-active">ACTIVE</div>
-                </div>
-                <div class="agent-metrics">
-                    <span>Risk Score: 0.23</span>
-                    <span>Certainty: 94.7%</span>
-                    <span>Alerts: 2 Auto</span>
-                    <span>Mitigation: Active</span>
-                </div>
-                <div class="confidence-bar">
-                    <div class="confidence-fill" style="width: 88%;"></div>
-                </div>
-            </div>
-
-            <div class="agent-card">
-                <div class="agent-header">
-                    <div class="agent-name">Cross-Port Orchestrator</div>
-                    <div class="agent-status status-sync">SYNC</div>
-                </div>
-                <div class="agent-metrics">
-                    <span>Global Ports: 8</span>
-                    <span>Data Sync: 99.8%</span>
-                    <span>Latency: 12ms</span>
-                    <span>Predictions: Live</span>
-                </div>
-                <div class="confidence-bar">
-                    <div class="confidence-fill" style="width: 97%;"></div>
-                </div>
-            </div>
-
-            <div class="agent-card">
-                <div class="agent-header">
-                    <div class="agent-name">Edge Compute Manager</div>
-                    <div class="agent-status status-active">REAL-TIME</div>
-                </div>
-                <div class="agent-metrics">
-                    <span>Nodes: 47 Active</span>
-                    <span>Efficiency: 96.8%</span>
-                    <span>Inference: <2ms</span>
-                    <span>Load: 34%</span>
-                </div>
-                <div class="confidence-bar">
-                    <div class="confidence-fill" style="width: 91%;"></div>
-                </div>
-            </div>
         </div>
 
         <!-- Main View - Port of LA Map -->
@@ -2251,25 +2189,6 @@
 
         <!-- Control Panel -->
         <div class="control-panel">
-            <div class="section-title">🤖 Agentic AI Workflow</div>
-            
-            <!-- AI Recommendations Panel -->
-            <div class="ai-recommendations-panel">
-                <div class="recommendation-header">
-                    <span class="ai-status" id="aiStatus">🟢 ANALYZING</span>
-                    <span class="timestamp" id="lastAnalysis">Last scan: --:--</span>
-                </div>
-                
-                <div class="active-recommendations" id="activeRecommendations">
-                    <!-- Recommendations will be populated here -->
-                </div>
-                
-                <div class="workflow-actions">
-                    <button class="action-btn scan-btn" onclick="triggerAIScan()">🔍 Trigger AI Scan</button>
-                    <button class="action-btn auto-btn" onclick="toggleAutoMode()" id="autoModeBtn">⚡ Enable Auto Mode</button>
-                </div>
-            </div>
-
             <div class="section-title">💬 AI Assistant Chat</div>
             
             <!-- Chat Interface Integrated -->
