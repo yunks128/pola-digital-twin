@@ -2095,6 +2095,469 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+
+        /* Traffic Optimization Styles */
+        .traffic-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 400px;
+            max-height: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            z-index: 99;
+            overflow: hidden;
+        }
+
+        .traffic-header {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .traffic-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .traffic-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .traffic-btn {
+            padding: 0.4rem 0.8rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .traffic-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .traffic-btn.active {
+            background: rgba(255, 255, 255, 0.9);
+            color: #d97706;
+            font-weight: 600;
+        }
+
+        .traffic-content {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .traffic-view {
+            display: none;
+            padding: 1rem;
+        }
+
+        .traffic-view.active {
+            display: block;
+        }
+
+        .traffic-overview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .traffic-metric {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.8rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .metric-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f59e0b;
+        }
+
+        .metric-desc {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin: 0.3rem 0;
+        }
+
+        .metric-status {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .metric-status.good {
+            background: #dcfce7;
+            color: #059669;
+            border: 1px solid #bbf7d0;
+        }
+
+        .metric-status.warning {
+            background: #fef3c7;
+            color: #d97706;
+            border: 1px solid #fde68a;
+        }
+
+        .metric-status.critical {
+            background: #fecaca;
+            color: #dc2626;
+            border: 1px solid #fca5a5;
+        }
+
+        .live-alerts, .route-suggestions, .alerts-list {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .alert-item, .route-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .alert-item:last-child, .route-item:last-child {
+            border-bottom: none;
+        }
+
+        .alert-content, .route-content {
+            flex: 1;
+        }
+
+        .alert-title, .route-title {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .alert-details, .route-details {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .alert-time, .route-time {
+            font-size: 0.7rem;
+            color: #94a3b8;
+        }
+
+        .alert-severity {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .severity-low { background: #10b981; }
+        .severity-medium { background: #f59e0b; }
+        .severity-high { background: #ef4444; }
+        .severity-critical { background: #dc2626; animation: pulse 2s infinite; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .route-action, .alert-action {
+            padding: 0.3rem 0.8rem;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .route-action:hover, .alert-action:hover {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            transform: translateY(-1px);
+        }
+
+        .alert-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.4rem 0.8rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #64748b;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            border-color: #0ea5e9;
+        }
+
+        .route-savings {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.3rem;
+        }
+
+        .savings-item {
+            background: #ecfdf5;
+            border: 1px solid #bbf7d0;
+            color: #059669;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        /* Map Traffic Visualization Styles */
+        .congestion-zone {
+            position: absolute;
+            border-radius: 8px;
+            border: 2px solid;
+            backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .congestion-zone.critical {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: #ef4444;
+            animation: pulse-red 2s infinite;
+        }
+
+        .congestion-zone.high {
+            background: rgba(245, 158, 11, 0.3);
+            border-color: #f59e0b;
+        }
+
+        .congestion-zone.medium {
+            background: rgba(234, 179, 8, 0.25);
+            border-color: #eab308;
+        }
+
+        .congestion-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            text-align: center;
+            padding: 0.2rem 0.4rem;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 4px;
+        }
+
+        @keyframes pulse-red {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            }
+            50% { 
+                box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+            }
+        }
+
+        .truck-marker {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .truck-marker:hover {
+            transform: scale(1.3);
+            z-index: 20;
+        }
+
+        .truck-marker.moving {
+            filter: brightness(1.2) saturate(1.5);
+        }
+
+        .truck-marker.delayed {
+            filter: hue-rotate(45deg) brightness(0.9);
+            animation: bounce 2s infinite;
+        }
+
+        .truck-marker.congested {
+            filter: hue-rotate(0deg) brightness(0.7) saturate(0.8);
+            animation: shake 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-5px); }
+            60% { transform: translateY(-3px); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
+        }
+
+        .truck-info {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .truck-marker:hover .truck-info {
+            opacity: 1;
+        }
+
+        .traffic-flow {
+            position: absolute;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .traffic-flow:hover {
+            opacity: 1;
+        }
+
+        .traffic-flow.good {
+            background: linear-gradient(90deg, #10b981, #059669);
+        }
+
+        .traffic-flow.moderate {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+        }
+
+        .traffic-flow.slow {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+
+        .traffic-flow.congested {
+            background: linear-gradient(90deg, #dc2626, #991b1b);
+            animation: pulse-flow 3s infinite;
+        }
+
+        @keyframes pulse-flow {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .port-area {
+            position: absolute;
+            border: 2px dashed #64748b;
+            border-radius: 12px;
+            background: rgba(248, 250, 252, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .port-area:hover {
+            background: rgba(248, 250, 252, 0.2);
+            border-color: #0ea5e9;
+        }
+
+        .area-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 0.3rem;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .traffic-status {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .traffic-status.good {
+            background: #dcfce7;
+            color: #059669;
+            border: 1px solid #bbf7d0;
+        }
+
+        .traffic-status.moderate {
+            background: #fef3c7;
+            color: #d97706;
+            border: 1px solid #fde68a;
+        }
+
+        .traffic-status.high {
+            background: #fecaca;
+            color: #dc2626;
+            border: 1px solid #fca5a5;
+        }
+
+        .route-line.suggested {
+            animation: dash-flow 3s linear infinite;
+        }
+
+        @keyframes dash-flow {
+            0% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: 30; }
+        }
+
+        .route-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
     </style>
 </head>
 <body>
@@ -2157,6 +2620,80 @@
                 <!-- Map Overlay for Interactive Elements -->
                 <div class="map-overlay" id="mapOverlay">
                     <!-- Vessel markers will be added here dynamically -->
+                    
+                    <!-- Traffic Congestion Zones -->
+                    <div class="congestion-zone critical" style="top: 25%; left: 40%; width: 15%; height: 8%;" title="Vincent Thomas Bridge - Critical Congestion">
+                        <div class="congestion-label">🚧 Bridge Construction</div>
+                    </div>
+                    
+                    <div class="congestion-zone high" style="top: 45%; left: 20%; width: 12%; height: 10%;" title="Terminal Island Freeway - High Traffic">
+                        <div class="congestion-label">🚨 Accident</div>
+                    </div>
+                    
+                    <div class="congestion-zone medium" style="top: 60%; left: 55%; width: 18%; height: 6%;" title="Container Terminal - Moderate Delays">
+                        <div class="congestion-label">📦 High Volume</div>
+                    </div>
+                    
+                    <!-- Truck Markers -->
+                    <div class="truck-marker delayed" style="top: 28%; left: 42%;" data-truck="TRK002" title="TRK002 - Delayed 25min">
+                        🚛
+                        <div class="truck-info">TRK002<br>25min delay</div>
+                    </div>
+                    
+                    <div class="truck-marker moving" style="top: 35%; left: 65%;" data-truck="TRK001" title="TRK001 - On Schedule">
+                        🚛
+                        <div class="truck-info">TRK001<br>12min delay</div>
+                    </div>
+                    
+                    <div class="truck-marker congested" style="top: 62%; left: 58%;" data-truck="TRK004" title="TRK004 - Congested">
+                        🚛
+                        <div class="truck-info">TRK004<br>30min delay</div>
+                    </div>
+                    
+                    <div class="truck-marker moving" style="top: 70%; left: 30%;" data-truck="TRK003" title="TRK003 - Moving">
+                        🚛
+                        <div class="truck-info">TRK003<br>5min delay</div>
+                    </div>
+                    
+                    <div class="truck-marker moving" style="top: 80%; left: 45%;" data-truck="TRK005" title="TRK005 - On Route">
+                        🚛
+                        <div class="truck-info">TRK005<br>8min delay</div>
+                    </div>
+                    
+                    <!-- Route Suggestions Overlay -->
+                    <div class="route-overlay" id="routeOverlay" style="display: none;">
+                        <!-- Alternative route from Vincent Thomas Bridge -->
+                        <svg class="route-line suggested" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+                            <path d="M 42% 28% Q 35% 35% 30% 50% Q 40% 60% 58% 62%" stroke="#10b981" stroke-width="3" fill="none" stroke-dasharray="10,5"/>
+                        </svg>
+                        
+                        <!-- Original congested route -->
+                        <svg class="route-line original" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+                            <path d="M 42% 28% L 50% 35% L 58% 62%" stroke="#ef4444" stroke-width="2" fill="none" opacity="0.6"/>
+                        </svg>
+                    </div>
+                    
+                    <!-- Traffic Flow Indicators -->
+                    <div class="traffic-flow slow" style="top: 25%; left: 38%; width: 20%; height: 2%;" title="Slow Traffic - Vincent Thomas Bridge"></div>
+                    <div class="traffic-flow congested" style="top: 47%; left: 18%; width: 16%; height: 2%;" title="Stop-and-Go Traffic"></div>
+                    <div class="traffic-flow moderate" style="top: 62%; left: 53%; width: 22%; height: 2%;" title="Moderate Traffic"></div>
+                    <div class="traffic-flow good" style="top: 72%; left: 28%; width: 15%; height: 2%;" title="Free Flowing"></div>
+                    
+                    <!-- Port Areas with Traffic Status -->
+                    <div class="port-area" style="top: 15%; left: 60%; width: 25%; height: 15%;" title="Pier 400 - Moderate Traffic">
+                        <div class="area-label">Pier 400</div>
+                        <div class="traffic-status moderate">Moderate</div>
+                    </div>
+                    
+                    <div class="port-area" style="top: 55%; left: 70%; width: 20%; height: 20%;" title="Container Terminal - High Volume">
+                        <div class="area-label">Container Terminal</div>
+                        <div class="traffic-status high">High Volume</div>
+                    </div>
+                    
+                    <div class="port-area" style="top: 75%; left: 15%; width: 20%; height: 15%;" title="Rail Yard - Clear">
+                        <div class="area-label">Rail Yard</div>
+                        <div class="traffic-status good">Clear</div>
+                    </div>
                 </div>
 
                 <!-- Live Data Fusion Overlay -->
@@ -2182,6 +2719,64 @@
                         <div class="data-item">
                             <div class="data-label">Vessel AIS</div>
                             <div class="data-value">1,247 Tracked</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Traffic Optimization Panel -->
+                <div class="traffic-panel" id="trafficPanel">
+                    <div class="traffic-header">
+                        <div class="traffic-title">🚛 Smart Traffic Optimization</div>
+                        <div class="traffic-controls">
+                            <button class="traffic-btn active" onclick="showTrafficView('live')">Live Traffic</button>
+                            <button class="traffic-btn" onclick="showTrafficView('routes')">Route Planning</button>
+                            <button class="traffic-btn" onclick="showTrafficView('alerts')">Active Alerts</button>
+                        </div>
+                    </div>
+                    
+                    <div class="traffic-content" id="trafficContent">
+                        <!-- Live Traffic View -->
+                        <div class="traffic-view active" id="liveTraffic">
+                            <div class="traffic-overview">
+                                <div class="traffic-metric">
+                                    <div class="metric-number">47</div>
+                                    <div class="metric-desc">Active Trucks</div>
+                                    <div class="metric-status good">All Tracked</div>
+                                </div>
+                                <div class="traffic-metric">
+                                    <div class="metric-number">12</div>
+                                    <div class="metric-desc">Congestion Zones</div>
+                                    <div class="metric-status warning">2 Critical</div>
+                                </div>
+                                <div class="traffic-metric">
+                                    <div class="metric-number">8min</div>
+                                    <div class="metric-desc">Avg Delay</div>
+                                    <div class="metric-status good">Improving</div>
+                                </div>
+                            </div>
+                            <div class="live-alerts" id="liveAlerts">
+                                <!-- Live alerts populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <!-- Route Planning View -->
+                        <div class="traffic-view" id="routePlanning">
+                            <div class="route-suggestions" id="routeSuggestions">
+                                <!-- Route suggestions populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <!-- Active Alerts View -->
+                        <div class="traffic-view" id="activeAlerts">
+                            <div class="alert-filters">
+                                <button class="filter-btn active" onclick="filterAlerts('all')">All</button>
+                                <button class="filter-btn" onclick="filterAlerts('critical')">Critical</button>
+                                <button class="filter-btn" onclick="filterAlerts('trucks')">Trucks</button>
+                                <button class="filter-btn" onclick="filterAlerts('employees')">Staff</button>
+                            </div>
+                            <div class="alerts-list" id="alertsList">
+                                <!-- Alerts populated by JavaScript -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -5631,8 +6226,381 @@ Which visualization would you like to see? I'll provide detailed analysis along 
         }
 
         // Initialize agentic AI system
+        // Traffic Optimization System
+        const trafficData = {
+            trucks: [
+                { id: 'TRK001', location: 'Terminal Island', destination: 'Warehouse District', status: 'moving', delay: 12 },
+                { id: 'TRK002', location: 'Vincent Thomas Bridge', destination: 'Container Terminal', status: 'delayed', delay: 25 },
+                { id: 'TRK003', location: 'Harbor Freeway', destination: 'Rail Yard', status: 'moving', delay: 5 },
+                { id: 'TRK004', location: 'Pier 400', destination: 'Storage Area', status: 'congested', delay: 30 },
+                { id: 'TRK005', location: 'World Cruise Center', destination: 'Maintenance Dock', status: 'moving', delay: 8 }
+            ],
+            alerts: [
+                { id: 1, type: 'congestion', severity: 'high', location: 'Vincent Thomas Bridge', description: 'Heavy traffic due to construction', time: '2 min ago', affected: 'trucks' },
+                { id: 2, type: 'accident', severity: 'critical', location: 'Terminal Island Freeway', description: 'Vehicle incident blocking 2 lanes', time: '5 min ago', affected: 'both' },
+                { id: 3, type: 'construction', severity: 'medium', location: 'Pier 300 Access Road', description: 'Lane closure for maintenance', time: '15 min ago', affected: 'trucks' },
+                { id: 4, type: 'weather', severity: 'low', location: 'Harbor Area', description: 'Light fog reducing visibility', time: '22 min ago', affected: 'both' },
+                { id: 5, type: 'congestion', severity: 'medium', location: 'Container Terminal', description: 'High container pickup volume', time: '8 min ago', affected: 'trucks' }
+            ],
+            routes: [
+                { 
+                    id: 'R001', 
+                    truck: 'TRK002', 
+                    original: 'Vincent Thomas Bridge → Container Terminal', 
+                    suggested: 'Harbor Freeway → Terminal Island → Container Terminal',
+                    savings: { time: '18 min', fuel: '2.3 gal', cost: '$12' },
+                    reason: 'Avoiding bridge construction congestion'
+                },
+                {
+                    id: 'R002',
+                    truck: 'TRK004',
+                    original: 'Pier 400 → Storage Area',
+                    suggested: 'Pier 400 → Back Channel → Storage Area',
+                    savings: { time: '12 min', fuel: '1.8 gal', cost: '$8' },
+                    reason: 'Bypassing container terminal congestion'
+                },
+                {
+                    id: 'R003',
+                    employee: 'Staff Shuttle',
+                    original: 'Admin Building → Maintenance Yard',
+                    suggested: 'Admin Building → East Channel → Maintenance Yard',
+                    savings: { time: '8 min', fuel: '0.9 gal', cost: '$5' },
+                    reason: 'Avoiding peak traffic on main routes'
+                }
+            ]
+        };
+
+        function showTrafficView(view) {
+            document.querySelectorAll('.traffic-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.traffic-view').forEach(v => v.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(view === 'live' ? 'liveTraffic' : view === 'routes' ? 'routePlanning' : 'activeAlerts').classList.add('active');
+            
+            if (view === 'live') {
+                updateLiveAlerts();
+            } else if (view === 'routes') {
+                updateRouteRecommendations();
+            } else if (view === 'alerts') {
+                updateAlertsList();
+            }
+        }
+
+        function updateLiveAlerts() {
+            const liveAlertsContainer = document.getElementById('liveAlerts');
+            const recentAlerts = trafficData.alerts.slice(0, 3);
+            
+            liveAlertsContainer.innerHTML = `
+                <div style="color: #f59e0b; font-weight: 600; margin-bottom: 0.8rem; font-size: 0.9rem;">🚨 Current Traffic Alerts</div>
+                ${recentAlerts.map(alert => `
+                    <div class="alert-item">
+                        <div class="alert-severity severity-${alert.severity}"></div>
+                        <div class="alert-content">
+                            <div class="alert-title">${alert.location}</div>
+                            <div class="alert-details">${alert.description}</div>
+                            <div class="alert-time">${alert.time}</div>
+                        </div>
+                        <button class="alert-action" onclick="resolveAlert(${alert.id})">View</button>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        function updateRouteRecommendations() {
+            const routeContainer = document.getElementById('routeSuggestions');
+            
+            routeContainer.innerHTML = `
+                <div style="color: #0ea5e9; font-weight: 600; margin-bottom: 0.8rem; font-size: 0.9rem;">🛣️ AI Route Recommendations</div>
+                ${trafficData.routes.map(route => `
+                    <div class="route-item">
+                        <div class="route-content">
+                            <div class="route-title">${route.truck || route.employee}</div>
+                            <div class="route-details">Suggested: ${route.suggested}</div>
+                            <div class="route-time">${route.reason}</div>
+                            <div class="route-savings">
+                                <div class="savings-item">⏱️ ${route.savings.time}</div>
+                                <div class="savings-item">⛽ ${route.savings.fuel}</div>
+                                <div class="savings-item">💰 ${route.savings.cost}</div>
+                            </div>
+                        </div>
+                        <button class="route-action" onclick="applyRoute('${route.id}')">Apply</button>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        function updateAlertsList() {
+            const alertsList = document.getElementById('alertsList');
+            
+            alertsList.innerHTML = `
+                <div style="color: #dc2626; font-weight: 600; margin-bottom: 0.8rem; font-size: 0.9rem;">⚠️ All Traffic Alerts</div>
+                ${trafficData.alerts.map(alert => `
+                    <div class="alert-item">
+                        <div class="alert-severity severity-${alert.severity}"></div>
+                        <div class="alert-content">
+                            <div class="alert-title">${alert.location} - ${alert.type.toUpperCase()}</div>
+                            <div class="alert-details">${alert.description} (Affects: ${alert.affected})</div>
+                            <div class="alert-time">${alert.time}</div>
+                        </div>
+                        <button class="alert-action" onclick="resolveAlert(${alert.id})">Resolve</button>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        function filterAlerts(filter) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            let filteredAlerts = trafficData.alerts;
+            if (filter === 'critical') {
+                filteredAlerts = trafficData.alerts.filter(a => a.severity === 'critical' || a.severity === 'high');
+            } else if (filter === 'trucks') {
+                filteredAlerts = trafficData.alerts.filter(a => a.affected === 'trucks' || a.affected === 'both');
+            } else if (filter === 'employees') {
+                filteredAlerts = trafficData.alerts.filter(a => a.affected === 'both');
+            }
+            
+            const alertsList = document.getElementById('alertsList');
+            alertsList.innerHTML = `
+                <div style="color: #dc2626; font-weight: 600; margin-bottom: 0.8rem; font-size: 0.9rem;">⚠️ ${filter.charAt(0).toUpperCase() + filter.slice(1)} Alerts</div>
+                ${filteredAlerts.map(alert => `
+                    <div class="alert-item">
+                        <div class="alert-severity severity-${alert.severity}"></div>
+                        <div class="alert-content">
+                            <div class="alert-title">${alert.location} - ${alert.type.toUpperCase()}</div>
+                            <div class="alert-details">${alert.description} (Affects: ${alert.affected})</div>
+                            <div class="alert-time">${alert.time}</div>
+                        </div>
+                        <button class="alert-action" onclick="resolveAlert(${alert.id})">Resolve</button>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        function applyRoute(routeId) {
+            const route = trafficData.routes.find(r => r.id === routeId);
+            if (route) {
+                // Show route on map
+                showRouteOnMap(routeId);
+                
+                alert(`✅ Route applied for ${route.truck || route.employee}!\n\nNew route: ${route.suggested}\n\nEstimated savings:\n⏱️ ${route.savings.time}\n⛽ ${route.savings.fuel}\n💰 ${route.savings.cost}`);
+                
+                // Simulate route application by updating truck status
+                const truck = trafficData.trucks.find(t => t.id === route.truck);
+                if (truck) {
+                    truck.status = 'rerouted';
+                    truck.delay = Math.max(0, truck.delay - 15);
+                    updateTruckOnMap(truck.id, truck.status, truck.delay);
+                }
+            }
+        }
+
+        function showRouteOnMap(routeId) {
+            const routeOverlay = document.getElementById('routeOverlay');
+            routeOverlay.style.display = 'block';
+            
+            // Hide route after 8 seconds
+            setTimeout(() => {
+                routeOverlay.style.display = 'none';
+            }, 8000);
+        }
+
+        function updateTruckOnMap(truckId, status, delay) {
+            const truckMarker = document.querySelector(`[data-truck="${truckId}"]`);
+            if (truckMarker) {
+                // Remove old status classes
+                truckMarker.classList.remove('moving', 'delayed', 'congested', 'rerouted');
+                
+                // Add new status class
+                truckMarker.classList.add(status);
+                
+                // Update info tooltip
+                const truckInfo = truckMarker.querySelector('.truck-info');
+                if (truckInfo) {
+                    truckInfo.innerHTML = `${truckId}<br>${delay}min delay`;
+                }
+                
+                // Add visual feedback for rerouted trucks
+                if (status === 'rerouted') {
+                    truckMarker.style.filter = 'hue-rotate(120deg) brightness(1.3) saturate(1.2)';
+                    truckMarker.style.animation = 'none';
+                }
+            }
+        }
+
+        function animateTruckMovement() {
+            // Simulate truck movement every 10 seconds
+            setInterval(() => {
+                const trucks = document.querySelectorAll('.truck-marker');
+                trucks.forEach(truck => {
+                    if (truck.classList.contains('moving') || truck.classList.contains('rerouted')) {
+                        const currentTop = parseFloat(truck.style.top);
+                        const currentLeft = parseFloat(truck.style.left);
+                        
+                        // Random small movement
+                        const newTop = currentTop + (Math.random() - 0.5) * 4;
+                        const newLeft = currentLeft + (Math.random() - 0.5) * 4;
+                        
+                        // Keep within bounds
+                        truck.style.top = Math.max(10, Math.min(85, newTop)) + '%';
+                        truck.style.left = Math.max(10, Math.min(85, newLeft)) + '%';
+                    }
+                });
+            }, 10000);
+        }
+
+        function updateCongestionZones() {
+            // Simulate dynamic congestion zone updates
+            setInterval(() => {
+                const zones = document.querySelectorAll('.congestion-zone');
+                zones.forEach(zone => {
+                    if (Math.random() > 0.9) {
+                        // Randomly change congestion levels
+                        const levels = ['medium', 'high', 'critical'];
+                        const currentLevel = zone.classList.contains('critical') ? 'critical' : 
+                                           zone.classList.contains('high') ? 'high' : 'medium';
+                        
+                        const newLevel = levels[Math.floor(Math.random() * levels.length)];
+                        
+                        zone.classList.remove('medium', 'high', 'critical');
+                        zone.classList.add(newLevel);
+                    }
+                });
+            }, 20000);
+        }
+
+        function initializeMapInteractions() {
+            // Add click handlers for congestion zones
+            document.querySelectorAll('.congestion-zone').forEach(zone => {
+                zone.addEventListener('click', function() {
+                    const title = this.getAttribute('title');
+                    alert(`Traffic Alert: ${title}\n\nClick on Route Planning to see alternative routes.`);
+                });
+            });
+
+            // Add click handlers for truck markers
+            document.querySelectorAll('.truck-marker').forEach(marker => {
+                marker.addEventListener('click', function() {
+                    const truckId = this.getAttribute('data-truck');
+                    const truck = trafficData.trucks.find(t => t.id === truckId);
+                    if (truck) {
+                        alert(`${truck.id} Status:\nLocation: ${truck.location}\nDestination: ${truck.destination}\nDelay: ${truck.delay} minutes\nStatus: ${truck.status.toUpperCase()}`);
+                    }
+                });
+            });
+
+            // Add click handlers for port areas
+            document.querySelectorAll('.port-area').forEach(area => {
+                area.addEventListener('click', function() {
+                    const title = this.getAttribute('title');
+                    alert(`Port Area: ${title}\n\nAccess this area through the traffic optimization panel.`);
+                });
+            });
+        }
+
+        function resolveAlert(alertId) {
+            const alert = trafficData.alerts.find(a => a.id === alertId);
+            if (alert) {
+                if (confirm(`Mark alert as resolved?\n\n${alert.location}: ${alert.description}`)) {
+                    // Remove alert from array
+                    trafficData.alerts = trafficData.alerts.filter(a => a.id !== alertId);
+                    
+                    // Refresh the current view
+                    const activeView = document.querySelector('.traffic-view.active').id;
+                    if (activeView === 'liveTraffic') updateLiveAlerts();
+                    else if (activeView === 'activeAlerts') updateAlertsList();
+                }
+            }
+        }
+
+        function simulateTrafficUpdates() {
+            // Simulate new alerts periodically
+            setInterval(() => {
+                const locations = ['Pier 200', 'Harbor Freeway', 'Terminal Island', 'Container Yard', 'Maintenance Area'];
+                const types = ['congestion', 'construction', 'weather', 'equipment'];
+                const severities = ['low', 'medium', 'high'];
+                const descriptions = [
+                    'Heavy traffic reported',
+                    'Lane closure due to maintenance',
+                    'Equipment malfunction causing delays',
+                    'Weather conditions affecting visibility'
+                ];
+                
+                if (Math.random() > 0.7 && trafficData.alerts.length < 8) {
+                    const newAlert = {
+                        id: Date.now(),
+                        type: types[Math.floor(Math.random() * types.length)],
+                        severity: severities[Math.floor(Math.random() * severities.length)],
+                        location: locations[Math.floor(Math.random() * locations.length)],
+                        description: descriptions[Math.floor(Math.random() * descriptions.length)],
+                        time: 'Just now',
+                        affected: Math.random() > 0.5 ? 'trucks' : 'both'
+                    };
+                    
+                    trafficData.alerts.unshift(newAlert);
+                    
+                    // Update active view if showing live traffic
+                    if (document.getElementById('liveTraffic').classList.contains('active')) {
+                        updateLiveAlerts();
+                    }
+                }
+                
+                // Update truck delays randomly
+                trafficData.trucks.forEach(truck => {
+                    if (Math.random() > 0.8) {
+                        truck.delay += Math.floor(Math.random() * 10) - 5;
+                        truck.delay = Math.max(0, truck.delay);
+                        
+                        if (truck.delay > 20) truck.status = 'delayed';
+                        else if (truck.delay > 10) truck.status = 'congested';
+                        else truck.status = 'moving';
+                    }
+                });
+                
+                // Update metrics in the overview
+                const activeTrucks = document.querySelector('.traffic-overview .metric-number');
+                const delayedTrucks = trafficData.trucks.filter(t => t.delay > 10).length;
+                const avgDelay = Math.round(trafficData.trucks.reduce((sum, t) => sum + t.delay, 0) / trafficData.trucks.length);
+                
+                if (activeTrucks) {
+                    const metrics = document.querySelectorAll('.traffic-metric');
+                    if (metrics[1]) {
+                        metrics[1].querySelector('.metric-number').textContent = trafficData.alerts.length;
+                        const criticalAlerts = trafficData.alerts.filter(a => a.severity === 'high' || a.severity === 'critical').length;
+                        metrics[1].querySelector('.metric-status').textContent = criticalAlerts > 0 ? `${criticalAlerts} Critical` : 'All Clear';
+                    }
+                    if (metrics[2]) {
+                        metrics[2].querySelector('.metric-number').textContent = avgDelay + 'min';
+                        const status = metrics[2].querySelector('.metric-status');
+                        if (avgDelay < 10) {
+                            status.textContent = 'Good';
+                            status.className = 'metric-status good';
+                        } else if (avgDelay < 20) {
+                            status.textContent = 'Warning';
+                            status.className = 'metric-status warning';
+                        } else {
+                            status.textContent = 'Critical';
+                            status.className = 'metric-status critical';
+                        }
+                    }
+                }
+            }, 15000);
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🤖 Initializing Agentic AI Workflow System...');
+            console.log('🚛 Initializing Traffic Optimization System...');
+            console.log('🗺️ Initializing Interactive Map Features...');
+            
+            // Initialize traffic optimization
+            updateLiveAlerts();
+            simulateTrafficUpdates();
+            
+            // Initialize map interactions
+            initializeMapInteractions();
+            animateTruckMovement();
+            updateCongestionZones();
             
             // Perform initial scan after a short delay
             setTimeout(() => {
