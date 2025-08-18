@@ -2723,64 +2723,6 @@
                     </div>
                 </div>
 
-                <!-- Traffic Optimization Panel -->
-                <div class="traffic-panel" id="trafficPanel">
-                    <div class="traffic-header">
-                        <div class="traffic-title">🚛 Smart Traffic Optimization</div>
-                        <div class="traffic-controls">
-                            <button class="traffic-btn active" onclick="showTrafficView('live')">Live Traffic</button>
-                            <button class="traffic-btn" onclick="showTrafficView('routes')">Route Planning</button>
-                            <button class="traffic-btn" onclick="showTrafficView('alerts')">Active Alerts</button>
-                        </div>
-                    </div>
-                    
-                    <div class="traffic-content" id="trafficContent">
-                        <!-- Live Traffic View -->
-                        <div class="traffic-view active" id="liveTraffic">
-                            <div class="traffic-overview">
-                                <div class="traffic-metric">
-                                    <div class="metric-number">47</div>
-                                    <div class="metric-desc">Active Trucks</div>
-                                    <div class="metric-status good">All Tracked</div>
-                                </div>
-                                <div class="traffic-metric">
-                                    <div class="metric-number">12</div>
-                                    <div class="metric-desc">Congestion Zones</div>
-                                    <div class="metric-status warning">2 Critical</div>
-                                </div>
-                                <div class="traffic-metric">
-                                    <div class="metric-number">8min</div>
-                                    <div class="metric-desc">Avg Delay</div>
-                                    <div class="metric-status good">Improving</div>
-                                </div>
-                            </div>
-                            <div class="live-alerts" id="liveAlerts">
-                                <!-- Live alerts populated by JavaScript -->
-                            </div>
-                        </div>
-                        
-                        <!-- Route Planning View -->
-                        <div class="traffic-view" id="routePlanning">
-                            <div class="route-suggestions" id="routeSuggestions">
-                                <!-- Route suggestions populated by JavaScript -->
-                            </div>
-                        </div>
-                        
-                        <!-- Active Alerts View -->
-                        <div class="traffic-view" id="activeAlerts">
-                            <div class="alert-filters">
-                                <button class="filter-btn active" onclick="filterAlerts('all')">All</button>
-                                <button class="filter-btn" onclick="filterAlerts('critical')">Critical</button>
-                                <button class="filter-btn" onclick="filterAlerts('trucks')">Trucks</button>
-                                <button class="filter-btn" onclick="filterAlerts('employees')">Staff</button>
-                            </div>
-                            <div class="alerts-list" id="alertsList">
-                                <!-- Alerts populated by JavaScript -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Global Ports Network -->
                 <div class="global-ports-panel minimized" id="globalPanel">
                     <div class="global-panel-header" onclick="toggleGlobalPanel()">
