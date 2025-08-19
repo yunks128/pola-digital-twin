@@ -2922,155 +2922,6 @@
             </div>
         </div>
 
-        <!-- Main View - Port of LA Map -->
-        <div class="main-view dashboard-panel minimized">
-            <div class="panel-header">
-                <span>🗺️ POLA Digital Twin Map</span>
-                <div class="panel-controls">
-                    <button class="panel-control-btn minimize-btn" onclick="togglePanel(this)">+</button>
-                    <button class="panel-control-btn close-btn" onclick="closePanel(this)">×</button>
-                </div>
-            </div>
-            <div class="panel-content">
-            <div class="port-map-container" id="mapContainer">
-                <!-- Google Maps Integration -->
-                <div id="googleMap" class="google-map"></div>
-                
-                <!-- Map Overlay for Interactive Elements -->
-                <div class="map-overlay" id="mapOverlay">
-                    <!-- Vessel markers will be added here dynamically -->
-                    
-                    
-                    
-                </div>
-
-                <!-- Live Data Fusion Overlay -->
-                <div class="data-overlay">
-                    <div style="color: #0ea5e9; font-weight: 600; margin-bottom: 1rem; font-size: 0.95rem;">🔄 Live Multi-Source Data Fusion</div>
-                    <div class="data-grid">
-                        <div class="data-item">
-                            <div class="data-label">Bathymetry</div>
-                            <div class="data-value">4D Model Active</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Sedimentation</div>
-                            <div class="data-value">Real-time Tracking</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Tidal Data</div>
-                            <div class="data-value">+2.3ft Rising</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Environmental</div>
-                            <div class="data-value">157 Sensors</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Vessel AIS</div>
-                            <div class="data-value">1,247 Tracked</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Global Ports Network -->
-                <div class="global-ports-panel minimized" id="globalPanel">
-                    <div class="global-panel-header" onclick="toggleGlobalPanel()">
-                        <span>🌐 IEEE 2875 Global Network</span>
-                        <span class="global-expand-icon">▼</span>
-                    </div>
-                    <div class="global-panel-content">
-                        <div class="port-connection">
-                            <span style="color: #1e293b; font-weight: 500;">🇸🇬 Singapore</span>
-                            <div class="connection-status">
-                                <div class="latency-indicator">
-                                    <div class="latency-bar">
-                                        <div class="latency-fill"></div>
-                                    </div>
-                                    <span style="font-size: 0.75rem; color: #10b981;">8ms</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="port-connection">
-                            <span style="color: #1e293b; font-weight: 500;">🇳🇱 Rotterdam</span>
-                            <div class="connection-status">
-                                <div class="latency-indicator">
-                                    <div class="latency-bar">
-                                        <div class="latency-fill"></div>
-                                    </div>
-                                    <span style="font-size: 0.75rem; color: #10b981;">15ms</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="port-connection">
-                            <span style="color: #1e293b; font-weight: 500;">🇨🇳 Shanghai</span>
-                            <div class="connection-status">
-                                <div class="latency-indicator">
-                                    <div class="latency-bar">
-                                        <div class="latency-fill"></div>
-                                    </div>
-                                    <span style="font-size: 0.75rem; color: #f59e0b;">23ms</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="port-connection">
-                            <span style="color: #1e293b; font-weight: 500;">🇬🇧 Felixstowe</span>
-                            <div class="connection-status">
-                                <div class="latency-indicator">
-                                    <div class="latency-bar">
-                                        <div class="latency-fill"></div>
-                                    </div>
-                                    <span style="font-size: 0.75rem; color: #10b981;">12ms</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-top: 1rem; font-size: 0.75rem; color: #64748b;">
-                            Cross-port impact modeling & resilience planning active
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Explainable AI Panel -->
-                <div class="explainable-ai-panel minimized" id="aiPanel">
-                    <div class="ai-panel-header" onclick="toggleAIPanel()">
-                        <span>🔍 Explainable AI Reasoning</span>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    <div class="ai-panel-content">
-                        <div class="explanation-item">
-                            <div class="explanation-content">
-                                <div class="explanation-title">Terminal Capacity Alert</div>
-                                <div class="explanation-detail">Pier B: Tidal patterns + Weather forecast + Current load</div>
-                            </div>
-                            <div class="confidence-indicator">
-                                <div class="confidence-level" style="width: 87%; background: #f59e0b;"></div>
-                            </div>
-                        </div>
-                        <div class="explanation-item">
-                            <div class="explanation-content">
-                                <div class="explanation-title">Route Optimization</div>
-                                <div class="explanation-detail">AIS tracking + Bathymetry data + Current conditions</div>
-                            </div>
-                            <div class="confidence-indicator">
-                                <div class="confidence-level" style="width: 94%; background: #10b981;"></div>
-                            </div>
-                        </div>
-                        <div class="explanation-item">
-                            <div class="explanation-content">
-                                <div class="explanation-title">Environmental Compliance</div>
-                                <div class="explanation-detail">Air quality sensors + Water temperature + Noise levels</div>
-                            </div>
-                            <div class="confidence-indicator">
-                                <div class="confidence-level" style="width: 99%; background: #10b981;"></div>
-                            </div>
-                        </div>
-                        <div style="margin-top: 1rem; font-size: 0.75rem; color: #64748b;">
-                            Model uncertainty: ±2.3% variance • Confidence intervals updated real-time
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-
         <!-- Control Panel -->
         <div class="control-panel dashboard-panel">
             <div class="panel-header">
@@ -3229,6 +3080,155 @@
                     ✅ Environmental Sensor Grid<br>
                     ✅ Bathymetric Survey Data<br>
                     ✅ Terminal Operating Systems
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Main View - Port of LA Map -->
+        <div class="main-view dashboard-panel minimized">
+            <div class="panel-header">
+                <span>🗺️ POLA Digital Twin Map</span>
+                <div class="panel-controls">
+                    <button class="panel-control-btn minimize-btn" onclick="togglePanel(this)">+</button>
+                    <button class="panel-control-btn close-btn" onclick="closePanel(this)">×</button>
+                </div>
+            </div>
+            <div class="panel-content">
+            <div class="port-map-container" id="mapContainer">
+                <!-- Google Maps Integration -->
+                <div id="googleMap" class="google-map"></div>
+                
+                <!-- Map Overlay for Interactive Elements -->
+                <div class="map-overlay" id="mapOverlay">
+                    <!-- Vessel markers will be added here dynamically -->
+                    
+                    
+                    
+                </div>
+
+                <!-- Live Data Fusion Overlay -->
+                <div class="data-overlay">
+                    <div style="color: #0ea5e9; font-weight: 600; margin-bottom: 1rem; font-size: 0.95rem;">🔄 Live Multi-Source Data Fusion</div>
+                    <div class="data-grid">
+                        <div class="data-item">
+                            <div class="data-label">Bathymetry</div>
+                            <div class="data-value">4D Model Active</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Sedimentation</div>
+                            <div class="data-value">Real-time Tracking</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Tidal Data</div>
+                            <div class="data-value">+2.3ft Rising</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Environmental</div>
+                            <div class="data-value">157 Sensors</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Vessel AIS</div>
+                            <div class="data-value">1,247 Tracked</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Global Ports Network -->
+                <div class="global-ports-panel minimized" id="globalPanel">
+                    <div class="global-panel-header" onclick="toggleGlobalPanel()">
+                        <span>🌐 IEEE 2875 Global Network</span>
+                        <span class="global-expand-icon">▼</span>
+                    </div>
+                    <div class="global-panel-content">
+                        <div class="port-connection">
+                            <span style="color: #1e293b; font-weight: 500;">🇸🇬 Singapore</span>
+                            <div class="connection-status">
+                                <div class="latency-indicator">
+                                    <div class="latency-bar">
+                                        <div class="latency-fill"></div>
+                                    </div>
+                                    <span style="font-size: 0.75rem; color: #10b981;">8ms</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="port-connection">
+                            <span style="color: #1e293b; font-weight: 500;">🇳🇱 Rotterdam</span>
+                            <div class="connection-status">
+                                <div class="latency-indicator">
+                                    <div class="latency-bar">
+                                        <div class="latency-fill"></div>
+                                    </div>
+                                    <span style="font-size: 0.75rem; color: #10b981;">15ms</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="port-connection">
+                            <span style="color: #1e293b; font-weight: 500;">🇨🇳 Shanghai</span>
+                            <div class="connection-status">
+                                <div class="latency-indicator">
+                                    <div class="latency-bar">
+                                        <div class="latency-fill"></div>
+                                    </div>
+                                    <span style="font-size: 0.75rem; color: #f59e0b;">23ms</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="port-connection">
+                            <span style="color: #1e293b; font-weight: 500;">🇬🇧 Felixstowe</span>
+                            <div class="connection-status">
+                                <div class="latency-indicator">
+                                    <div class="latency-bar">
+                                        <div class="latency-fill"></div>
+                                    </div>
+                                    <span style="font-size: 0.75rem; color: #10b981;">12ms</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1rem; font-size: 0.75rem; color: #64748b;">
+                            Cross-port impact modeling & resilience planning active
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explainable AI Panel -->
+                <div class="explainable-ai-panel minimized" id="aiPanel">
+                    <div class="ai-panel-header" onclick="toggleAIPanel()">
+                        <span>🔍 Explainable AI Reasoning</span>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="ai-panel-content">
+                        <div class="explanation-item">
+                            <div class="explanation-content">
+                                <div class="explanation-title">Terminal Capacity Alert</div>
+                                <div class="explanation-detail">Pier B: Tidal patterns + Weather forecast + Current load</div>
+                            </div>
+                            <div class="confidence-indicator">
+                                <div class="confidence-level" style="width: 87%; background: #f59e0b;"></div>
+                            </div>
+                        </div>
+                        <div class="explanation-item">
+                            <div class="explanation-content">
+                                <div class="explanation-title">Route Optimization</div>
+                                <div class="explanation-detail">AIS tracking + Bathymetry data + Current conditions</div>
+                            </div>
+                            <div class="confidence-indicator">
+                                <div class="confidence-level" style="width: 94%; background: #10b981;"></div>
+                            </div>
+                        </div>
+                        <div class="explanation-item">
+                            <div class="explanation-content">
+                                <div class="explanation-title">Environmental Compliance</div>
+                                <div class="explanation-detail">Air quality sensors + Water temperature + Noise levels</div>
+                            </div>
+                            <div class="confidence-indicator">
+                                <div class="confidence-level" style="width: 99%; background: #10b981;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1rem; font-size: 0.75rem; color: #64748b;">
+                            Model uncertainty: ±2.3% variance • Confidence intervals updated real-time
+                        </div>
+                    </div>
                 </div>
             </div>
             </div>
