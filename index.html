@@ -7074,20 +7074,28 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                 const textSentences = text.split(sentenceEnders).filter(s => s.trim().length > 0);
                 
                 async function playNextSpeech() {
+                    console.log('playNextSpeech called - Queue length:', speechQueue.length, 'Voice enabled:', voiceOutputEnabled, 'Is speaking:', isSpeaking);
+                    
                     if (speechQueue.length > 0 && voiceOutputEnabled && !isSpeaking) {
                         isSpeaking = true;
                         const sentence = speechQueue.shift();
+                        console.log('Playing speech for sentence:', sentence);
                         
                         try {
+                            updateVoiceStatus('speaking', '🔊 Speaking...');
                             await speakTextRealtime(sentence);
+                            console.log('Speech completed for:', sentence);
                         } catch (error) {
                             console.error('Real-time speech error:', error);
                         }
                         
                         isSpeaking = false;
+                        updateVoiceStatus('', 'Voice Assistant Ready');
                         
                         // Continue with next sentence
                         setTimeout(playNextSpeech, 100);
+                    } else {
+                        console.log('Speech not played - conditions not met');
                     }
                 }
                 
@@ -7101,13 +7109,18 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                         // Check if we completed a sentence
                         if (/[.!?]/.test(char) && currentSentence.trim().length > 5) {
                             const completeSentence = currentSentence.trim();
+                            console.log('Sentence completed:', completeSentence);
+                            
                             if (completeSentence) {
                                 speechQueue.push(completeSentence);
                                 currentSentence = '';
                                 
                                 // Start playing speech if not already playing
-                                if (!isSpeaking) {
+                                if (!isSpeaking && voiceOutputEnabled) {
+                                    console.log('Starting speech for:', completeSentence);
                                     playNextSpeech();
+                                } else {
+                                    console.log('Speech queued (already speaking or disabled):', isSpeaking, voiceOutputEnabled);
                                 }
                             }
                         }
@@ -7120,8 +7133,9 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                     } else {
                         // Handle any remaining text that didn't end with punctuation
                         if (currentSentence.trim().length > 0) {
+                            console.log('Final sentence:', currentSentence.trim());
                             speechQueue.push(currentSentence.trim());
-                            if (!isSpeaking) {
+                            if (!isSpeaking && voiceOutputEnabled) {
                                 playNextSpeech();
                             }
                         }
@@ -7137,52 +7151,42 @@ Which visualization would you like to see? I'll provide detailed analysis along 
 
         // Real-time speech function (faster, optimized for streaming)
         async function speakTextRealtime(text) {
-            if (!voiceOutputEnabled || !text.trim()) return;
-            
-            try {
-                // Use Google Cloud TTS for shorter sentences with faster processing
-                const audioBuffer = await generateSpeechWithGoogle(text);
-                
-                // Play the audio immediately
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const source = audioContext.createBufferSource();
-                
-                const decodedData = await audioContext.decodeAudioData(audioBuffer);
-                source.buffer = decodedData;
-                source.connect(audioContext.destination);
-                
-                return new Promise((resolve) => {
-                    source.onended = function() {
-                        resolve();
-                    };
-                    source.start(0);
-                });
-                
-            } catch (error) {
-                console.error('Real-time Google TTS error:', error);
-                
-                // Fallback to browser speech synthesis for real-time
-                return new Promise((resolve) => {
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.rate = 1.1; // Slightly faster for real-time
-                    utterance.pitch = 1.0;
-                    utterance.volume = 0.8;
-                    
-                    utterance.onend = function() {
-                        resolve();
-                    };
-                    
-                    utterance.onerror = function() {
-                        resolve(); // Continue even if speech fails
-                    };
-                    
-                    if (synthesis) {
-                        synthesis.speak(utterance);
-                    } else {
-                        resolve();
-                    }
-                });
+            if (!voiceOutputEnabled || !text.trim()) {
+                console.log('Speech skipped - voice disabled or empty text');
+                return;
             }
+            
+            console.log('Starting speech synthesis for:', text);
+            
+            // Use browser speech synthesis first for reliability
+            return new Promise((resolve) => {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 1.0;
+                utterance.pitch = 1.0;
+                utterance.volume = 0.9;
+                
+                utterance.onstart = function() {
+                    console.log('Speech started for:', text);
+                };
+                
+                utterance.onend = function() {
+                    console.log('Speech ended for:', text);
+                    resolve();
+                };
+                
+                utterance.onerror = function(event) {
+                    console.error('Speech error:', event.error, 'for text:', text);
+                    resolve(); // Continue even if speech fails
+                };
+                
+                if (synthesis) {
+                    synthesis.cancel(); // Cancel any previous speech
+                    synthesis.speak(utterance);
+                } else {
+                    console.error('Speech synthesis not available');
+                    resolve();
+                }
+            });
         }
 
         // Modify existing sendMessage function to include streaming and voice output
