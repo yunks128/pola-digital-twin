@@ -1857,6 +1857,27 @@
             margin-bottom: 0;
         }
 
+        .critical-priority {
+            border-left: 4px solid #ef4444;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            animation: pulse-critical 1.5s infinite;
+        }
+
+        .high-priority {
+            border-left: 4px solid #f59e0b;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+
+        .medium-priority {
+            border-left: 4px solid #3b82f6;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        }
+
+        .low-priority {
+            border-left: 4px solid #6b7280;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+        }
+
         .recommendation-header-item {
             display: flex;
             justify-content: space-between;
@@ -7361,38 +7382,96 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             const activeRecommendations = document.getElementById('activeRecommendations');
             
             // Set initial status
-            aiStatus.textContent = '🔄 AUTO-SCANNING';
-            aiStatus.style.background = '#06b6d4';
-            lastAnalysis.textContent = 'Automatic scans every 45 seconds';
+            aiStatus.textContent = '🟢 COMPLETED';
+            aiStatus.style.background = '#10b981';
             
-            // Show immediate alerts
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            lastAnalysis.textContent = `Last scan: ${timeStr}`;
+            
+            // Show comprehensive AI scan results
             const initialAlerts = [
                 {
-                    title: "High Traffic Volume Detected",
-                    description: "Terminal Island Freeway experiencing 25% increase in truck traffic. Consider alternate routing.",
-                    priority: "high",
-                    type: "traffic",
+                    title: "Terminal at 97% capacity",
+                    description: "Immediate vessel redirection needed to prevent gridlock.",
+                    priority: "critical",
+                    type: "operations",
                     time: "Just now"
                 },
                 {
-                    title: "Vessel Queue Building",
-                    description: "3 vessels waiting for berth assignment at Pier 400. ETA coordination recommended.",
-                    priority: "medium", 
-                    type: "operations",
+                    title: "Main shipping channel blocked",
+                    description: "Deploy tugboats and implement traffic control measures.",
+                    priority: "critical",
+                    type: "navigation",
+                    time: "1 min ago"
+                },
+                {
+                    title: "Crane #3 offline",
+                    description: "Reducing loading capacity by 30%. Maintenance crew deployed.",
+                    priority: "high",
+                    type: "equipment",
                     time: "2 min ago"
                 },
                 {
-                    title: "Air Quality Monitoring",
-                    description: "AQI levels normal at 89. Emissions within acceptable parameters.",
-                    priority: "low",
-                    type: "environmental", 
+                    title: "Throughput below capacity",
+                    description: "Scale up terminal operations and extend shift hours.",
+                    priority: "medium",
+                    type: "operations",
+                    time: "3 min ago"
+                },
+                {
+                    title: "Tide level +3.2ft affecting operations",
+                    description: "Small craft operations impacted. Enhanced monitoring required.",
+                    priority: "medium",
+                    type: "environmental",
+                    time: "4 min ago"
+                },
+                {
+                    title: "25+ knot winds affecting anchorage",
+                    description: "Suspend non-essential operations.",
+                    priority: "high",
+                    type: "weather",
                     time: "5 min ago"
+                },
+                {
+                    title: "Pier C at 89% capacity",
+                    description: "Accelerate rail operations to prevent backup.",
+                    priority: "medium",
+                    type: "operations",
+                    time: "6 min ago"
+                },
+                {
+                    title: "Truck queue time exceeding 45 minutes",
+                    description: "Open additional inspection lanes.",
+                    priority: "medium",
+                    type: "traffic",
+                    time: "7 min ago"
+                },
+                {
+                    title: "MSC TRUST 3-hour delay",
+                    description: "Creating schedule cascade. Adjust berth allocations.",
+                    priority: "high",
+                    type: "scheduling",
+                    time: "8 min ago"
+                },
+                {
+                    title: "Minor leak detected at bulk terminal",
+                    description: "Environmental team monitoring situation.",
+                    priority: "low",
+                    type: "environmental",
+                    time: "9 min ago"
                 }
             ];
             
             let alertsHTML = '';
             initialAlerts.forEach(alert => {
-                const priorityClass = alert.priority === 'high' ? 'high-priority' : 
+                const priorityClass = alert.priority === 'critical' ? 'critical-priority' :
+                                   alert.priority === 'high' ? 'high-priority' : 
                                    alert.priority === 'medium' ? 'medium-priority' : 'low-priority';
                 
                 alertsHTML += `
@@ -7406,7 +7485,9 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                             </div>
                         </div>
                         <div class="recommendation-actions">
-                            <button class="recommend-btn" onclick="acknowledgeAlert('${alert.title}')">✓ Acknowledge</button>
+                            <button class="action-btn approve-btn" onclick="approveAlert('${alert.title}')">✓ Approve</button>
+                            <button class="action-btn reject-btn" onclick="rejectAlert('${alert.title}')">✗ Reject</button>
+                            <button class="action-btn defer-btn" onclick="deferAlert('${alert.title}')">⏸ Defer</button>
                         </div>
                     </div>
                 `;
@@ -7421,6 +7502,92 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             event.target.closest('.recommendation-item').style.opacity = '0.5';
             event.target.textContent = '✓ Acknowledged';
             event.target.disabled = true;
+        }
+
+        function approveAlert(alertTitle) {
+            console.log(`Alert approved: ${alertTitle}`);
+            const alertElement = event.target.closest('.recommendation-item');
+            const actionButtons = alertElement.querySelectorAll('.action-btn');
+            
+            // Disable all action buttons
+            actionButtons.forEach(btn => btn.disabled = true);
+            
+            // Update the approve button
+            event.target.style.background = '#10b981';
+            event.target.innerHTML = '✓ APPROVED';
+            
+            // Add approved styling
+            alertElement.style.borderLeft = '4px solid #10b981';
+            alertElement.style.background = 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)';
+            
+            // Log action for audit trail
+            const timestamp = new Date().toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            console.log(`AUDIT: Alert "${alertTitle}" approved at ${timestamp}`);
+        }
+
+        function rejectAlert(alertTitle) {
+            console.log(`Alert rejected: ${alertTitle}`);
+            const alertElement = event.target.closest('.recommendation-item');
+            const actionButtons = alertElement.querySelectorAll('.action-btn');
+            
+            // Disable all action buttons
+            actionButtons.forEach(btn => btn.disabled = true);
+            
+            // Update the reject button
+            event.target.style.background = '#ef4444';
+            event.target.innerHTML = '✗ REJECTED';
+            
+            // Add rejected styling
+            alertElement.style.borderLeft = '4px solid #ef4444';
+            alertElement.style.background = 'linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%)';
+            alertElement.style.opacity = '0.7';
+            
+            // Log action for audit trail
+            const timestamp = new Date().toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            console.log(`AUDIT: Alert "${alertTitle}" rejected at ${timestamp}`);
+        }
+
+        function deferAlert(alertTitle) {
+            console.log(`Alert deferred: ${alertTitle}`);
+            const alertElement = event.target.closest('.recommendation-item');
+            const actionButtons = alertElement.querySelectorAll('.action-btn');
+            
+            // Disable all action buttons
+            actionButtons.forEach(btn => btn.disabled = true);
+            
+            // Update the defer button
+            event.target.style.background = '#f59e0b';
+            event.target.innerHTML = '⏸ DEFERRED';
+            
+            // Add deferred styling
+            alertElement.style.borderLeft = '4px solid #f59e0b';
+            alertElement.style.background = 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)';
+            
+            // Log action for audit trail
+            const timestamp = new Date().toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            console.log(`AUDIT: Alert "${alertTitle}" deferred at ${timestamp}`);
+            
+            // Schedule re-evaluation in 15 minutes
+            setTimeout(() => {
+                console.log(`SYSTEM: Re-evaluating deferred alert "${alertTitle}"`);
+                alertElement.style.border = '2px solid #f59e0b';
+                alertElement.style.animation = 'pulse-warning 2s infinite';
+            }, 900000); // 15 minutes
         }
 
         document.addEventListener('DOMContentLoaded', function() {
