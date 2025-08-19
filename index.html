@@ -150,6 +150,10 @@
             height: 200px;
         }
 
+        .operations-panel {
+            height: 400px;
+        }
+
         .logo-section {
             display: flex;
             align-items: center;
@@ -2964,124 +2968,6 @@
                 </div>
             </div>
 
-            <div class="section-title">📊 Real-Time Metrics</div>
-            
-            <div class="metric-card">
-                <div class="metric-value">
-                    247
-                    <div class="uncertainty-indicator">
-                        <span>±3</span>
-                        <div style="width: 8px; height: 8px; background: #f59e0b; border-radius: 50%;"></div>
-                    </div>
-                </div>
-                <div class="metric-label">Vessels Tracked (Multi-Source)</div>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-value">
-                    94.7%
-                    <div class="uncertainty-indicator">
-                        <span>±1.2%</span>
-                        <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%;"></div>
-                    </div>
-                </div>
-                <div class="metric-label">Data Fusion Accuracy</div>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-value">
-                    <2ms
-                    <div class="uncertainty-indicator">
-                        <span>Edge</span>
-                        <div style="width: 8px; height: 8px; background: #8b5cf6; border-radius: 50%;"></div>
-                    </div>
-                </div>
-                <div class="metric-label">Inference Latency</div>
-            </div>
-
-            <div class="section-title">🤖 Autonomous Operations</div>
-            
-            <div class="automation-panel">
-                <div class="automation-item">
-                    <div class="automation-content">
-                        <div class="automation-title">Environmental Impact Report</div>
-                        <div class="automation-time">Auto-generated at 14:15 PST</div>
-                    </div>
-                    <div class="auto-generated">AUTO</div>
-                </div>
-                <div class="automation-item">
-                    <div class="automation-content">
-                        <div class="automation-title">Risk Assessment Update</div>
-                        <div class="automation-time">Auto-generated at 14:20 PST</div>
-                    </div>
-                    <div class="auto-generated">AUTO</div>
-                </div>
-                <div class="automation-item">
-                    <div class="automation-content">
-                        <div class="automation-title">Cross-Port Resilience Plan</div>
-                        <div class="automation-time">Updated at 14:18 PST</div>
-                    </div>
-                    <div class="auto-generated">AUTO</div>
-                </div>
-            </div>
-
-            <div class="section-title">⚡ Edge Computing Network</div>
-            
-            <div class="integration-status">
-                <div class="integration-title">47 Active Edge Nodes</div>
-                <div class="integration-list">
-                    🚁 Autonomous Buoys: 12 nodes<br>
-                    🏗️ Smart Cranes: 18 nodes<br>
-                    ⛵ Pilot Vessels: 8 nodes<br>
-                    📡 Fixed Sensors: 9 nodes<br><br>
-                    <strong style="color: #10b981;">Sub-2ms inference for critical decisions</strong>
-                </div>
-            </div>
-
-            <div class="section-title">🏗️ 3D Photorealistic Views</div>
-            
-            <div class="integration-status">
-                <div class="integration-title">Google Earth 3D Models</div>
-                <div class="integration-list" style="display: grid; grid-template-columns: 1fr; gap: 4px;">
-                    <button onclick="flyTo3DView('vincent_thomas_bridge')" style="padding: 4px 8px; background: #0ea5e9; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🌉 Vincent Thomas Bridge</button>
-                    <button onclick="flyTo3DView('terminal_island')" style="padding: 4px 8px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🏗️ Terminal Island</button>
-                    <button onclick="flyTo3DView('pier_400')" style="padding: 4px 8px; background: #8b5cf6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🚢 Pier 400</button>
-                    <button onclick="flyTo3DView('main_channel')" style="padding: 4px 8px; background: #f59e0b; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">⚓ Main Channel</button>
-                    <button onclick="flyTo3DView('breakwater')" style="padding: 4px 8px; background: #64748b; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🌊 Breakwater</button>
-                </div>
-            </div>
-
-            <div class="section-title">🚦 Real-Time Traffic & Routing</div>
-            
-            <div class="integration-status">
-                <div class="integration-title">Traffic Monitoring Active</div>
-                <div class="integration-list">
-                    📍 8 Traffic Monitor Points<br>
-                    🚛 Truck Route Optimization<br>
-                    👥 Employee Parking Management<br>
-                    🗺️ Google Maps Traffic Layer<br>
-                    ⏱️ Real-time Delay Estimation<br>
-                    🛣️ Alternative Route Suggestions<br><br>
-                    <div id="currentTrafficStatus" style="color: #10b981; font-weight: 600;">
-                        System Analyzing Traffic...
-                    </div>
-                </div>
-            </div>
-
-            <div class="section-title">🔗 System Integrations</div>
-            
-            <div class="integration-status">
-                <div class="integration-title">23 Data Sources Connected</div>
-                <div class="integration-list">
-                    ✅ Esri ArcGIS Enterprise<br>
-                    ✅ NOAA Weather & Tide APIs<br>
-                    ✅ US Coast Guard AIS Network<br>
-                    ✅ Port Management Systems<br>
-                    ✅ Environmental Sensor Grid<br>
-                    ✅ Bathymetric Survey Data<br>
-                    ✅ Terminal Operating Systems
-                </div>
-            </div>
             </div>
         </div>
 
@@ -3343,6 +3229,138 @@
                 <canvas class="graph-canvas" id="graphCanvas"></canvas>
             </div>
         </div>
+            </div>
+        </div>
+
+        <!-- Operations & Integrations Panel -->
+        <div class="operations-panel dashboard-panel">
+            <div class="panel-header">
+                <span>🔧 Operations & Integrations</span>
+                <div class="panel-controls">
+                    <button class="panel-control-btn minimize-btn" onclick="togglePanel(this)">–</button>
+                    <button class="panel-control-btn close-btn" onclick="closePanel(this)">×</button>
+                </div>
+            </div>
+            <div class="panel-content">
+            
+            <div class="section-title">📊 Real-Time Metrics</div>
+            
+            <div class="metric-card">
+                <div class="metric-value">
+                    247
+                    <div class="uncertainty-indicator">
+                        <span>±3</span>
+                        <div style="width: 8px; height: 8px; background: #f59e0b; border-radius: 50%;"></div>
+                    </div>
+                </div>
+                <div class="metric-label">Vessels Tracked (Multi-Source)</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-value">
+                    94.7%
+                    <div class="uncertainty-indicator">
+                        <span>±1.2%</span>
+                        <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%;"></div>
+                    </div>
+                </div>
+                <div class="metric-label">Data Fusion Accuracy</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-value">
+                    <2ms
+                    <div class="uncertainty-indicator">
+                        <span>Edge</span>
+                        <div style="width: 8px; height: 8px; background: #8b5cf6; border-radius: 50%;"></div>
+                    </div>
+                </div>
+                <div class="metric-label">Inference Latency</div>
+            </div>
+
+            <div class="section-title">🤖 Autonomous Operations</div>
+            
+            <div class="automation-panel">
+                <div class="automation-item">
+                    <div class="automation-content">
+                        <div class="automation-title">Environmental Impact Report</div>
+                        <div class="automation-time">Auto-generated at 13:44 PST</div>
+                    </div>
+                    <div class="auto-generated">AUTO</div>
+                </div>
+                <div class="automation-item">
+                    <div class="automation-content">
+                        <div class="automation-title">Risk Assessment Update</div>
+                        <div class="automation-time">Auto-generated at 14:20 PST</div>
+                    </div>
+                    <div class="auto-generated">AUTO</div>
+                </div>
+                <div class="automation-item">
+                    <div class="automation-content">
+                        <div class="automation-title">Cross-Port Resilience Plan</div>
+                        <div class="automation-time">Auto-generated at 13:43 PST</div>
+                    </div>
+                    <div class="auto-generated">AUTO</div>
+                </div>
+            </div>
+
+            <div class="section-title">⚡ Edge Computing Network</div>
+            
+            <div class="integration-status">
+                <div class="integration-title">47 Active Edge Nodes</div>
+                <div class="integration-list">
+                    🚁 Autonomous Buoys: 12 nodes<br>
+                    🏗️ Smart Cranes: 18 nodes<br>
+                    ⛵ Pilot Vessels: 8 nodes<br>
+                    📡 Fixed Sensors: 9 nodes<br><br>
+                    <strong style="color: #10b981;">Sub-2ms inference for critical decisions</strong>
+                </div>
+            </div>
+
+            <div class="section-title">🏗️ 3D Photorealistic Views</div>
+            
+            <div class="integration-status">
+                <div class="integration-title">Google Earth 3D Models</div>
+                <div class="integration-list" style="display: grid; grid-template-columns: 1fr; gap: 4px;">
+                    <button onclick="flyTo3DView('vincent_thomas_bridge')" style="padding: 4px 8px; background: #0ea5e9; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🌉 Vincent Thomas Bridge</button>
+                    <button onclick="flyTo3DView('terminal_island')" style="padding: 4px 8px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🏗️ Terminal Island</button>
+                    <button onclick="flyTo3DView('pier_400')" style="padding: 4px 8px; background: #8b5cf6; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🚢 Pier 400</button>
+                    <button onclick="flyTo3DView('main_channel')" style="padding: 4px 8px; background: #f59e0b; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">⚓ Main Channel</button>
+                    <button onclick="flyTo3DView('breakwater')" style="padding: 4px 8px; background: #64748b; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🌊 Breakwater</button>
+                </div>
+            </div>
+
+            <div class="section-title">🚦 Real-Time Traffic & Routing</div>
+            
+            <div class="integration-status">
+                <div class="integration-title">Traffic Monitoring Active</div>
+                <div class="integration-list">
+                    📍 8 Traffic Monitor Points<br>
+                    🚛 Truck Route Optimization<br>
+                    👥 Employee Parking Management<br>
+                    🗺️ Google Maps Traffic Layer<br>
+                    ⏱️ Real-time Delay Estimation<br>
+                    🛣️ Alternative Route Suggestions<br><br>
+                    <div id="currentTrafficStatus" style="color: #10b981; font-weight: 600;">
+                        ⚡ 3 Moderate Traffic Points
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">🔗 System Integrations</div>
+            
+            <div class="integration-status">
+                <div class="integration-title">23 Data Sources Connected</div>
+                <div class="integration-list">
+                    ✅ Esri ArcGIS Enterprise<br>
+                    ✅ NOAA Weather & Tide APIs<br>
+                    ✅ US Coast Guard AIS Network<br>
+                    ✅ Port Management Systems<br>
+                    ✅ Environmental Sensor Grid<br>
+                    ✅ Bathymetric Survey Data<br>
+                    ✅ Terminal Operating Systems
+                </div>
+            </div>
             </div>
         </div>
     </div>
