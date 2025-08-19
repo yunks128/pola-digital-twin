@@ -109,6 +109,14 @@
             overflow-y: auto;
         }
 
+        .dashboard-panel.minimized .panel-content {
+            display: none;
+        }
+
+        .dashboard-panel.minimized {
+            height: auto;
+        }
+
 
         .header {
             width: 100%;
@@ -2915,11 +2923,11 @@
         </div>
 
         <!-- Main View - Port of LA Map -->
-        <div class="main-view dashboard-panel">
+        <div class="main-view dashboard-panel minimized">
             <div class="panel-header">
                 <span>🗺️ POLA Digital Twin Map</span>
                 <div class="panel-controls">
-                    <button class="panel-control-btn minimize-btn" onclick="togglePanel(this)">–</button>
+                    <button class="panel-control-btn minimize-btn" onclick="togglePanel(this)">+</button>
                     <button class="panel-control-btn close-btn" onclick="closePanel(this)">×</button>
                 </div>
             </div>
@@ -3228,11 +3236,11 @@
 
 
         <!-- Real-Time Status Dashboard -->
-        <div class="status-dashboard dashboard-panel">
+        <div class="status-dashboard dashboard-panel minimized">
             <div class="panel-header">
                 <span>📊 Real-Time Status Dashboard</span>
                 <div class="panel-controls">
-                    <button class="panel-control-btn minimize-btn" onclick="togglePanel(this)">–</button>
+                    <button class="panel-control-btn minimize-btn" onclick="togglePanel(this)">+</button>
                     <button class="panel-control-btn close-btn" onclick="closePanel(this)">×</button>
                 </div>
             </div>
@@ -3347,18 +3355,14 @@
         // Panel control functions
         function togglePanel(button) {
             const panel = button.closest('.dashboard-panel');
-            const content = panel.querySelector('.panel-content');
-            const isMinimized = content.style.display === 'none';
+            const isMinimized = panel.classList.contains('minimized');
             
             if (isMinimized) {
-                content.style.display = '';
-                panel.style.height = panel.dataset.originalHeight || 'auto';
+                panel.classList.remove('minimized');
                 button.textContent = '–';
                 button.title = 'Minimize';
             } else {
-                panel.dataset.originalHeight = panel.style.height || panel.offsetHeight + 'px';
-                content.style.display = 'none';
-                panel.style.height = '50px';
+                panel.classList.add('minimized');
                 button.textContent = '+';
                 button.title = 'Restore';
             }
