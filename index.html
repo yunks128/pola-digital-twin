@@ -6673,31 +6673,100 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             }, 15000);
         }
 
-        // Voice Assistant Functionality using Google Cloud Speech-to-Text
+        // Voice Assistant Functionality
         let isRecording = false;
         let mediaRecorder = null;
         let audioChunks = [];
         let voiceOutputEnabled = true;
         let synthesis = window.speechSynthesis;
+        let recognition = null;
 
         function initializeVoiceAssistant() {
-            // Check for MediaRecorder support (required for Google Cloud Speech-to-Text)
-            if ('MediaRecorder' in window && 'navigator' in window && 'mediaDevices' in navigator) {
-                updateVoiceStatus('', 'Voice Assistant Ready');
-                document.getElementById('voiceToggleBtn').classList.add('active');
+            // Check for speech recognition support - try browser first for desktop
+            const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile && 'MediaRecorder' in window && 'navigator' in window && 'mediaDevices' in navigator) {
+                // Use Google Cloud Speech-to-Text for mobile
+                console.log('Mobile detected - using Google Cloud Speech-to-Text');
+                updateVoiceStatus('', 'Voice Assistant Ready (Mobile)');
                 
-                // Check if Google Maps API key is available
                 if (!window.GOOGLE_MAPS_API_KEY || window.GOOGLE_MAPS_API_KEY === 'YOUR_GOOGLE_MAPS_API_KEY') {
                     updateVoiceStatus('error', '❌ Google API key not configured');
                     document.getElementById('voiceBtn').disabled = true;
                     return;
                 }
-                
-                console.log('Google Cloud Speech-to-Text initialized successfully');
+            } else if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                // Use Web Speech API for desktop
+                console.log('Desktop detected - using Web Speech API');
+                try {
+                    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                    recognition.continuous = false;
+                    recognition.interimResults = false;
+                    recognition.lang = 'en-US';
+                    
+                    recognition.onstart = function() {
+                        updateVoiceStatus('listening', '🎤 Listening...');
+                        document.getElementById('voiceBtn').classList.add('recording');
+                        document.getElementById('voiceIndicator').classList.add('active');
+                    };
+                    
+                    recognition.onresult = function(event) {
+                        const transcript = event.results[0][0].transcript;
+                        document.getElementById('chatInput').value = transcript;
+                        updateVoiceStatus('', '🤖 Analyzing...');
+                        
+                        // Auto-send the message immediately
+                        sendMessage();
+                    };
+                    
+                    recognition.onerror = function(event) {
+                        let errorMessage = '❌ Speech error';
+                        
+                        switch(event.error) {
+                            case 'not-allowed':
+                                errorMessage = '❌ Microphone permission denied. Please allow microphone access.';
+                                break;
+                            case 'no-speech':
+                                errorMessage = '⚠️ No speech detected. Try speaking louder.';
+                                break;
+                            case 'audio-capture':
+                                errorMessage = '❌ Microphone not found. Check your microphone.';
+                                break;
+                            case 'network':
+                                errorMessage = '❌ Network error. Check your internet connection.';
+                                break;
+                            default:
+                                errorMessage = `❌ Speech error: ${event.error}`;
+                        }
+                        
+                        updateVoiceStatus('error', errorMessage);
+                        setTimeout(() => {
+                            updateVoiceStatus('', 'Voice Assistant Ready');
+                        }, 3000);
+                    };
+                    
+                    recognition.onend = function() {
+                        isRecording = false;
+                        document.getElementById('voiceBtn').classList.remove('recording');
+                        document.getElementById('voiceIndicator').classList.remove('active');
+                        if (!document.getElementById('voiceStatus').classList.contains('error')) {
+                            updateVoiceStatus('', 'Voice Assistant Ready');
+                        }
+                    };
+
+                    updateVoiceStatus('', 'Voice Assistant Ready (Desktop)');
+                    
+                } catch (error) {
+                    console.error('Error initializing speech recognition:', error);
+                    updateVoiceStatus('error', '❌ Failed to initialize speech recognition');
+                    document.getElementById('voiceBtn').disabled = true;
+                }
             } else {
-                updateVoiceStatus('error', '❌ MediaRecorder not supported in this browser');
+                updateVoiceStatus('error', '❌ Speech recognition not supported in this browser');
                 document.getElementById('voiceBtn').disabled = true;
             }
+            
+            document.getElementById('voiceToggleBtn').classList.add('active');
         }
 
         let silenceTimer = null;
@@ -6923,10 +6992,26 @@ Which visualization would you like to see? I'll provide detailed analysis along 
         }
 
         function toggleVoiceRecording() {
-            if (isRecording) {
-                stopGoogleSpeechRecognition();
+            const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                // Use Google Cloud Speech-to-Text for mobile
+                if (isRecording) {
+                    stopGoogleSpeechRecognition();
+                } else {
+                    startGoogleSpeechRecognition();
+                }
             } else {
-                startGoogleSpeechRecognition();
+                // Use Web Speech API for desktop
+                if (!recognition) return;
+                
+                if (isRecording) {
+                    recognition.stop();
+                    isRecording = false;
+                } else {
+                    recognition.start();
+                    isRecording = true;
+                }
             }
         }
 
