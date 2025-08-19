@@ -6636,7 +6636,7 @@ Which visualization would you like to see? I'll provide detailed analysis along 
         function initializeVoiceAssistant() {
             // Check for MediaRecorder support (required for Google Cloud Speech-to-Text)
             if ('MediaRecorder' in window && 'navigator' in window && 'mediaDevices' in navigator) {
-                updateVoiceStatus('', 'Voice Assistant Ready - Powered by Google Cloud Speech-to-Text');
+                updateVoiceStatus('', 'Voice Assistant Ready');
                 document.getElementById('voiceToggleBtn').classList.add('active');
                 
                 // Check if Google Maps API key is available
@@ -6653,6 +6653,12 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             }
         }
 
+        let silenceTimer = null;
+        let audioContext = null;
+        let analyser = null;
+        let microphone = null;
+        let dataArray = null;
+
         async function startGoogleSpeechRecognition() {
             try {
                 // Request microphone access
@@ -6665,9 +6671,20 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                     } 
                 });
                 
-                updateVoiceStatus('listening', '🎤 Listening... (Google Cloud)');
+                updateVoiceStatus('listening', '🎤 Listening... speak now');
                 document.getElementById('voiceBtn').classList.add('recording');
                 document.getElementById('voiceIndicator').classList.add('active');
+                
+                // Set up audio analysis for silence detection
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                microphone = audioContext.createMediaStreamSource(stream);
+                
+                analyser.fftSize = 512;
+                const bufferLength = analyser.frequencyBinCount;
+                dataArray = new Uint8Array(bufferLength);
+                
+                microphone.connect(analyser);
                 
                 // Initialize MediaRecorder
                 mediaRecorder = new MediaRecorder(stream, {
@@ -6688,16 +6705,22 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                     // Stop all tracks to release microphone
                     stream.getTracks().forEach(track => track.stop());
                     
+                    // Clean up audio context
+                    if (audioContext) {
+                        audioContext.close();
+                        audioContext = null;
+                    }
+                    
                     updateVoiceStatus('', '🔄 Processing speech...');
                     
                     try {
                         const transcript = await sendAudioToGoogle(audioBlob);
                         if (transcript && transcript.trim()) {
                             document.getElementById('chatInput').value = transcript;
-                            updateVoiceStatus('', 'Voice Assistant Ready');
+                            updateVoiceStatus('', '🤖 Analyzing...');
                             
-                            // Auto-send the message
-                            setTimeout(() => sendMessage(), 500);
+                            // Auto-send the message immediately
+                            sendMessage();
                         } else {
                             updateVoiceStatus('error', '⚠️ No speech detected. Try speaking louder.');
                             setTimeout(() => {
@@ -6716,12 +6739,16 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                 mediaRecorder.start();
                 isRecording = true;
                 
-                // Auto-stop after 10 seconds
+                // Start silence detection
+                detectSilence();
+                
+                // Fallback auto-stop after 15 seconds
                 setTimeout(() => {
                     if (isRecording && mediaRecorder && mediaRecorder.state === 'recording') {
+                        updateVoiceStatus('', '⏰ Maximum recording time reached');
                         stopGoogleSpeechRecognition();
                     }
-                }, 10000);
+                }, 15000);
                 
             } catch (error) {
                 console.error('Microphone access error:', error);
@@ -6742,11 +6769,59 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             }
         }
 
+        function detectSilence() {
+            if (!isRecording || !analyser) return;
+            
+            analyser.getByteFrequencyData(dataArray);
+            
+            // Calculate average volume
+            let sum = 0;
+            for (let i = 0; i < dataArray.length; i++) {
+                sum += dataArray[i];
+            }
+            const average = sum / dataArray.length;
+            
+            // Threshold for detecting speech (adjust as needed)
+            const speechThreshold = 10;
+            
+            if (average > speechThreshold) {
+                // Speech detected, clear silence timer
+                if (silenceTimer) {
+                    clearTimeout(silenceTimer);
+                    silenceTimer = null;
+                }
+                updateVoiceStatus('listening', '🎤 Listening... keep speaking');
+            } else {
+                // Silence detected, start/continue timer
+                if (!silenceTimer) {
+                    updateVoiceStatus('listening', '🎤 Listening... silence detected');
+                    silenceTimer = setTimeout(() => {
+                        if (isRecording) {
+                            updateVoiceStatus('', '🔇 Silence detected, processing...');
+                            stopGoogleSpeechRecognition();
+                        }
+                    }, 2000); // Stop after 2 seconds of silence
+                }
+            }
+            
+            // Continue monitoring
+            if (isRecording) {
+                requestAnimationFrame(detectSilence);
+            }
+        }
+
         function stopGoogleSpeechRecognition() {
             if (mediaRecorder && mediaRecorder.state === 'recording') {
                 mediaRecorder.stop();
             }
             isRecording = false;
+            
+            // Clear silence timer
+            if (silenceTimer) {
+                clearTimeout(silenceTimer);
+                silenceTimer = null;
+            }
+            
             document.getElementById('voiceBtn').classList.remove('recording');
             document.getElementById('voiceIndicator').classList.remove('active');
         }
