@@ -21,8 +21,8 @@
 
         .dashboard-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 80px 400px 1fr 200px;
+            grid-template-columns: 1fr;
+            grid-template-rows: 80px 400px 350px 1fr 200px;
             height: 100vh;
             gap: 1px;
             background: #e2e8f0;
@@ -36,6 +36,25 @@
                 height: auto;
                 min-height: 100vh;
                 overflow-y: auto;
+            }
+            
+            .sidebar {
+                grid-row: 2;
+            }
+            
+            .control-panel {
+                grid-row: 3;
+            }
+            
+            .main-view {
+                grid-row: 4;
+                height: 50vh;
+                min-height: 50vh;
+                max-height: 50vh;
+            }
+            
+            .status-dashboard {
+                grid-row: 5;
             }
         }
 
@@ -57,28 +76,29 @@
             background: #ffffff;
             padding: 1.5rem;
             overflow-y: auto;
-            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .control-panel {
-            grid-column: 2;
-            grid-row: 2;
+            grid-column: 1;
+            grid-row: 3;
             background: #ffffff;
             padding: 1.5rem;
             overflow-y: auto;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .main-view {
-            grid-column: 1 / -1;
-            grid-row: 3;
+            grid-column: 1;
+            grid-row: 4;
             background: #f8fafc;
             position: relative;
             overflow: hidden;
         }
 
         .status-dashboard {
-            grid-column: 1 / -1;
-            grid-row: 4;
+            grid-column: 1;
+            grid-row: 5;
             background: #ffffff;
             padding: 1.5rem;
             overflow-y: auto;
@@ -7324,11 +7344,84 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             }
         }
 
+        function showInitialAlerts() {
+            console.log('🚨 Loading initial alerts...');
+            
+            const aiStatus = document.getElementById('aiStatus');
+            const lastAnalysis = document.getElementById('lastAnalysis');
+            const activeRecommendations = document.getElementById('activeRecommendations');
+            
+            // Set initial status
+            aiStatus.textContent = '🟡 MONITORING';
+            aiStatus.style.background = '#f59e0b';
+            lastAnalysis.textContent = 'Continuous monitoring active';
+            
+            // Show immediate alerts
+            const initialAlerts = [
+                {
+                    title: "High Traffic Volume Detected",
+                    description: "Terminal Island Freeway experiencing 25% increase in truck traffic. Consider alternate routing.",
+                    priority: "high",
+                    type: "traffic",
+                    time: "Just now"
+                },
+                {
+                    title: "Vessel Queue Building",
+                    description: "3 vessels waiting for berth assignment at Pier 400. ETA coordination recommended.",
+                    priority: "medium", 
+                    type: "operations",
+                    time: "2 min ago"
+                },
+                {
+                    title: "Air Quality Monitoring",
+                    description: "AQI levels normal at 89. Emissions within acceptable parameters.",
+                    priority: "low",
+                    type: "environmental", 
+                    time: "5 min ago"
+                }
+            ];
+            
+            let alertsHTML = '';
+            initialAlerts.forEach(alert => {
+                const priorityClass = alert.priority === 'high' ? 'high-priority' : 
+                                   alert.priority === 'medium' ? 'medium-priority' : 'low-priority';
+                
+                alertsHTML += `
+                    <div class="recommendation-item ${priorityClass}">
+                        <div class="recommendation-content">
+                            <div class="recommendation-title">${alert.title}</div>
+                            <div class="recommendation-description">${alert.description}</div>
+                            <div class="recommendation-meta">
+                                <span class="recommendation-type">${alert.type.toUpperCase()}</span>
+                                <span class="recommendation-time">${alert.time}</span>
+                            </div>
+                        </div>
+                        <div class="recommendation-actions">
+                            <button class="recommend-btn" onclick="acknowledgeAlert('${alert.title}')">✓ Acknowledge</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            activeRecommendations.innerHTML = alertsHTML;
+        }
+        
+        function acknowledgeAlert(alertTitle) {
+            console.log(`Alert acknowledged: ${alertTitle}`);
+            // Remove the alert element
+            event.target.closest('.recommendation-item').style.opacity = '0.5';
+            event.target.textContent = '✓ Acknowledged';
+            event.target.disabled = true;
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🤖 Initializing Agentic AI Workflow System...');
             console.log('🚛 Initializing Traffic Optimization System...');
             console.log('🗺️ Initializing Interactive Map Features...');
             console.log('🎤 Initializing Voice Assistant...');
+            
+            // Show alerts immediately
+            showInitialAlerts();
             
             // Initialize voice assistant
             initializeVoiceAssistant();
@@ -7342,10 +7435,10 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             animateTruckMovement();
             updateCongestionZones();
             
-            // Perform initial scan after a short delay
+            // Perform full AI scan after a delay (this will add more recommendations)
             setTimeout(() => {
                 triggerAIScan();
-            }, 3000);
+            }, 5000); // Increased to 5 seconds to see initial alerts first
         });
     </script>
 </body>
