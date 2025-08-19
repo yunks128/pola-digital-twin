@@ -114,7 +114,17 @@
         }
 
         .dashboard-panel.minimized {
-            height: auto;
+            height: auto !important;
+            min-height: auto !important;
+        }
+
+        /* Ensure minimized panels work properly on mobile */
+        @media (max-width: 768px) {
+            .dashboard-panel.minimized {
+                height: auto !important;
+                min-height: auto !important;
+                max-height: none !important;
+            }
         }
 
 
