@@ -1634,6 +1634,115 @@
             cursor: not-allowed;
         }
 
+        /* Voice Assistant Styles */
+        .voice-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #0ea5e9;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .voice-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+
+        .voice-btn.recording {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-color: #ef4444;
+            animation: pulse-record 1.5s infinite;
+        }
+
+        @keyframes pulse-record {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .voice-indicator {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            top: 5px;
+            right: 5px;
+            display: none;
+        }
+
+        .voice-indicator.active {
+            display: block;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .voice-toggle-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background: #f8fafc;
+            color: #64748b;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .voice-toggle-btn:hover {
+            background: #f1f5f9;
+            border-color: #0ea5e9;
+        }
+
+        .voice-toggle-btn.active {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border-color: #10b981;
+        }
+
+        .voice-status {
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #64748b;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .voice-status-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .voice-status.listening {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            color: #d97706;
+        }
+
+        .voice-status.speaking {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            color: #059669;
+        }
+
+        .voice-status.error {
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+            color: #dc2626;
+        }
+
         /* AI Recommendations Panel Styles */
         .ai-recommendations-panel {
             background: #ffffff;
@@ -2819,8 +2928,18 @@
                     </div>
                 </div>
                 <div class="chat-input-container">
-                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask about port operations, status, or AI recommendations..." maxlength="500">
+                    <button class="voice-btn" id="voiceBtn" onclick="toggleVoiceRecording()" title="Click to speak">
+                        🎤
+                        <div class="voice-indicator" id="voiceIndicator"></div>
+                    </button>
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask about port operations or say 'Hey POLA'..." maxlength="500">
                     <button class="chat-send-btn" id="chatSendBtn" onclick="sendMessage()">Send</button>
+                    <button class="voice-toggle-btn" id="voiceToggleBtn" onclick="toggleVoiceOutput()" title="Toggle voice responses">
+                        🔊
+                    </button>
+                </div>
+                <div class="voice-status" id="voiceStatus">
+                    <span class="voice-status-text">Voice Assistant Ready</span>
                 </div>
             </div>
 
@@ -6507,10 +6626,246 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             }, 15000);
         }
 
+        // Voice Assistant Functionality
+        let isRecording = false;
+        let recognition = null;
+        let voiceOutputEnabled = true;
+        let synthesis = window.speechSynthesis;
+
+        function initializeVoiceAssistant() {
+            // Check for speech recognition support
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'en-US';
+                
+                recognition.onstart = function() {
+                    updateVoiceStatus('listening', '🎤 Listening...');
+                    document.getElementById('voiceBtn').classList.add('recording');
+                    document.getElementById('voiceIndicator').classList.add('active');
+                };
+                
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    document.getElementById('chatInput').value = transcript;
+                    updateVoiceStatus('', 'Voice Assistant Ready');
+                    
+                    // Auto-send if confidence is high
+                    if (event.results[0][0].confidence > 0.7) {
+                        setTimeout(() => sendMessage(), 500);
+                    }
+                };
+                
+                recognition.onerror = function(event) {
+                    updateVoiceStatus('error', '❌ Speech recognition error');
+                    console.error('Speech recognition error:', event.error);
+                };
+                
+                recognition.onend = function() {
+                    isRecording = false;
+                    document.getElementById('voiceBtn').classList.remove('recording');
+                    document.getElementById('voiceIndicator').classList.remove('active');
+                    if (!document.getElementById('voiceStatus').classList.contains('error')) {
+                        updateVoiceStatus('', 'Voice Assistant Ready');
+                    }
+                };
+
+                // Initialize voice output toggle
+                document.getElementById('voiceToggleBtn').classList.add('active');
+            } else {
+                updateVoiceStatus('error', '❌ Speech recognition not supported');
+                document.getElementById('voiceBtn').disabled = true;
+            }
+
+            // Listen for "Hey POLA" wake word
+            startWakeWordDetection();
+        }
+
+        function toggleVoiceRecording() {
+            if (!recognition) return;
+            
+            if (isRecording) {
+                recognition.stop();
+                isRecording = false;
+            } else {
+                recognition.start();
+                isRecording = true;
+            }
+        }
+
+        function toggleVoiceOutput() {
+            voiceOutputEnabled = !voiceOutputEnabled;
+            const btn = document.getElementById('voiceToggleBtn');
+            
+            if (voiceOutputEnabled) {
+                btn.classList.add('active');
+                btn.title = 'Voice responses enabled';
+                updateVoiceStatus('', 'Voice responses enabled');
+            } else {
+                btn.classList.remove('active');
+                btn.title = 'Voice responses disabled';
+                updateVoiceStatus('', 'Voice responses disabled');
+            }
+            
+            // Stop any current speech
+            synthesis.cancel();
+        }
+
+        function updateVoiceStatus(className, text) {
+            const voiceStatus = document.getElementById('voiceStatus');
+            const voiceStatusText = document.querySelector('.voice-status-text');
+            
+            voiceStatus.className = 'voice-status ' + className;
+            voiceStatusText.textContent = text;
+        }
+
+        function speakText(text) {
+            if (!voiceOutputEnabled || !synthesis) return;
+            
+            // Cancel any current speech
+            synthesis.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9;
+            utterance.pitch = 1.0;
+            utterance.volume = 0.8;
+            
+            // Try to use a more natural voice
+            const voices = synthesis.getVoices();
+            const preferredVoice = voices.find(voice => 
+                voice.name.includes('Google') || 
+                voice.name.includes('Microsoft') ||
+                voice.lang === 'en-US'
+            );
+            if (preferredVoice) {
+                utterance.voice = preferredVoice;
+            }
+            
+            utterance.onstart = function() {
+                updateVoiceStatus('speaking', '🔊 Speaking...');
+            };
+            
+            utterance.onend = function() {
+                updateVoiceStatus('', 'Voice Assistant Ready');
+            };
+            
+            utterance.onerror = function(event) {
+                console.error('Speech synthesis error:', event.error);
+                updateVoiceStatus('error', '❌ Speech output error');
+            };
+            
+            synthesis.speak(utterance);
+        }
+
+        function startWakeWordDetection() {
+            // Simplified wake word detection
+            if (!recognition) return;
+            
+            const wakeWordRecognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            wakeWordRecognition.continuous = true;
+            wakeWordRecognition.interimResults = true;
+            wakeWordRecognition.lang = 'en-US';
+            
+            wakeWordRecognition.onresult = function(event) {
+                const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
+                
+                if (transcript.includes('hey pola') || transcript.includes('hey polar')) {
+                    // Wake word detected
+                    updateVoiceStatus('listening', '👋 Hey POLA detected! Listening...');
+                    wakeWordRecognition.stop();
+                    
+                    // Start main recognition after a short delay
+                    setTimeout(() => {
+                        if (!isRecording) {
+                            toggleVoiceRecording();
+                        }
+                    }, 500);
+                    
+                    // Restart wake word detection after 3 seconds
+                    setTimeout(() => {
+                        startWakeWordDetection();
+                    }, 3000);
+                }
+            };
+            
+            wakeWordRecognition.onerror = function(event) {
+                // Silently restart wake word detection on error
+                setTimeout(() => {
+                    startWakeWordDetection();
+                }, 2000);
+            };
+            
+            wakeWordRecognition.start();
+        }
+
+        // Modify existing sendMessage function to include voice output
+        const originalSendMessage = window.sendMessage;
+        window.sendMessage = function() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                // Call original function
+                if (originalSendMessage) {
+                    originalSendMessage();
+                } else {
+                    // Fallback implementation
+                    const chatMessages = document.getElementById('chatMessages');
+                    
+                    // Add user message
+                    const userDiv = document.createElement('div');
+                    userDiv.className = 'chat-message user';
+                    userDiv.textContent = message;
+                    chatMessages.appendChild(userDiv);
+                    
+                    // Simulate AI response
+                    setTimeout(() => {
+                        const aiDiv = document.createElement('div');
+                        aiDiv.className = 'chat-message ai';
+                        
+                        let response = getAIResponse(message);
+                        aiDiv.textContent = response;
+                        chatMessages.appendChild(aiDiv);
+                        
+                        // Speak the response
+                        speakText(response);
+                        
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }, 1000);
+                    
+                    input.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            }
+        };
+
+        function getAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('traffic') || lowerMessage.includes('congestion')) {
+                return "Currently monitoring 47 active trucks with 2 critical congestion zones at Vincent Thomas Bridge and Terminal Island Freeway. Alternative routes have been calculated to reduce delays by up to 18 minutes.";
+            } else if (lowerMessage.includes('weather') || lowerMessage.includes('fog')) {
+                return "Current weather conditions show light fog reducing visibility in the harbor area. All vessels are operating under enhanced navigation protocols with AIS tracking active for 1,247 tracked vessels.";
+            } else if (lowerMessage.includes('status') || lowerMessage.includes('operations')) {
+                return "Port operations are running smoothly. All 8 global ports in the network are connected with latency under 15ms. 47 edge computing nodes are operational with real-time data fusion from 23 integrated systems.";
+            } else if (lowerMessage.includes('alert') || lowerMessage.includes('emergency')) {
+                return "Current alert status: 3 active alerts including 1 critical incident at Terminal Island Freeway and moderate congestion at Container Terminal. Emergency protocols are ready and autonomous systems are monitoring the situation.";
+            } else if (lowerMessage.includes('vessel') || lowerMessage.includes('ship')) {
+                return "Vessel tracking is active with AIS data from 1,247 tracked vessels. Bathymetry 4D model is operational and tidal data shows +2.3ft rising. All terminals are processing vessels according to schedule.";
+            } else {
+                return "I'm POLA's AI assistant. I can help you with traffic optimization, vessel tracking, operational status, weather conditions, and emergency alerts. What would you like to know?";
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🤖 Initializing Agentic AI Workflow System...');
             console.log('🚛 Initializing Traffic Optimization System...');
             console.log('🗺️ Initializing Interactive Map Features...');
+            console.log('🎤 Initializing Voice Assistant...');
+            
+            // Initialize voice assistant
+            initializeVoiceAssistant();
             
             // Initialize traffic optimization
             updateLiveAlerts();
