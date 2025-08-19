@@ -21,9 +21,10 @@
 
         .dashboard-container {
             position: relative;
-            height: 100vh;
+            height: 1200px;
+            min-height: 100vh;
             background: #e2e8f0;
-            overflow: hidden;
+            overflow: auto;
         }
 
         /* Mobile Layout - Stack vertically on small screens */
@@ -177,28 +178,30 @@
         .sidebar {
             top: 90px;
             left: 10px;
-            width: 400px;
-            height: 450px;
+            right: 10px;
+            width: calc(100% - 20px);
+            height: 250px;
         }
 
         .control-panel {
-            top: 90px;
+            top: 350px;
+            left: 10px;
             right: 10px;
-            width: 400px;
-            height: 450px;
+            width: calc(100% - 20px);
+            height: 250px;
         }
 
         .main-view {
-            top: 90px;
-            left: 420px;
-            right: 420px;
-            height: 450px;
+            top: 610px;
+            left: 10px;
+            right: 10px;
+            height: 350px;
             background: #f8fafc;
             border-radius: 8px;
         }
 
         .status-dashboard {
-            bottom: 10px;
+            top: 970px;
             left: 10px;
             right: 10px;
             height: 200px;
