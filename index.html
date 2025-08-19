@@ -7058,17 +7058,59 @@ Which visualization would you like to see? I'll provide detailed analysis along 
         }
 
 
-        // Streaming text functionality
+        // Streaming text functionality with real-time speech
         function streamText(element, text, speed = 30) {
             return new Promise((resolve) => {
                 element.textContent = '';
                 element.classList.add('streaming');
                 let index = 0;
+                let currentSentence = '';
+                let sentences = [];
+                let speechQueue = [];
+                let isSpeaking = false;
+                
+                // Split text into sentences for real-time speech
+                const sentenceEnders = /[.!?]+/g;
+                const textSentences = text.split(sentenceEnders).filter(s => s.trim().length > 0);
+                
+                async function playNextSpeech() {
+                    if (speechQueue.length > 0 && voiceOutputEnabled && !isSpeaking) {
+                        isSpeaking = true;
+                        const sentence = speechQueue.shift();
+                        
+                        try {
+                            await speakTextRealtime(sentence);
+                        } catch (error) {
+                            console.error('Real-time speech error:', error);
+                        }
+                        
+                        isSpeaking = false;
+                        
+                        // Continue with next sentence
+                        setTimeout(playNextSpeech, 100);
+                    }
+                }
                 
                 function typeCharacter() {
                     if (index < text.length) {
-                        element.textContent += text.charAt(index);
+                        const char = text.charAt(index);
+                        element.textContent += char;
+                        currentSentence += char;
                         index++;
+                        
+                        // Check if we completed a sentence
+                        if (/[.!?]/.test(char) && currentSentence.trim().length > 5) {
+                            const completeSentence = currentSentence.trim();
+                            if (completeSentence) {
+                                speechQueue.push(completeSentence);
+                                currentSentence = '';
+                                
+                                // Start playing speech if not already playing
+                                if (!isSpeaking) {
+                                    playNextSpeech();
+                                }
+                            }
+                        }
                         
                         // Scroll to bottom as text appears
                         const chatMessages = document.getElementById('chatMessages');
@@ -7076,6 +7118,14 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                         
                         setTimeout(typeCharacter, speed);
                     } else {
+                        // Handle any remaining text that didn't end with punctuation
+                        if (currentSentence.trim().length > 0) {
+                            speechQueue.push(currentSentence.trim());
+                            if (!isSpeaking) {
+                                playNextSpeech();
+                            }
+                        }
+                        
                         element.classList.remove('streaming');
                         resolve();
                     }
@@ -7083,6 +7133,56 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                 
                 typeCharacter();
             });
+        }
+
+        // Real-time speech function (faster, optimized for streaming)
+        async function speakTextRealtime(text) {
+            if (!voiceOutputEnabled || !text.trim()) return;
+            
+            try {
+                // Use Google Cloud TTS for shorter sentences with faster processing
+                const audioBuffer = await generateSpeechWithGoogle(text);
+                
+                // Play the audio immediately
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const source = audioContext.createBufferSource();
+                
+                const decodedData = await audioContext.decodeAudioData(audioBuffer);
+                source.buffer = decodedData;
+                source.connect(audioContext.destination);
+                
+                return new Promise((resolve) => {
+                    source.onended = function() {
+                        resolve();
+                    };
+                    source.start(0);
+                });
+                
+            } catch (error) {
+                console.error('Real-time Google TTS error:', error);
+                
+                // Fallback to browser speech synthesis for real-time
+                return new Promise((resolve) => {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.rate = 1.1; // Slightly faster for real-time
+                    utterance.pitch = 1.0;
+                    utterance.volume = 0.8;
+                    
+                    utterance.onend = function() {
+                        resolve();
+                    };
+                    
+                    utterance.onerror = function() {
+                        resolve(); // Continue even if speech fails
+                    };
+                    
+                    if (synthesis) {
+                        synthesis.speak(utterance);
+                    } else {
+                        resolve();
+                    }
+                });
+            }
         }
 
         // Modify existing sendMessage function to include streaming and voice output
@@ -7124,13 +7224,8 @@ Which visualization would you like to see? I'll provide detailed analysis along 
                     // Get AI response
                     let response = getAIResponse(message);
                     
-                    // Stream the text output
+                    // Stream the text output with real-time speech
                     await streamText(aiDiv, response, 25); // 25ms delay between characters
-                    
-                    // Start speaking while text is still streaming (after a short delay)
-                    setTimeout(() => {
-                        speakText(response);
-                    }, 500);
                     
                     chatMessages.scrollTop = chatMessages.scrollHeight;
                 }, 1500); // 1.5 second "thinking" time
