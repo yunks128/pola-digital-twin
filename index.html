@@ -2822,7 +2822,7 @@
                 </div>
                 
                 <div class="workflow-actions">
-                    <button class="action-btn scan-btn" onclick="triggerAIScan()">🔍 Trigger AI Scan</button>
+                    <button class="action-btn scan-btn" onclick="triggerAIScan()">🔍 Manual Scan</button>
                     <button class="action-btn auto-btn" onclick="toggleAutoMode()" id="autoModeBtn">⚡ Enable Auto Mode</button>
                 </div>
             </div>
@@ -7361,9 +7361,9 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             const activeRecommendations = document.getElementById('activeRecommendations');
             
             // Set initial status
-            aiStatus.textContent = '🟡 MONITORING';
-            aiStatus.style.background = '#f59e0b';
-            lastAnalysis.textContent = 'Continuous monitoring active';
+            aiStatus.textContent = '🔄 AUTO-SCANNING';
+            aiStatus.style.background = '#06b6d4';
+            lastAnalysis.textContent = 'Automatic scans every 45 seconds';
             
             // Show immediate alerts
             const initialAlerts = [
@@ -7444,10 +7444,15 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             animateTruckMovement();
             updateCongestionZones();
             
-            // Perform full AI scan after a delay (this will add more recommendations)
+            // Start automatic AI scanning
             setTimeout(() => {
                 triggerAIScan();
-            }, 5000); // Increased to 5 seconds to see initial alerts first
+                
+                // Continue periodic automatic scans
+                setInterval(() => {
+                    triggerAIScan();
+                }, 45000); // Automatically scan every 45 seconds
+            }, 3000); // First scan after 3 seconds
         });
     </script>
 </body>
