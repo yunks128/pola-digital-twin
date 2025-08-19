@@ -20,11 +20,10 @@
         }
 
         .dashboard-container {
-            position: relative;
-            height: 1200px;
+            display: flex;
+            flex-direction: column;
             min-height: 100vh;
             background: #e2e8f0;
-            overflow: auto;
         }
 
         /* Mobile Layout - Stack vertically on small screens */
@@ -40,27 +39,21 @@
         }
 
         .dashboard-panel {
-            position: absolute;
+            position: static;
             background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             overflow: hidden;
-            min-width: 200px;
-            min-height: 150px;
+            margin: 10px;
+            flex-shrink: 0;
         }
 
-        .dashboard-panel.dragging {
-            z-index: 1000;
-            transform: rotate(2deg);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
 
         .panel-header {
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             padding: 0.75rem 1rem;
             border-bottom: 1px solid #e2e8f0;
-            cursor: move;
             user-select: none;
             display: flex;
             justify-content: space-between;
@@ -116,53 +109,8 @@
             overflow-y: auto;
         }
 
-        .resize-handle {
-            position: absolute;
-            background: #0ea5e9;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .dashboard-panel:hover .resize-handle {
-            opacity: 0.6;
-        }
-
-        .resize-handle:hover {
-            opacity: 1 !important;
-        }
-
-        .resize-se {
-            bottom: 0;
-            right: 0;
-            width: 12px;
-            height: 12px;
-            cursor: se-resize;
-            border-radius: 8px 0 8px 0;
-        }
-
-        .resize-e {
-            top: 50%;
-            right: 0;
-            width: 4px;
-            height: 40px;
-            transform: translateY(-50%);
-            cursor: e-resize;
-            border-radius: 4px 0 0 4px;
-        }
-
-        .resize-s {
-            bottom: 0;
-            left: 50%;
-            width: 40px;
-            height: 4px;
-            transform: translateX(-50%);
-            cursor: s-resize;
-            border-radius: 4px 4px 0 0;
-        }
 
         .header {
-            top: 0;
-            left: 0;
             width: 100%;
             height: 80px;
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
@@ -173,37 +121,24 @@
             border-bottom: 2px solid #0ea5e9;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             z-index: 100;
+            flex-shrink: 0;
         }
 
         .sidebar {
-            top: 90px;
-            left: 10px;
-            right: 10px;
-            width: calc(100% - 20px);
             height: 250px;
         }
 
         .control-panel {
-            top: 350px;
-            left: 10px;
-            right: 10px;
-            width: calc(100% - 20px);
             height: 250px;
         }
 
         .main-view {
-            top: 610px;
-            left: 10px;
-            right: 10px;
             height: 350px;
             background: #f8fafc;
             border-radius: 8px;
         }
 
         .status-dashboard {
-            top: 970px;
-            left: 10px;
-            right: 10px;
             height: 200px;
         }
 
@@ -2977,9 +2912,6 @@
                 </div>
             </div>
             </div>
-            <div class="resize-handle resize-se"></div>
-            <div class="resize-handle resize-e"></div>
-            <div class="resize-handle resize-s"></div>
         </div>
 
         <!-- Main View - Port of LA Map -->
@@ -3129,9 +3061,6 @@
                 </div>
             </div>
             </div>
-            <div class="resize-handle resize-se"></div>
-            <div class="resize-handle resize-e"></div>
-            <div class="resize-handle resize-s"></div>
         </div>
 
         <!-- Control Panel -->
@@ -3295,9 +3224,6 @@
                 </div>
             </div>
             </div>
-            <div class="resize-handle resize-se"></div>
-            <div class="resize-handle resize-e"></div>
-            <div class="resize-handle resize-s"></div>
         </div>
 
 
@@ -3410,9 +3336,6 @@
             </div>
         </div>
             </div>
-            <div class="resize-handle resize-se"></div>
-            <div class="resize-handle resize-e"></div>
-            <div class="resize-handle resize-s"></div>
         </div>
     </div>
 
@@ -3420,117 +3343,6 @@
     <script src="config.js"></script>
     
     <script>
-        // Dashboard Layout Management System
-        let isDragging = false;
-        let isResizing = false;
-        let currentPanel = null;
-        let dragOffset = { x: 0, y: 0 };
-        let resizeDirection = null;
-
-        // Initialize drag and resize functionality
-        function initializeDashboardLayout() {
-            const panels = document.querySelectorAll('.dashboard-panel');
-            
-            panels.forEach(panel => {
-                const header = panel.querySelector('.panel-header');
-                const resizeHandles = panel.querySelectorAll('.resize-handle');
-                
-                // Make panels draggable
-                if (header && !panel.classList.contains('header')) {
-                    header.addEventListener('mousedown', startDrag);
-                }
-                
-                // Add resize functionality
-                resizeHandles.forEach(handle => {
-                    handle.addEventListener('mousedown', startResize);
-                });
-            });
-            
-            // Global mouse events
-            document.addEventListener('mousemove', handleMouseMove);
-            document.addEventListener('mouseup', handleMouseUp);
-        }
-
-        function startDrag(e) {
-            if (e.target.closest('.panel-controls')) return; // Don't drag when clicking controls
-            
-            isDragging = true;
-            currentPanel = e.target.closest('.dashboard-panel');
-            currentPanel.classList.add('dragging');
-            
-            const rect = currentPanel.getBoundingClientRect();
-            dragOffset.x = e.clientX - rect.left;
-            dragOffset.y = e.clientY - rect.top;
-            
-            // Bring to front
-            currentPanel.style.zIndex = '1000';
-            
-            e.preventDefault();
-        }
-
-        function startResize(e) {
-            isResizing = true;
-            currentPanel = e.target.closest('.dashboard-panel');
-            resizeDirection = e.target.classList.contains('resize-se') ? 'se' :
-                            e.target.classList.contains('resize-e') ? 'e' :
-                            e.target.classList.contains('resize-s') ? 's' : 'se';
-            
-            e.preventDefault();
-        }
-
-        function handleMouseMove(e) {
-            if (isDragging && currentPanel) {
-                const container = document.querySelector('.dashboard-container');
-                const containerRect = container.getBoundingClientRect();
-                
-                let newX = e.clientX - containerRect.left - dragOffset.x;
-                let newY = e.clientY - containerRect.top - dragOffset.y;
-                
-                // Keep panel within bounds
-                newX = Math.max(0, Math.min(newX, containerRect.width - currentPanel.offsetWidth));
-                newY = Math.max(0, Math.min(newY, containerRect.height - currentPanel.offsetHeight));
-                
-                currentPanel.style.left = newX + 'px';
-                currentPanel.style.top = newY + 'px';
-                currentPanel.style.right = 'auto';
-                currentPanel.style.bottom = 'auto';
-            }
-            
-            if (isResizing && currentPanel) {
-                const rect = currentPanel.getBoundingClientRect();
-                const container = document.querySelector('.dashboard-container');
-                const containerRect = container.getBoundingClientRect();
-                
-                if (resizeDirection.includes('e')) {
-                    const newWidth = e.clientX - rect.left;
-                    currentPanel.style.width = Math.max(200, Math.min(newWidth, containerRect.width - (rect.left - containerRect.left))) + 'px';
-                    currentPanel.style.right = 'auto';
-                }
-                
-                if (resizeDirection.includes('s')) {
-                    const newHeight = e.clientY - rect.top;
-                    currentPanel.style.height = Math.max(150, Math.min(newHeight, containerRect.height - (rect.top - containerRect.top))) + 'px';
-                    currentPanel.style.bottom = 'auto';
-                }
-            }
-        }
-
-        function handleMouseUp() {
-            if (isDragging && currentPanel) {
-                currentPanel.classList.remove('dragging');
-                currentPanel.style.zIndex = '';
-                saveLayout();
-            }
-            
-            if (isResizing && currentPanel) {
-                saveLayout();
-            }
-            
-            isDragging = false;
-            isResizing = false;
-            currentPanel = null;
-            resizeDirection = null;
-        }
 
         // Panel control functions
         function togglePanel(button) {
@@ -3550,99 +3362,13 @@
                 button.textContent = '+';
                 button.title = 'Restore';
             }
-            saveLayout();
         }
 
         function closePanel(button) {
             const panel = button.closest('.dashboard-panel');
             panel.style.display = 'none';
-            saveLayout();
         }
 
-        // Layout persistence
-        function saveLayout() {
-            const panels = document.querySelectorAll('.dashboard-panel');
-            const layout = {};
-            
-            panels.forEach(panel => {
-                const id = panel.className.split(' ')[0]; // Get first class as ID
-                const rect = panel.getBoundingClientRect();
-                const container = document.querySelector('.dashboard-container').getBoundingClientRect();
-                
-                layout[id] = {
-                    left: panel.style.left || (rect.left - container.left) + 'px',
-                    top: panel.style.top || (rect.top - container.top) + 'px',
-                    width: panel.style.width || rect.width + 'px',
-                    height: panel.style.height || rect.height + 'px',
-                    display: panel.style.display || 'block',
-                    minimized: panel.querySelector('.panel-content').style.display === 'none'
-                };
-            });
-            
-            localStorage.setItem('dashboardLayout', JSON.stringify(layout));
-        }
-
-        function restoreLayout() {
-            const saved = localStorage.getItem('dashboardLayout');
-            if (!saved) return;
-            
-            try {
-                const layout = JSON.parse(saved);
-                
-                Object.keys(layout).forEach(panelClass => {
-                    const panel = document.querySelector('.' + panelClass);
-                    if (panel) {
-                        const config = layout[panelClass];
-                        panel.style.left = config.left;
-                        panel.style.top = config.top;
-                        panel.style.width = config.width;
-                        panel.style.height = config.height;
-                        panel.style.display = config.display;
-                        panel.style.right = 'auto';
-                        panel.style.bottom = 'auto';
-                        
-                        if (config.minimized) {
-                            const content = panel.querySelector('.panel-content');
-                            const minimizeBtn = panel.querySelector('.minimize-btn');
-                            content.style.display = 'none';
-                            minimizeBtn.textContent = '+';
-                            minimizeBtn.title = 'Restore';
-                        }
-                    }
-                });
-            } catch (error) {
-                console.warn('Failed to restore layout:', error);
-            }
-        }
-
-        // Reset layout to default
-        function resetLayout() {
-            localStorage.removeItem('dashboardLayout');
-            location.reload();
-        }
-
-        // Add reset button to header
-        function addLayoutControls() {
-            const header = document.querySelector('.header .header-info');
-            if (header) {
-                const resetBtn = document.createElement('button');
-                resetBtn.textContent = '🔄 Reset Layout';
-                resetBtn.style.cssText = `
-                    background: #0ea5e9;
-                    color: white;
-                    border: none;
-                    padding: 0.5rem 1rem;
-                    border-radius: 6px;
-                    cursor: pointer;
-                    font-size: 0.8rem;
-                    font-weight: 600;
-                    margin-left: 1rem;
-                `;
-                resetBtn.onclick = resetLayout;
-                resetBtn.title = 'Reset dashboard layout to default';
-                header.appendChild(resetBtn);
-            }
-        }
     </script>
     
     <script>
@@ -7991,10 +7717,6 @@ Which visualization would you like to see? I'll provide detailed analysis along 
             console.log('🎤 Initializing Voice Assistant...');
             console.log('🔧 Initializing Dashboard Layout System...');
             
-            // Initialize dashboard layout system
-            initializeDashboardLayout();
-            addLayoutControls();
-            restoreLayout();
             
             // Show alerts immediately
             showInitialAlerts();
